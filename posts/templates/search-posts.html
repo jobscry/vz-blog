@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+
+{% load markup %}
+<h2>Search</h2>
+<form method="get" action="{% url search_posts %}">
+{{ form.as_p }}
+<p><input type="submit" value="Go" /></p>
+</form>
+{% if search_string %}
+<p>Found {{ posts.count }} post{{ posts.count|pluralize }} with <em>{{ search_string }}</em>.</p>
+<ol>
+	{% for post in posts %}
+	<li>
+		<a href="{{ post.get_absolute_url }}" title="{{ post }}">{{ post }}</a> 
+		- {{ post.published_on|date:blog_datetime_format }}
+	</li>
+	{% endfor %}
+<ol>
+{% endif %}
+{% endblock %}

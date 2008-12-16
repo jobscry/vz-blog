@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+	<head>
+		<title>Blog</title>
+        <link rel="alternate" type="application/rss+xml" title="Latest Posts" href="{{ base_url }}{% url django.contrib.syndication.views.feed url="latest" %}">
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css">
+		<!--[if IE]><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.ie.css"><![endif]-->
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript">google.load("jquery", "1.2.6");</script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/tweets.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/prettydate.js"></script>
+		{% block extra-javascript %}{% endblock %}
+	</head>
+	<body class="l7 normal equal">
+		<div id="container">
+			<div id="header">			
+				<div class="content">				
+					<h1><a href="{% url posts_list %}" title="posts list">Blog</a></h1>
+				</div>
+			</div>
+			<div id="primary">
+				<div class="content">				
+					{% block main-content %}{% endblock %}
+				</div>
+			</div>
+			<div id="secondary">			
+				<div class="content">
+					<div id="tweets">
+					    <h3><a href="http://twitter.com/jobscry" title="Twitter">Tweets</a></h3>
+					</div>
+					<div id="linkroll">
+					    {% include "linkroll.html" %}
+					</div>
+				</div>
+			</div>
+			<div id="tertiary">
+				<div class="content">				
+					<div id="user-menu">
+					    {% include "user-menu.html" %}
+					</div>
+					<div id="posts-user-menu">
+    					{% include "posts-user-menu.html" %}
+    				</div>
+    				<div id="tags">
+    				    {% include "post-tags.html" %}
+    				</div>
+					{% block menus %}{% endblock %}
+				</div>
+			</div>
+			<div id="footer">
+				<div class="content">				
+					<p><small>Blog pre-alpha</small></p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

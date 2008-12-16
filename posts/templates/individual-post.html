@@ -1,0 +1,16 @@
+{% load markup post_extras comments tagging_tags %}
+<div class="post">
+<h2><a href="{{ base_url }}{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+<div class="info">
+<p><strong>By:</strong> {{ post.author }} on {{ post.published_on|date:blog_datetime_format }}</p>
+{% tags_for_object post as tags %}
+<p><strong>Tagged:</strong> 
+{% for tag in tags %}<a href="{% url posts_by_tag %}?tag={{ tag }}" rel="tag">{{ tag }}</a> {% endfor %}
+</p>
+{% get_comment_count for post as comments  %}
+{% if comments %}
+<p><strong>Comments:</strong>  {{ comments }}</p>
+{% endif %}
+</div>
+{{ post.body|markdown:"codehilite"|safe }}
+</div>

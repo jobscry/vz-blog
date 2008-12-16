@@ -1,0 +1,17 @@
+{% load markup %}
+{% for comment in comments %}
+<p>
+<strong>
+<a href="{{ post.get_absolute_url }}#c{{ comment.id }}" name="#c{{ comment.id }}">#{{ comment.id }}</a> by 
+{% if comment.user_url %}
+    <a href="{{ comment.user_url }}" rel="nofollow" title="{{ comment.user_name }}">{{ comment.user_name }}</a>
+{% else %}
+    {{ comment.user_name }}
+{% endif %} 
+</strong>
+{% if perms.comments.can_flag %}
+ - <a href="{% url comments-flag comment.id %}{{ post.get_absolute_url }}" title="mark as SPAM">SPAM</a>
+{% endif %}
+</p>
+{{ comment.comment|markdown:"codehilite"|removetags:"a img"|safe }}
+{% endfor %}

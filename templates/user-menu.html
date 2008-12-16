@@ -1,0 +1,8 @@
+<ul class="menu">
+{% if user.is_authenticated %}
+<li><a href="{% url logout %}" title="logout">Logout</a></li>
+<li><a href="{% url my_profile %}" title="my profile">My Profile</a></li>
+{% else %}
+<li><a href="{% url login %}" title="login">Login</a></li>
+{% endif %}
+</ul>

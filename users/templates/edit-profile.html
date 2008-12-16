@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+	{% ifequal request.user this_user %}
+<h2>Editing My Profile</h2>
+	{% else %}
+<h2>Editing {{ this_user }}'s Profile</h2>
+	{% endifequal %}
+
+<form action="{% url edit_profile this_user.username %}" method="post">
+{{ this_user_form.as_p }}
+<p><input type="submit" value="Save Profile" /></p>
+{% endblock %}

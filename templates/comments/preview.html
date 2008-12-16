@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block user-menu %}
+
+{% endblock %}
+
+{% block main-content %}
+	{% load comments %}
+	{{ form.content_type }}
+	<div id="comments" class="post">
+		<h3>New Comment</h3>
+		<div id="comment-form">
+        {% include "comments/form.html" %}
+        </div>
+	</div>
+{% endblock %}

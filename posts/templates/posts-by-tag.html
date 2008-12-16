@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block user-menu %}
+
+{% endblock %}
+
+{% block main-content %}
+{% load tagging_tags %}
+<h2>Tags</h2>
+{% tag_cloud_for_model posts.post as post_tags with steps=10 min_count=1 distribution=log %}
+<p>
+{% for post_tag in post_tags %}
+<a href="{% url posts_by_tag %}?tag={{ post_tag }}" rel="tag" class="tag_{{ post_tag.font_size }}">{{ post_tag }}</a> 
+{% endfor %}
+</p>
+
+{% if tag %}
+<h2>{{ posts.count }} post{{ posts.count|pluralize }} tagged <em>{{ tag }}</em></h2>
+<ul>
+    {% for post in posts %}
+    <li><a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
