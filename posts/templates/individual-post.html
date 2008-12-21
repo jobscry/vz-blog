@@ -1,4 +1,4 @@
-{% load markup post_extras comments tagging_tags %}
+{% load markup post_extras tagging_tags %}
 <div class="post">
 <h2><a href="{{ base_url }}{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
 <div class="info">
@@ -7,10 +7,11 @@
 <p><strong>Tagged:</strong> 
 {% for tag in tags %}<a href="{% url posts_by_tag %}?tag={{ tag }}" rel="tag">{{ tag }}</a> {% endfor %}
 </p>
-{% get_comment_count for post as comments  %}
-{% if comments %}
-<p><strong>Comments:</strong>  {{ comments }}</p>
-{% endif %}
+{% with post.approved_comments.count as comment_count %}
+    {% if comment_count %}
+<p><strong>Comments:</strong>  {{ comment_count }}</p>
+    {% endif %}
+{% endwith %}
 </div>
 {{ post.body|markdown:"codehilite"|safe }}
 </div>

@@ -5,8 +5,6 @@
 {% endblock %}
 
 {% block main-content %}
-	{% load cache %}
-	{% cache 900 archive_year %}
 <h2>
 	<a href="{% url archive_index %}" title="back to archive">Archive</a>
 	&gt; {{ year }}
@@ -17,5 +15,4 @@
 	<li><a href="{% url archive_month month.year, month.month %}" title="archive for {{ month|date:"F" }} {{ month.year }}">{{ month|date:"F" }}</a></li>
 {% endfor %}
 </ul>
-	{% endcache %}
 {% endblock %}

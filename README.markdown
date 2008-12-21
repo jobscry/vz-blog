@@ -13,7 +13,7 @@ Learning Python and Django.  This is one of my first attempts to *dive into Pyth
 ## Features (for alpha version)
 
 * Blog
-    * Pingbacks
+  * Pingbacks
 * LinkRoll
 
 ## TODO

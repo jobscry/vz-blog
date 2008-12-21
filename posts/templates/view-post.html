@@ -20,14 +20,26 @@
         </ul>
     </div>
     {% endif %}
-    {% load comments %}
     <div id="comments" class="post">
     <h3>Comments</h3>
-    {% get_comment_form for post as form %}
+        {% if post.can_comment %}
         <div id="comment-form">
             {% include "comments/form.html" %}
         </div>
-    {% get_comment_list for post as comments %}
-        {% include "comments/comment.html" %}
+        {% else %}
+        <p>Comments are closed for this post.</p>
+        {% endif %}
+        {% if perms.comment.can_change %}
+            {% if post.moderation_queue.count %}
+        <h4>{{ post.moderation_queue.count }} Comment{{ post.moderation_queue.count|pluralize }} Awaiting Moderation</h4>
+               {% with post.moderation_queue.all as comments %}
+                    {% include "comments/comment.html" %}
+                {% endwith %}
+            <h4>Approved Comments</h4>
+            {% endif %}
+         {% endif %}
+        {% with post.approved_comments.all as comments %}
+            {% include "comments/comment.html" %}
+        {% endwith %}
     </div>
 {% endblock %}

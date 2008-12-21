@@ -1,5 +1,7 @@
-from django.db.models import Q
+from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.sites.models import Site
+from django.db.models import Q
 from django.http import HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_list_or_404, get_object_or_404
 from django.views.decorators.cache import cache_page
@@ -7,9 +9,25 @@ from django.views.generic.list_detail import object_detail
 from django.views.generic.date_based import archive_index, archive_year, archive_month
 from django.template import RequestContext
 from tagging.models import Tag, TaggedItem
-from models import Post
-from forms import SearchForm
+from models import Post, Comment
+from forms import SearchForm, CommentForm
 
+def moderate_comment(request, action, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    post = get_object_or_404(Post, comments=comment)
+    
+    if post.is_published == False:
+        return HttpResponseNotAllowed('You cannot comment on this post.')
+    
+    if action == 'approved':
+        comment.mark_approved()
+    elif action == 'spam':
+        comment.mark_spam()
+    else:
+        return HttpResponseNotAllowed('Action must be either "spam" or "approved".')
+
+    return HttpResponseRedirect(post.get_absolute_url())
+moderate_comment = permission_required('comment.can_change')(moderate_comment)
 
 def posts_by_tag(request):
     tag = request.GET.get('tag', None)
@@ -93,12 +111,38 @@ def view_post(request, slug):
             return HttpResponseNotAllowed('You cannot view this post.')
 
     related_posts = TaggedItem.objects.get_union_by_model(Post, post.tags).filter(is_published=True).exclude(pk=post.pk)
+    
+    if post.can_comment:
+        if request.method == 'POST':
+            form = CommentForm(post, request.POST)
+            if form.is_valid():
+                comment = form.save()
+                if request.user.is_authenticated():
+                    comment.mark_approved()
+                post.comments.add(comment)
+
+        if request.user.is_authenticated():
+            current_site = Site.objects.get(id=settings.SITE_ID)
+            form = CommentForm(
+                post,
+                initial = {
+                    'author_name': request.user.username,
+                    'author_email': request.user.email,
+                    'author_url': u'http://%s'%current_site.domain,
+                }
+            )
+        else:
+            form = CommentForm(post)
+    else:
+        form = None
+        
 
     return render_to_response(
         'view-post.html',
         {
             'post': post,
             'related_posts': related_posts,
+            'form': form,
         },
         context_instance=RequestContext(request)
     )

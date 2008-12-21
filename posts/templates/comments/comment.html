@@ -1,0 +1,24 @@
+{% load markup %}
+{% if comments.count %}
+    {% for comment in comments %}
+<p>
+<strong>
+<a href="{{ post.get_absolute_url }}#c{{ comment.id }}" name="#c{{ comment.id }}">#{{ comment.id }}</a> by 
+    {% if comment.author_url %}
+    <a href="{{ comment.author_url }}" rel="nofollow" title="{{ comment.author_name }}">{{ comment.author_name }}</a>
+    {% else %}
+        {{ comment.author_name }}
+    {% endif %} on {{ comment.added_on|date:blog_datetime_format }}
+</strong>
+    {% if perms.comment.can_change %}
+ - <a href="{% url moderate_comment "spam",comment.pk %}" title="mark as SPAM">SPAM</a>
+    {% endif %}
+    {% if comment.awaiting_moderation %}
+     | <a href="{% url moderate_comment "approved",comment.pk %}" title="approve comment">Approve</a>
+    {% endif %}
+</p>
+    {{ comment.body|markdown:"codehilite"|removetags:"a img"|safe }}
+    {% endfor %}
+{% else %}
+<p>No comments.</p>
+{% endif %}
