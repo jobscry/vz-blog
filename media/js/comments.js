@@ -8,5 +8,5 @@ $(document).ready(function () {
             return false;
         }
     );
-    $("input#id_honeypot").parent().parent().hide();
+    $("input#id_honeypot").prev('label').andSelf().hide();
 });
