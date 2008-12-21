@@ -9,37 +9,42 @@
 {% endblock %}
 
 {% block main-content %}
-    {% include "individual-post.html" %}
-    {% if related_posts %}
+    {% load cache %}
+    {% cache 3600 post post.pk %}
+        {% include "individual-post.html" %}
+        {% if related_posts %}
     <div id="related_posts" class="post">
         <h3>{{ related_posts|length }} Related Post{{ related_posts|length|pluralize }}</h3>
         <ul>
-        {% for related_post in related_posts %}
+            {% for related_post in related_posts %}
             <li><a href="{{ related_post.get_absolute_url }}" title="{{ related_post.title }}">{{ related_post.title }}</a> - {{ related_post.published_on|date:blog_datetime_format }}</li>
-        {% endfor %}
+            {% endfor %}
         </ul>
     </div>
-    {% endif %}
+        {% endif %}
+    {% endcache %}
     <div id="comments" class="post">
     <h3>Comments</h3>
-        {% if post.can_comment %}
+    {% if post.can_comment %}
         <div id="comment-form">
-            {% include "comments/form.html" %}
+        {% include "comments/form.html" %}
         </div>
-        {% else %}
+    {% else %}
         <p>Comments are closed for this post.</p>
-        {% endif %}
-        {% if perms.comment.can_change %}
-            {% if post.moderation_queue.count %}
+    {% endif %}
+    {% if perms.comment.can_change %}
+        {% if post.moderation_queue.count %}
         <h4>{{ post.moderation_queue.count }} Comment{{ post.moderation_queue.count|pluralize }} Awaiting Moderation</h4>
-               {% with post.moderation_queue.all as comments %}
-                    {% include "comments/comment.html" %}
-                {% endwith %}
+            {% with post.moderation_queue.all as comments %}
+                {% include "comments/comment.html" %}
+            {% endwith %}
             <h4>Approved Comments</h4>
-            {% endif %}
-         {% endif %}
+        {% endif %}
+    {% endif %}
+    {% cache 3600 post_comments post.pk %}
         {% with post.approved_comments.all as comments %}
             {% include "comments/comment.html" %}
         {% endwith %}
+    {% endcache %}
     </div>
 {% endblock %}

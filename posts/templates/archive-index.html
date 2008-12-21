@@ -5,11 +5,13 @@
 {% endblock %}
 
 {% block main-content %}
+    {% load cache %}
+    {% cache 3600 archive_index %}
 <h2>Archive</h2>
-
 <ul>
-{% for year in date_list %}
+    {% for year in date_list %}
 	<li><a href="{% url archive_year year.year %}" title="archive for {{ year.year }}">{{ year.year }}</a></li>
-{% endfor %}
+    {% endfor %}
 </ul>
+    {% endcache %}
 {% endblock %}

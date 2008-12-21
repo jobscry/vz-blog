@@ -1,11 +1,13 @@
-{% load tagging_tags %}
-{% tags_for_model links.link as linktags %}
-{% for linktag in linktags %}
-<h3>{{ linktag|title }}</h3>
-    {% tagged_objects linktag in links.link as links %}
-    <ul>
-    {% for link in links %}
-        <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+{% load tagging_tags cache %}
+{% cache 3600 linkroll %}
+    {% tags_for_model links.link as linktags %}
+    {% for linktag in linktags %}
+    <h3>{{ linktag|title }}</h3>
+        {% tagged_objects linktag in links.link as links %}
+        <ul>
+        {% for link in links %}
+            <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+        {% endfor %}
+        </ul>
     {% endfor %}
-    </ul>
-{% endfor %}
+{% endcache %}

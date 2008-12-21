@@ -1,7 +1,9 @@
-{% load tagging_tags %}
-{% tags_for_model posts.post as post_tags with counts %}
+{% load cache tagging_tags %}
+{% cache 3600 post_tags %}
+    {% tags_for_model posts.post as post_tags with counts %}
 <ul>
-{% for tag in post_tags|dictsortreversed:"count" %}
+    {% for tag in post_tags|dictsortreversed:"count" %}
     <li><a href="{% url posts_by_tag %}?tag={{ tag }}" rel="tag">{{ tag }}</a> ({{ tag.count }})</li>
-{% endfor %}
+    {% endfor %}
 </ul>
+{% endcache %}

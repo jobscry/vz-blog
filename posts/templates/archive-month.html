@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block main-content %}
+    {% load cache %}
+    {% with month|date:"F_y" as cache_key %}
+     {% cache 3600 archive_month cache_key %}
 <h2>
 	<a href="{% url archive_index %}" title="back to archive">Archive</a>
 	&gt; <a href="{% url archive_year month.year %}" title="back to archive for {{ month.year }}">{{ month.year }}</a>
@@ -12,11 +15,13 @@
 </h2>
 
 <ul>
-{% for post in posts_list %}
+            {% for post in posts_list %}
 	<li>
 		<a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a> 
 		- {{ post.published_on|date:blog_datetime_format }}
 	</li>
-{% endfor %}
+            {% endfor %}
 </ul>
+        {% endcache %}
+    {% endwith %}
 {% endblock %}
