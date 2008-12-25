@@ -31,7 +31,10 @@ moderate_comment = permission_required('comment.can_change')(moderate_comment)
 @cache_page(60 * 60)
 def posts_by_tag(request):
     tag = request.GET.get('tag', None)
-    posts = TaggedItem.objects.get_by_model(Post, tag).filter(is_published=True)
+    if tag != None:
+        posts = TaggedItem.objects.get_by_model(Post, tag).filter(is_published=True)
+    else:
+        posts = None
 
     return render_to_response(
         'posts-by-tag.html',
