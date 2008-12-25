@@ -68,6 +68,7 @@ MIDDLEWARE_CLASSES = (
 	'django.contrib.csrf.middleware.CsrfMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'debug_toolbar.middleware.DebugToolbarMiddleware',
+	'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 ROOT_URLCONF = 'blog.urls'
@@ -81,15 +82,12 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.markup',
     'django.contrib.admindocs',
     'django.contrib.flatpages',
     'django.contrib.humanize',
+    'django.contrib.sitemaps',
     'tagging',
     'timezones',
     'django_extensions',
