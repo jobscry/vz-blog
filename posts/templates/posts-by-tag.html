@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block main-content %}
-{% load tagging_tags cache %}
-{% cache 3600 tag_cloud %}
+    {% load tagging_tags %}
 <h2>Tags</h2>
     {% tag_cloud_for_model posts.post as post_tags with steps=10 min_count=1 distribution=log %}
 <p>
@@ -14,10 +13,8 @@
 <a href="{% url posts_by_tag %}?tag={{ post_tag }}" rel="tag" class="tag_{{ post_tag.font_size }}">{{ post_tag }}</a> 
     {% endfor %}
 </p>
-{% endcache %}
 
-{% if tag %}
-    {% cache 3600 tag tag %}
+    {% if tag %}
 <h3>{{ posts.count }} post{{ posts.count|pluralize }} tagged <em>{{ tag }}</em></h3>
 <ul>
         {% for post in posts %}
@@ -27,6 +24,5 @@
 	</li>
         {% endfor %}
 </ul>
-    {% endcache %}
-{% endif %}
+    {% endif %}
 {% endblock %}

@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.sites.models import Site
-from django.db.models import Q
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_list_or_404, get_object_or_404
 from django.views.decorators.cache import cache_page
 from django.views.generic.list_detail import object_detail
@@ -29,6 +28,7 @@ def moderate_comment(request, action, comment_id):
     return HttpResponseRedirect(post.get_absolute_url())
 moderate_comment = permission_required('comment.can_change')(moderate_comment)
 
+@cache_page(60 * 60)
 def posts_by_tag(request):
     tag = request.GET.get('tag', None)
     posts = TaggedItem.objects.get_by_model(Post, tag).filter(is_published=True)
@@ -42,6 +42,7 @@ def posts_by_tag(request):
         context_instance=RequestContext(request)
     )
 
+@cache_page(60 * 60)
 def archive(request, year, month):
     queryset = Post.objects.filter(is_published=True)
     date_field = 'published_on'    
@@ -75,6 +76,7 @@ def archive(request, year, month):
     )    
 
 def search_posts(request):
+    from django.db.models import Q
     search_string = request.GET.get('search_string', None)
     if search_string != None:
         form =     SearchForm(request.GET)
@@ -83,8 +85,23 @@ def search_posts(request):
             Q(title__contains=search_string) | Q(body__contains=search_string)
         )
     else:
-        form =     SearchForm()
+        form =  SearchForm()
         posts = None
+
+    if request.is_ajax():
+        from django.core import serializers
+        if posts != None:
+            data = serializers.serialize(
+                'json',
+                posts, 
+                fields=('title', 'slug', 'published_on')
+        )
+        else:
+            data = None
+        response = HttpResponse(mimetype='application/json')
+        response.write(data)
+        return response
+
     return render_to_response(
         'search-posts.html',
         {
@@ -95,6 +112,7 @@ def search_posts(request):
         context_instance=RequestContext(request)
     )
 
+@cache_page(60 * 15)
 def posts_list(request):
     return render_to_response(
         'posts-list.html',
@@ -104,6 +122,7 @@ def posts_list(request):
         context_instance=RequestContext(request)
     )
 
+@cache_page(60 * 15)
 def view_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if post.is_published == False:

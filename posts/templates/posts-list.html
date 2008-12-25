@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block main-content %}
-	{% load cache markup %}
-    {% cache 3600 posts_list %}
+	{% load markup %}
 	{% if posts %}
 		{% for post in posts %}
 	{% include "individual-post.html" %}
@@ -10,5 +9,4 @@
 	{% else %}
 <p>No posts!</p>
 	{% endif %}
-	{% endcache %}
 {% endblock %}
