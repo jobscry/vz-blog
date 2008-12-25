@@ -34,7 +34,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -89,6 +89,7 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django.contrib.admindocs',
     'django.contrib.flatpages',
+    'django.contrib.humanize',
     'tagging',
     'timezones',
     'django_extensions',
@@ -103,7 +104,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
-    'blog.utils.context_processors.time_format',
     'blog.utils.context_processors.base_url',
 )
 LOGIN_REDIRECT_URL = '/'
@@ -114,12 +114,14 @@ DATETIME_FORMAT = 'N j, Y, P'
 DEFAULT_CHARSET = 'utf-8'
 FORCE_SCRIPT_NAME = ''
 
-CACHE_BACKEND = 'db://fixer'
-
 INTERNAL_IPS = ('127.0.0.1', )
 INSTALLED_APPS += ('debug_toolbar',)
+
+CACHE_BACKEND = 'db://fixer'
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 AKISMET_API_KEY = ''
 BLOG_TITLE = 'test blog'
 BLOG_DESCRIPTION = 'my thoughts and other miscellany'
 BLOG_COPYRIGHT = ''
+MAX_COMMENT_DAYS = 60
