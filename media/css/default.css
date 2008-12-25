@@ -26,18 +26,16 @@ a{
 	border-right: dotted #151417 1px;
 	padding-right: 1.5em;
 }
+#secondary, #tertiary {
+    padding-top: 2em;
+}
 #tertiary{	
 	margin-right: -2em;
-	margin-top: 2em;
 }
-#tertiary ul{
+#secondary ul.menu, #tertiary ul.menu{
 	list-style: none;
 	margin-left: 1em;
 	margin-bottom: 1em;
-}
-#secondary ul{
-	list-style: none;
-	margin-left: 0;
 }
 #footer{
 	background: #FFFFFF;
