@@ -1,4 +1,4 @@
-{% load markup %}
+{% load markup humanize %}
 {% if comments.count %}
     {% for comment in comments %}
 <p>
@@ -8,7 +8,7 @@
     <a href="{{ comment.author_url }}" rel="nofollow" title="{{ comment.author_name }}">{{ comment.author_name }}</a>
     {% else %}
         {{ comment.author_name }}
-    {% endif %} on {{ comment.added_on|date:blog_datetime_format }}
+    {% endif %}, {{ comment.added_on|naturalday }}
 </strong>
     {% if perms.comment.can_change %}
  - <a href="{% url moderate_comment "spam",comment.pk %}" title="mark as SPAM">SPAM</a>

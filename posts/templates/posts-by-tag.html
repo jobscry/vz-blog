@@ -16,13 +16,8 @@
 
     {% if tag %}
 <h3>{{ posts.count }} post{{ posts.count|pluralize }} tagged <em>{{ tag }}</em></h3>
-<ul>
-        {% for post in posts %}
-	<li>
-		<a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a> 
-		- {{ post.published_on|date:blog_datetime_format }}
-	</li>
-        {% endfor %}
-</ul>
+        {% with posts as posts_list %}
+            {% include "ul-posts.html" %}
+        {% endwith %}
     {% endif %}
 {% endblock %}

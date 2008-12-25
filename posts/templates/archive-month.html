@@ -11,13 +11,5 @@
 	&gt; <a href="{% url archive_year month.year %}" title="back to archive for {{ month.year }}">{{ month.year }}</a>
 	&gt; {{ month|date:"F" }}
 </h2>
-
-<ul>
-    {% for post in posts_list %}
-	<li>
-		<a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a> 
-		- {{ post.published_on|date:blog_datetime_format }}
-	</li>
-    {% endfor %}
-</ul>
+{% include "ul-posts.html" %}
 {% endblock %}

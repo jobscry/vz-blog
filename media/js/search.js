@@ -16,9 +16,9 @@ function getPosts(){
         type: 'GET',
         url: '/posts/search/',
         success: function(posts){
-            $('#search-results').html('<p>Found '+posts.length+' post(s) with <em>'+$('#id_search_string').val()+'</em></p><ol class="results"></ol>');
+            $('#search-results').html('<p>Found '+posts.length+' post(s) with <em>'+$('#id_search_string').val()+'</em></p><ul class="results"></ul>');
             $.each(posts, function(i, post){
-                $('ol.results').append('<li><a href="/posts/'+post.fields.slug+'">'+post.fields.title+'</a> - '+post.fields.published_on+'</li>');
+                $('ul.results').append('<li><a href="/posts/'+post.fields.slug+'">'+post.fields.title+'</a>, '+prettyDate(post.fields.published_on)+'</li>');
             });
         }
     })

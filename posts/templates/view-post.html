@@ -16,7 +16,7 @@
         <h3>{{ related_posts|length|apnumber|title }} Related Post{{ related_posts|length|pluralize }}</h3>
         <ul>
         {% for related_post in related_posts %}
-            <li><a href="{{ related_post.get_absolute_url }}" title="{{ related_post.title }}">{{ related_post.title }}</a> - {{ related_post.published_on|date:blog_datetime_format }}</li>
+            <li><a href="{{ related_post.get_absolute_url }}" title="{{ related_post.title }}">{{ related_post.title }}</a> - {{ related_post.published_on|naturalday }}</li>
         {% endfor %}
         </ul>
     </div>
