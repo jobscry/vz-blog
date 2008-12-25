@@ -69,6 +69,7 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.common.CommonMiddleware',
 	'debug_toolbar.middleware.DebugToolbarMiddleware',
 	'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+	'django.contrib.redirects.middleware.RedirectFallbackMiddleware',	
 )
 
 ROOT_URLCONF = 'blog.urls'
@@ -78,20 +79,21 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.admindocs',
 	'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
-    'django.contrib.markup',
-    'django.contrib.admindocs',
     'django.contrib.flatpages',
     'django.contrib.humanize',
+    'django.contrib.markup',
+    'django.contrib.redirects',
+    'django.contrib.sessions',
     'django.contrib.sitemaps',
-    'tagging',
-    'timezones',
+    'django.contrib.sites',
     'django_extensions',
     'django_evolution',
+    'tagging',
+    'timezones',
     'users',
 	'posts',
 	'links',
@@ -123,3 +125,4 @@ BLOG_TITLE = 'test blog'
 BLOG_DESCRIPTION = 'my thoughts and other miscellany'
 BLOG_COPYRIGHT = ''
 MAX_COMMENT_DAYS = 60
+POSTS_PER_PAGE = 3

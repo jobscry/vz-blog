@@ -106,3 +106,19 @@ a.tag_9{
 a.tag_10{
     font-size: 2.25em;
 }
+
+div.content ul.paginator{
+    list-style: none;
+    text-align: right;
+    padding-left: 0;
+    margin-left: 0;
+}
+div.content ul.paginator li{
+    display: inline;
+    list-style: none;
+}
+div.content ul.paginator li.current-page{
+    display: inline;
+    list-style: none;
+    text-decoration: underline;
+}

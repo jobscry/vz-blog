@@ -2,11 +2,9 @@
 
 {% block main-content %}
 	{% load markup %}
-	{% if posts %}
-		{% for post in posts %}
-	{% include "individual-post.html" %}
-		{% endfor %}
-	{% else %}
-<p>No posts!</p>
-	{% endif %}
+	{% include "post-list-pagination.html" %}
+	{% for post in post_list %}
+    	{% include "individual-post.html" %}
+	{% endfor %}
+	{% include "post-list-pagination.html" %}
 {% endblock %}

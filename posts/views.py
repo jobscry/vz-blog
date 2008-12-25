@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_list_or_404, get_object_or_404
-from django.views.decorators.cache import cache_page
-from django.views.generic.list_detail import object_detail
-from django.views.generic.date_based import archive_index, archive_year, archive_month
 from django.template import RequestContext
+from django.views.decorators.cache import cache_page
+from django.views.generic.list_detail import object_list
+from django.views.generic.date_based import archive_index, archive_year, archive_month
 from tagging.models import Tag, TaggedItem
 from models import Post, Comment
 from forms import SearchForm, CommentForm
@@ -116,13 +116,14 @@ def search_posts(request):
     )
 
 @cache_page(60 * 15)
-def posts_list(request):
-    return render_to_response(
-        'posts-list.html',
-        {
-            'posts': Post.objects.filter(is_published=True),
-        },
-        context_instance=RequestContext(request)
+def posts_list(request, page):
+    return object_list(
+        request,
+        Post.objects.filter(is_published=True),
+        paginate_by=settings.POSTS_PER_PAGE,
+        page=page,
+        template_name='posts-list.html',
+        template_object_name='post',
     )
 
 @cache_page(60 * 15)
