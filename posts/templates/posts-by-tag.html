@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
-{% block user-menu %}
-
+{% block page-title %}
+ :: Tags
+    {% if tag %}
+ :: {{ tag }}    
+    {% endif %}
 {% endblock %}
 
 {% block main-content %}
