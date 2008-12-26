@@ -27,7 +27,7 @@ a{
 	padding-right: 1.5em;
 }
 #secondary, #tertiary {
-    padding-top: 2em;
+    padding-top: 0;
 }
 #tertiary{	
 	margin-right: -2em;
@@ -109,6 +109,7 @@ div.content ul.paginator{
     list-style: none;
     text-align: right;
     padding-left: 0;
+    padding-top: .5em;
     margin-left: 0;
 }
 div.content ul.paginator li{

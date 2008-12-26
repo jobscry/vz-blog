@@ -27,26 +27,28 @@
 			</div>
 			<div id="secondary">			
 				<div class="content">
-					<div id="flatpages">
-					    {% include "flatpages/list.html" %}
-					</div>
-					<div id="tweets">
-					    <h3><a href="http://twitter.com/jobscry" title="Twitter">Tweets</a></h3>
-					</div>
 					<div id="linkroll">
+					    <h3>Links</h3>
 					    {% include "linkroll.html" %}
 					</div>
 				</div>
 			</div>
 			<div id="tertiary">
-				<div class="content">				
+				<div class="content">
+					<div id="flatpages">
+					    <h3>Pages</h3>
+					    {% include "flatpages/list.html" %}
+					</div>
 					<div id="user-menu">
+					    <h3>Options</h3>
 					    {% include "user-menu.html" %}
 					</div>
 					<div id="posts-user-menu">
+					    <h3>Posts</h3>
     					{% include "posts-user-menu.html" %}
     				</div>
     				<div id="tags">
+					    <h3>Tags</h3>
     				    {% include "post-tags.html" %}
     				</div>
 					{% block menus %}{% endblock %}

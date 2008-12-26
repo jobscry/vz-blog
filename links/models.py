@@ -9,7 +9,7 @@ class Link(models.Model):
     Link model for linkroll
     """
     title = models.CharField(max_length='255')
-    url = models.URLField()
+    url = models.URLField(verify_exists=False)
     tags = TagField()
     added_by = models.ForeignKey(User)
     changed_on = models.DateTimeField(blank=True, null=True)

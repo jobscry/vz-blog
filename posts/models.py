@@ -114,16 +114,6 @@ def auto_pingback(sender, instance, created, **kwargs):
 
 post_save.connect(auto_pingback, sender=Post)
 
-def auto_cache_update(sender, instance, created, **kwargs):
-    """
-    Auto Cache Update
-    
-    """
-    from django.core.cache import cache
-
-
-#post_save.connect(auto_cache_update, sender=Post)
-#post_save.connect(auto_cache_update, sender=Comment)
 
 #http://sciyoshi.com/blog/2008/aug/27/using-akismet-djangos-new-comments-framework/
 from django.contrib.comments.signals import comment_was_posted

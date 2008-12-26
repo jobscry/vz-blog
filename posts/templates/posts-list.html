@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block main-content %}
-	{% load markup %}
-	{% include "post-list-pagination.html" %}
-	{% for post in post_list %}
-    	{% include "individual-post.html" %}
-	{% endfor %}
+    {% load markup %}
+    {% for post in post_list %}
+        {% include "individual-post.html" %}
+    {% endfor %}
+    {% include "post-list-pagination.html" %}
 {% endblock %}
