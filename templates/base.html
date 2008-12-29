@@ -20,17 +20,11 @@
 				</div>
 			</div>
 			<div id="secondary">			
-				<div class="content">
-					<div id="linkroll">
-					    <h3>Links</h3>
-					    {% include "linkroll.html" %}
-					</div>
-				</div>
+				<div class="content"></div>
 			</div>
 			<div id="tertiary">
 				<div class="content">
 					<div id="flatpages">
-					    <h3>Pages</h3>
 					    {% include "flatpages/list.html" %}
 					</div>
 					<div id="user-menu">
@@ -45,7 +39,13 @@
 					    <h3>Tags</h3>
     				    {% include "post-tags.html" %}
     				</div>
+					<div id="linkroll">
+					    {% include "linkroll.html" %}
+					</div>
 					{% block menus %}{% endblock %}
+                    <a href="http://www.djangoproject.com/">
+                        <img src="{{ MEDIA_URL }}/images/djangosite80x15.gif" border="0" alt="A Django site." title="A Django site.">
+                        </a>
 				</div>
 			</div>
 			<div id="footer">

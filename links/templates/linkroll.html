@@ -1,7 +1,7 @@
 {% load tagging_tags %}
 {% tags_for_model links.link as linktags %}
 {% for linktag in linktags %}
-<h4>{{ linktag|title }}</h4>
+<h3>{{ linktag|title }}</h3>
     {% tagged_objects linktag in links.link as links %}
 <ul class="menu">
     {% for link in links %}

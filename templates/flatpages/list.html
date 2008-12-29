@@ -1,5 +1,8 @@
-<ul class="menu">
-{% for page in flatpages %}
-    <li><a href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a></li>
-{% endfor %}
-</ul>
+{% if flatpages.count %}
+    <h3>Pages</h3>
+    <ul class="menu">
+    {% for page in flatpages %}
+        <li><a href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
