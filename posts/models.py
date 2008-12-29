@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.encoding import smart_unicode
-from tagging.fields import TagField
 from akismet import Akismet
+from tagging.fields import TagField
 from datetime import datetime, timedelta
 
 class Comment(models.Model):
