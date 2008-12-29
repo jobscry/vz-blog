@@ -104,6 +104,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
     'blog.utils.context_processors.base_url',
+    'blog.utils.context_processors.flatpage_list',
+    'blog.utils.context_processors.preview_length',
 )
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/logout/'
