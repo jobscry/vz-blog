@@ -1,4 +1,4 @@
-# VZ Blog alpha
+# VZ Blog beta
 
 Joe Vasquez <joe.vasquez@gmail.com>
 
@@ -8,22 +8,36 @@ This project is a work in progress, it's not finished yet.
 
 ## Purpose
 
-Learning Python and Django.  This is one of my first attempts to *dive into Python*
+Learning Python and Django.  This is one of my first attempts to *Dive into Python*
 
-## Features (for alpha version)
+## Features (for beta version)
 
 * Blog
-  * Pingbacks
+* Pingbacks (sending only for now)
 * LinkRoll
+* Akismet SPAM fighting ninja skills
 
 ## TODO
 
-* Finish comment moderation in Admin site
-* Add comment captcha
-* Setup Trackback server
+* Lifestream
+* Setup Trackback server (for receiving)
 * File uploading
+* More cowbell
 
 ## Third Party Libraries
 
-* Python Pingback [http://mathieu.fenniak.net/python-pingback-library/](http://mathieu.fenniak.net/python-pingback-library/)
-* Tripoli CSS framework [http://devkick.com/lab/tripoli/](http://devkick.com/lab/tripoli/)
+* [Python Pingback](http://mathieu.fenniak.net/python-pingback-library/ "Python Pingback")
+* [Tripoli CSS framework](http://devkick.com/lab/tripoli/ "Tripoli CSS framework")
+* [Pygments](http://pygments.org/ "Python Pygments")
+
+### Django Plugins
+
+* [Batchadmin](http://code.google.com/p/django-batchadmin/ "Django Batchadmin"]
+* [Tagging](http://code.google.com/p/django-tagging/ "Django Tagging"]
+* [Command Extensions](http://code.google.com/p/django-command-extensions/ "Django Command Extensions"]
+* [Evolution](http://code.google.com/p/django-evolution/ "Django Evolution"]
+
+## Credits
+
+* [Markdown Syntax Highlighting in Django](http://www.martin-geber.com/thought/2007/10/27/markdown-syntax-highlighting-django/ "Markdown Syntax Highlighting in Django")
+

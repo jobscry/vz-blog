@@ -44,4 +44,3 @@ def markdown(value, arg=''):
         else :
             safe_mode = False
         return markdown.markdown(value, extensions, safe_mode=safe_mode)
-
