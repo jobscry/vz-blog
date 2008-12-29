@@ -3,3 +3,4 @@ admin-media
 mysite.fcgi
 *.pyc
 *.data
+initial.data
