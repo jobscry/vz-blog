@@ -1,5 +1,5 @@
 from django.contrib import admin
-from batchadmin.admin import BatchModelAdmin
+from batchadmin.admin import BatchModelAdmin, CHECKBOX_NAME
 from models import Post, Comment
 
 class PostAdmin(admin.ModelAdmin):
