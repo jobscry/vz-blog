@@ -10,7 +10,7 @@
 {% block main-content %}
     {% load tagging_tags %}
 <h2>Tags</h2>
-    {% tag_cloud_for_model posts.post as post_tags with steps=10 min_count=1 distribution=log %}
+    {% tag_cloud_for_model posts.post as post_tags with steps=10 min_count=1 distribution=linear %}
 <p>
     {% for post_tag in post_tags %}
 <a href="{% url posts_by_tag %}?tag={{ post_tag }}" rel="tag" class="tag_{{ post_tag.font_size }}">{{ post_tag }}</a> 
@@ -18,7 +18,8 @@
 </p>
 
     {% if tag %}
-<h3>{{ posts.count }} post{{ posts.count|pluralize }} tagged <em>{{ tag }}</em></h3>
+        {% load humanize %}
+<h3>{{ posts.count|apnumber|title }} post{{ posts.count|pluralize }} tagged <em>{{ tag }}</em></h3>
         {% with posts as posts_list %}
             {% include "ul-posts.html" %}
         {% endwith %}
