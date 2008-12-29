@@ -3,7 +3,7 @@ $(document).ready(function () {
     var wait
     $('#id_search_string').keyup(
         function(){
-            clearTimeout(wait)
+            clearTimeout(wait);
             wait = setTimeout("getPosts()", 1000);
         }
     );

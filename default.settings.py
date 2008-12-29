@@ -61,15 +61,16 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
 	'django.middleware.gzip.GZipMiddleware',
 	'django.middleware.http.ConditionalGetMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.csrf.middleware.CsrfMiddleware',
 	'django.middleware.common.CommonMiddleware',
-	'debug_toolbar.middleware.DebugToolbarMiddleware',
 	'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-	'django.contrib.redirects.middleware.RedirectFallbackMiddleware',	
+	'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'blog.urls'
@@ -117,8 +118,9 @@ FORCE_SCRIPT_NAME = ''
 INTERNAL_IPS = ('127.0.0.1', )
 INSTALLED_APPS += ('debug_toolbar',)
 
-CACHE_BACKEND = 'db://fixer'
+CACHE_BACKEND = ''
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+CACHE_MIDDLEWARE_SECONDS = 60 * 15
 
 AKISMET_API_KEY = ''
 BLOG_TITLE = 'test blog'

@@ -4,14 +4,8 @@
 	<head>
 		<title>Blog{% block page-title %}{% endblock %}</title>
         <link rel="alternate" type="application/rss+xml" title="Latest Posts" href="{{ base_url }}{% url django.contrib.syndication.views.feed url="latest" %}">
-		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css">
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/production.default.css">
 		<!--[if IE]><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.ie.css"><![endif]-->
-		<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
-		<!-- <script type="text/javascript">google.load("jquery", "1.2.6");</script> -->
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/tweets.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/prettydate.js"></script>
-		{% block extra-javascript %}{% endblock %}
 	</head>
 	<body class="l7 normal equal">
 		<div id="container">
@@ -61,4 +55,7 @@
 			</div>
 		</div>
 	</body>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("jquery", "1.2.6");</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/production.js"></script>
 </html>
