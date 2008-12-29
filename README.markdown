@@ -1,6 +1,6 @@
 # VZ Blog beta
 
-Joe Vasquez <joe.vasquez@gmail.com>
+Joe Vasquez <joe.vasquez [do not freaking spam me] gmail.com>
 
 [Django](http://djangoproject.com "Django") powered homegrown [Blog](http://en.wikipedia.org/wiki/Blog "Blog").
 
@@ -32,10 +32,10 @@ Learning Python and Django.  This is one of my first attempts to *Dive into Pyth
 
 ### Django Plugins
 
-* [Batchadmin](http://code.google.com/p/django-batchadmin/ "Django Batchadmin"]
-* [Tagging](http://code.google.com/p/django-tagging/ "Django Tagging"]
-* [Command Extensions](http://code.google.com/p/django-command-extensions/ "Django Command Extensions"]
-* [Evolution](http://code.google.com/p/django-evolution/ "Django Evolution"]
+* [Batchadmin](http://code.google.com/p/django-batchadmin/ "Django Batchadmin")
+* [Tagging](http://code.google.com/p/django-tagging/ "Django Tagging")
+* [Command Extensions](http://code.google.com/p/django-command-extensions/ "Django Command Extensions")
+* [Evolution](http://code.google.com/p/django-evolution/ "Django Evolution")
 
 ## Credits
 
