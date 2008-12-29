@@ -2,8 +2,10 @@
 
 {% block main-content %}
     {% load markup %}
-    {% for post in post_list %}
-        {% include "individual-post.html" %}
-    {% endfor %}
+    {% with "1" as do_truncate %}
+        {% for post in post_list %}
+            {% include "individual-post.html" %}
+        {% endfor %}
+    {% endwith %}
     {% include "post-list-pagination.html" %}
 {% endblock %}

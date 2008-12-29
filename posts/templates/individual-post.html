@@ -13,5 +13,9 @@
         {% endif %}
     {% endwith %}
 </div>
-    {{ post.body|markdown:"codehilite"|safe }}
+    {% if do_truncate %}
+        {{ post.body|markdown:"codehilite"|safe|truncatewords_html:preview_length }}
+    {% else %}
+        {{ post.body|markdown:"codehilite"|safe }}
+    {% endif %}
 </div>
