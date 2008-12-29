@@ -9,7 +9,7 @@ from django.conf import settings
 from django.http import Http404
 from django.utils.encoding import force_unicode
 from django.utils.hashcompat import sha_constructor
-from models import Comment
+from blog.posts.models import Comment
 
 COMMENT_MAX_LENGTH = getattr(settings,'COMMENT_MAX_LENGTH', 3000)
 
@@ -120,4 +120,12 @@ class CommentForm(ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ('user', 'is_spam', 'is_approved', 'awaiting_moderation', 'added_on')
+        exclude = (
+            'author_ip',
+            'author_user_agent',
+            'author_referrer',
+            'user', 'is_spam',
+            'is_approved',
+            'awaiting_moderation',
+            'added_on'
+        )

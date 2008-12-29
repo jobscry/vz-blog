@@ -128,16 +128,23 @@ def view_post(request, slug):
         if request.user.has_perms('posts.post.can_change') == False:
             return HttpResponseNotAllowed('You cannot view this post.')
 
-    related_posts = TaggedItem.objects.get_union_by_model(Post, post.tags).filter(is_published=True).exclude(pk=post.pk)
-    
     if post.can_comment:
         if request.method == 'POST':
-            form = CommentForm(post, request.POST)
+            form = CommentForm(post, data=request.POST)
             if form.is_valid():
-                comment = form.save()
-                if request.user.is_authenticated():
-                    comment.mark_approved()
+                comment = form.save(commit=False)
+                if settings.DEBUG:
+                    comment.author_ip = '127.0.0.1'
+                else:
+                    comment.author_ip = request.META.get('REMOTE_ADDR', '127.0.0.1')
+                comment.author_user_agent = request.META.get('HTTP_USER_AGENT', '')
+                comment.author_refferrer = request.META.get('HTTP_REFERER', '')
+                comment.save()
                 post.comments.add(comment)
+                if request.user.is_authenticated():
+                    comment.user = request.user
+                    comment.mark_approved()
+                return HttpResponseRedirect(post.get_absolute_url())
 
         if request.user.is_authenticated():
             current_site = Site.objects.get(id=settings.SITE_ID)
@@ -153,13 +160,12 @@ def view_post(request, slug):
             form = CommentForm(post)
     else:
         form = None
-        
 
     return render_to_response(
         'view-post.html',
         {
             'post': post,
-            'related_posts': related_posts,
+            'related_posts': TaggedItem.objects.get_union_by_model(Post, post.tags).filter(is_published=True).exclude(pk=post.pk),
             'form': form,
         },
         context_instance=RequestContext(request)

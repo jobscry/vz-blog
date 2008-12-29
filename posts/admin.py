@@ -45,7 +45,7 @@ class PostAdmin(admin.ModelAdmin):
         obj.save()
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('added_on', 'author_name', 'author_email', 'author_url', 'is_approved', 'is_spam')
+    list_display = ('author_name', 'author_email', 'author_url', 'is_approved', 'is_spam', 'added_on', )
     list_filter = ('awaiting_moderation', 'is_approved', 'is_spam', 'author_name')
     search_fileds = [ 'author_name', 'author_email', 'author_url', 'body' ]
     date_hierarchy = 'added_on'
@@ -55,6 +55,10 @@ class CommentAdmin(admin.ModelAdmin):
         (None, {
              'classes': ('wide', ),
             'fields': ('author_name', 'author_email', 'author_url', 'body')
+        }),
+        ('Meta', {
+             'classes': ('wide', ),
+            'fields': ('author_ip', 'author_user_agent', 'author_referrer')
         }),
         ('Options', {
             'fields': ('awaiting_moderation', 'is_spam', 'is_approved')

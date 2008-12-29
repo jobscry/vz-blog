@@ -1,4 +1,5 @@
 settings.py
+manage.py
 admin-media
 mysite.fcgi
 *.pyc

@@ -3,13 +3,18 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
+from django.utils.encoding import smart_unicode
 from tagging.fields import TagField
+from akismet import Akismet
 from datetime import datetime, timedelta
 
 class Comment(models.Model):
     author_name = models.CharField('Name', max_length="255")
     author_email = models.EmailField('Email')
-    author_url = models.URLField('URL', verify_exists=False)
+    author_url = models.URLField('URL', verify_exists=False, null=True, blank=True)
+    author_ip = models.IPAddressField('IP Address')
+    author_user_agent = models.CharField('User Agent', max_length="255")
+    author_referrer = models.CharField('Referrer', max_length="255", null=True, blank=True)
     user = models.ForeignKey(User, null=True, blank=True, default='')
     body = models.TextField()
     is_approved = models.BooleanField(default=False, help_text="Approve this comment?")
@@ -21,16 +26,38 @@ class Comment(models.Model):
         return u'%s by %s on %s'%(self.pk, self.author_name, self.added_on.strftime('%c'))
 
     def mark_approved(self):
+        """
+        Mark Approved
+        
+        If comment was mistakenly marked as SPAM by Akismet, mark approved, then send HAM.
+        """
+        if self.is_spam:
+            ak = _get_ak()
+            if ak.verify_key():
+                data = _build_comment_data(self)
+                ak.suubmit_ham(smart_unicode(instance.body), data=data, build_data=True)
+
         self.is_approved = True
         self.awaiting_moderation = False
         self.is_spam = False
         self.save()
     
     def mark_spam(self):
+        """
+        Mark SPAM
+        
+        If Akismet didn't catch it, mark as SPAM and submit it to Akismet
+        """
+        if self.is_spam == False:        
+            ak = _get_ak()
+            if ak.verify_key():
+                data = _build_comment_data(self)
+                ak.submit_spam(smart_unicode(instance.body), data=data, build_data=True)
+
         self.is_approved = False
         self.awaiting_moderation = False
         self.is_spam = True
-        self.save()  
+        self.save()
 
     class Meta:
         permissions = (
@@ -116,34 +143,34 @@ post_save.connect(auto_pingback, sender=Post)
 
 
 #http://sciyoshi.com/blog/2008/aug/27/using-akismet-djangos-new-comments-framework/
-from django.contrib.comments.signals import comment_was_posted
 
-def on_comment_was_posted(sender, comment, request, *args, **kwargs):
-    try:
-        from akismet import Akismet
-    except:
-        return
+def comment_akismet_check(sender, instance, created, **kwargs):
+    """
+    Comment Akismet Check
+    
+    Check all incoming comments against Akismet
+    """
+    if created:
+        ak = _get_ak()
+        if ak.verify_key():
+            data = _build_comment_data(instance)
+            if ak.comment_check(smart_unicode(instance.body), data=data, build_data=True):
+                instance.is_spam = True
+                instance.mark_spam()
 
-    ak = Akismet(
+post_save.connect(comment_akismet_check, sender=Comment)
+
+def _get_ak():
+    return Akismet(
         key=settings.AKISMET_API_KEY,
         blog_url='http://%s/' % Site.objects.get(pk=settings.SITE_ID).domain
     )
 
-    if ak.verify_key():
-        data = {
-            'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
-            'user_agent': request.META.get('HTTP_USER_AGENT', ''),
-            'referrer': request.META.get('HTTP_REFERER', ''),
-            'comment_type': 'comment',
-            'comment_author': comment.user_name.encode('utf-8'),
-        }
-
-        if ak.comment_check(comment.comment.encode('utf-8'), data=data, build_data=True):
-            comment.flags.create(
-                user=comment.content_object.author,
-                flag='spam'
-            )
-            comment.is_public = False
-            comment.save()
-
-comment_was_posted.connect(on_comment_was_posted)
+def _build_comment_data(comment):
+    return {
+        'user_ip': smart_unicode(comment.author_ip),
+        'user_agent': smart_unicode(comment.author_user_agent),
+        'referrer': smart_unicode(comment.author_referrer),
+        'comment_type': 'comment',
+        'comment_author': smart_unicode(comment.author_name),
+    }
