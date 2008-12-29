@@ -91,8 +91,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django.contrib.sites',
-    'django_extensions',
-    'django_evolution',
     'tagging',
     'timezones',
     'users',
@@ -115,8 +113,12 @@ DATETIME_FORMAT = 'N j, Y, P'
 DEFAULT_CHARSET = 'utf-8'
 FORCE_SCRIPT_NAME = ''
 
-INTERNAL_IPS = ('127.0.0.1', )
-INSTALLED_APPS += ('debug_toolbar',)
+INSTALLED_APPS += (
+    'batchadmin',
+    'django_extensions', 
+    'django_evolution',
+)
+BATCHADMIN_MEDIA_PREFIX = 'batch-admin/'
 
 CACHE_BACKEND = ''
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
