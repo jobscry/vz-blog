@@ -1,15 +1,14 @@
 {% load markup post_extras tagging_tags humanize %}
 <div class="post">
 <h2><a href="{{ base_url }}{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
-<div class="info">
-<p><strong>By:</strong> {{ post.author }}, {{ post.published_on|naturalday }}</p>
+<p class="date">{{ post.published_on|naturalday }}</p>
+<div class="meta">
+    <p>
     {% tags_for_object post as tags %}
-<p><strong>Tagged:</strong> 
-    {% for tag in tags %}<a href="{% url posts_by_tag %}?tag={{ tag }}" rel="tag">{{ tag }}</a> {% endfor %}
-</p>
+    tagged: {% for tag in tags %}<a href="{% url posts_by_tag %}?tag={{ tag }}" rel="tag">{{ tag }}</a> {% endfor %}
     {% with post.approved_comments.count as comment_count %}
         {% if comment_count %}
-<p><strong>Comments:</strong>  {{ comment_count }}</p>
+    | {{ comment_count }} comment{{ comment_count|pluralize }}
         {% endif %}
     {% endwith %}
 </div>

@@ -3,8 +3,13 @@ from django.contrib.flatpages.models import FlatPage
 from django.contrib.sites.models import Site
 from blog.posts.models import Post
 
-def preview_length(request):
-    return { 'preview_length': settings.POST_PREVIEW_LENGTH }
+def blog_info(request):
+    return { 
+        'blog_tagline': settings.BLOG_TAGLINE,
+        'blog_title': settings.BLOG_TITLE,
+        'blog_copyright': settings.BLOG_COPYRIGHT,
+        'preview_length': settings.POST_PREVIEW_LENGTH
+    }
 
 def base_url(request):
     current_site = Site.objects.get(id=settings.SITE_ID)

@@ -1,8 +1,14 @@
 {% if flatpages.count %}
-    <h3>Pages</h3>
-    <ul class="menu">
+<div class="pages-list">
+    <ul>
     {% for page in flatpages %}
-        <li><a href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a></li>
+        <li>
+            <a href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a>
+        {% if not forloop.last %}
+            |
+        {% endif %}
+        </li>
     {% endfor %}
     </ul>
+</div>
 {% endif %}

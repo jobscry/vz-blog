@@ -5,7 +5,7 @@
 @import url(pygments.css);
 
 body{
-	
+	background: url(images/blue-header.png) repeat-x;
 }
 
 a{
@@ -15,52 +15,88 @@ a{
 #container{
 	padding-left: 1em;
 	padding-right: 1em;
-	color: #151417;
+    color: #2D2D29;
 }
 
 #header{
-	/**border-bottom: dotted #151417 1px;**/
-    border-bottom: dotted #151417 1px;
+    margin-top: 0;
 }
-#primary, #secondary{
-	/**border-bottom: dotted #151417 1px;
-	border-right: dotted #151417 1px;**/
-	padding-right: 1.5em;
+#header h1, #header div.pages-list{
+    margin-top: 0.25em;
 }
-#secondary, #tertiary {
-    padding-top: 0;
+#header h1 a{
+    color: #FFFFFF;
+    font-size: 2em;
+    padding: 0;
 }
-#tertiary{	
-	margin-right: -2em;
+#header p.tagline{
+    padding: 1em;
+    font-size: 1.5em;
+    font-style: italic;
+    margin-bottom: 1em;
 }
-#secondary ul.menu, #tertiary ul.menu{
+#header div.pages-list{
+    float: right;
+}
+#header div.pages-list ul{
+    list-style: none;
+    margin-top: .6em;
+}
+#header div.pages-list ul li{
+    display: inline;
+    padding: 0 .05em 0 .05em;
+}
+#header div.pages-list ul li a{
+    color: #2D2D29;
+    font-size: 1.25em;
+    font-weight: bold;
+    padding: .5em;
+}
+#header div.pages-list ul li a:hover{
+    color: #FFFFFF;;
+}
+
+#secondary ul.menu{
 	list-style: none;
 	margin-left: 1em;
 	margin-bottom: 1em;
 }
 #footer{
 	background: #FFFFFF;
-	border-top: dotted #151417 1px;
+	border-top: solid #DFECE6 1px;
 	margin-top: -.5em;
 }
-#header a, #primary a, #secondary a, #tertiary a, #footer a{
-	color: #3F5D4C;	
+#footer img {
+    vertical-align: middle;
 }
-#header a:hover, #primary a:hover, #secondary a:hover, #tertiary a:hover, #footer a:hover{
+#primary a, #secondary a,#footer a{
+	color: #215A6D;	
+}
+#header a:hover, #primary a:hover, #secondary a:hover, #footer a:hover{
 	color: #BD314D
 }
-div.info p{
-	margin-bottom: .5em;
-	padding-bottom: .25em;
-}
 div.post{
-    /**border-bottom: dotted #151417 1px;**/
-	margin-right: -1.25em;
-	padding-right: 1.25em;
+
+}
+div.page h2, div.post h2{
+    font-size: 2em;
+}
+div.page h2{
+    margin-top: 0;
+}
+div.post h2{
+    display:inline; 
+}
+div.post p.date{
+    color: #92C7A3;
+    display:inline;
+    font-style: italic;
+}
+div.meta {
+    border-top: solid #DFECE6 .05em;
 }
 ul.errorlist{
     background: #FFD1D1;
-    /**border: dotted #FF0000 1px;**/
     font-weight: bold;
     margin-left: 0;
     padding-left: 2em;
@@ -68,9 +104,6 @@ ul.errorlist{
 ul.errorlist li{
     padding: .5em 0 .5em 0;
     margin: 0;
-}
-#secondary div.content div, #tertiary div.content div{
-    /**border-bottom: dotted #151417 1px;**/
 }
 #tertiary div.content div{
     margin-bottom: 1em;

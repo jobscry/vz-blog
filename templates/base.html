@@ -6,12 +6,17 @@
         <link rel="alternate" type="application/rss+xml" title="Latest Posts" href="{{ base_url }}{% url django.contrib.syndication.views.feed url="latest" %}">
 		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/production.default.css">
 		<!--[if IE]><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.ie.css"><![endif]-->
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript">google.load("jquery", "1.2.6");</script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/production.js"></script>
 	</head>
-	<body class="l7 normal equal">
+	<body class="l1 equal">
 		<div id="container">
 			<div id="header">			
 				<div class="content">				
-					<h1><a href="{% url posts_list %}" title="posts list">Blog</a></h1>
+					{% include "flatpages/list.html" %}
+					<h1><a href="/" title="{{ blog_title }}">{{ blog_title }}</a></h1>
+					<p class="tagline"><span class="dquo">&#8220;</span>{{ blog_tagline }}&#8221;</p>
 				</div>
 			</div>
 			<div id="primary">
@@ -19,33 +24,21 @@
 					{% block main-content %}{% endblock %}
 				</div>
 			</div>
-			<div id="secondary">			
-				<div class="content"></div>
-			</div>
-			<div id="tertiary">
+			<div id="secondary">
 				<div class="content">
-					<div id="flatpages">
-					    {% include "flatpages/list.html" %}
-					</div>
 					<div id="user-menu">
-					    <h3>Options</h3>
 					    {% include "user-menu.html" %}
 					</div>
 					<div id="posts-user-menu">
-					    <h3>Posts</h3>
     					{% include "posts-user-menu.html" %}
     				</div>
     				<div id="tags">
-					    <h3>Tags</h3>
     				    {% include "post-tags.html" %}
     				</div>
 					<div id="linkroll">
 					    {% include "linkroll.html" %}
 					</div>
 					{% block menus %}{% endblock %}
-                    <a href="http://www.djangoproject.com/">
-                        <img src="{{ MEDIA_URL }}/images/djangosite80x15.gif" border="0" alt="A Django site." title="A Django site.">
-                        </a>
 				</div>
 			</div>
 			<div id="footer">
@@ -53,14 +46,15 @@
 					<p>
 					    <small>
 					        <a href="http://github.com/jobscry/vz-blog/tree/master" title="git repository">vz-blog</a>
-					         <em>beta</em>
+					         <em>beta</em> | <a href="http://validator.w3.org/check?uri=referer">valid HTML</a>
+    
 					    </small>
+                        <a href="http://www.djangoproject.com/">
+                            <img src="{{ MEDIA_URL }}/images/djangosite80x15.gif" alt="A Django site." title="A Django site.">
+                            </a>
 					</p>
 				</div>
 			</div>
 		</div>
 	</body>
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript">google.load("jquery", "1.2.6");</script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/production.js"></script>
 </html>

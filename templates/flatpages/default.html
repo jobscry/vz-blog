@@ -3,7 +3,9 @@
 {% block page-title %} :: {{ flatpage.title }}{% endblock %}
 
 {% block main-content %}
-	{% load markup %}
-	<h2>{{ flatpage.title }}</h2>
-    {{ flatpage.content }}
+	{% load markup post_extras %}
+	<div class="page">
+    	<h2>{{ flatpage.title }}</h2>
+        {{ flatpage.content|markdown:"codehilite"|safe }}
+    </div>
 {% endblock %}

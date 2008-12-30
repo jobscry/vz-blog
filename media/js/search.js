@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#submit-button').parent().hide();
-    var wait
+    var wait;
     $('#id_search_string').keyup(
         function(){
             clearTimeout(wait);
@@ -21,5 +21,5 @@ function getPosts(){
                 $('ul.results').append('<li><a href="/posts/'+post.fields.slug+'">'+post.fields.title+'</a>, '+prettyDate(post.fields.published_on)+'</li>');
             });
         }
-    })
+    });
 }
