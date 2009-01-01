@@ -146,7 +146,7 @@ class MarkItUpWidget(forms.Textarea):
         }
 
 class PostAdminForm(forms.ModelForm):
-    raw_body = forms.CharField(widget=MarkItUpWidget())
+    body = forms.CharField(widget=MarkItUpWidget())
 
     class Meta:
         model = Post
