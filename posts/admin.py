@@ -45,6 +45,12 @@ class PostAdmin(admin.ModelAdmin):
         obj.author = request.user
         obj.save()
 
+    class Media:
+        css = {
+            "all": ('js/markitup/skins/markitup/style.css', 'js/markitup/sets/markdown/style.css')
+        }
+        js = ('js/jquery.js', 'js/markitup/jquery.markitup.js', 'js/markitup/sets/markdown/set.js', 'js/markitup.js')
+
 class CommentAdmin(BatchModelAdmin):
     list_display = ('author_name', 'author_email', 'author_url', 'is_approved', 'is_spam', 'added_on', )
     list_filter = ('awaiting_moderation', 'is_approved', 'is_spam', 'author_name')
