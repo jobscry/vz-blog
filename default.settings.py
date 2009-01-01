@@ -105,7 +105,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'blog.utils.context_processors.base_url',
     'blog.utils.context_processors.flatpage_list',
-    'blog.utils.context_processors.preview_length',
+    'blog.utils.context_processors.blog_info',
 )
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/logout/'
@@ -128,7 +128,7 @@ CACHE_MIDDLEWARE_SECONDS = 60 * 15
 
 AKISMET_API_KEY = ''
 BLOG_TITLE = 'test blog'
-BLOG_DESCRIPTION = 'my thoughts and other miscellany'
+BLOG_TAGLINE = 'my thoughts and other miscellany'
 BLOG_COPYRIGHT = ''
 MAX_COMMENT_DAYS = 60
 POSTS_PER_PAGE = 3
