@@ -9,7 +9,7 @@ from django.conf import settings
 from django.http import Http404
 from django.utils.encoding import force_unicode
 from django.utils.hashcompat import sha_constructor
-from blog.posts.models import Comment
+from blog.posts.models import Post, Comment
 
 COMMENT_MAX_LENGTH = getattr(settings,'COMMENT_MAX_LENGTH', 3000)
 
@@ -129,3 +129,24 @@ class CommentForm(ModelForm):
             'awaiting_moderation',
             'added_on'
         )
+
+class MarkItUpWidget(forms.Textarea):
+    class Media:
+        js = (
+            'js/jquery.js',
+            'js/markitup/jquery.markitup.js',
+            'js/markitup/sets/markdown/set.js',
+            'js/markitup.js',
+        )
+        css = {
+            'screen': (
+                'js/markitup/skins/simple/style.css',
+                'js/markitup/sets/markdown/style.css',
+            )
+        }
+
+class PostAdminForm(forms.ModelForm):
+    raw_body = forms.CharField(widget=MarkItUpWidget())
+
+    class Meta:
+        model = Post

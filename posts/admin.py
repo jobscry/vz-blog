@@ -1,8 +1,10 @@
 from django.contrib import admin
 from batchadmin.admin import BatchModelAdmin, CHECKBOX_NAME
 from models import Post, Comment
+from forms import PostAdminForm
 
 class PostAdmin(admin.ModelAdmin):
+    form = PostAdminForm
     list_display = ('title', 'author', 'is_published', 'comment_status', 'num_moderation_comments', 'num_comments', 'num_spam_comments', 'published_on', 'created_on')
     prepopulated_fields = {"slug": ("title",)}
     list_filter = ('author', 'is_published')
@@ -13,7 +15,6 @@ class PostAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-             'classes': ('wide', ),
             'fields': ('title', 'slug', 'tags', 'body')
         }),
         ('Comment Options', {
@@ -44,12 +45,6 @@ class PostAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.author = request.user
         obj.save()
-
-    class Media:
-        css = {
-            "all": ('js/markitup/skins/markitup/style.css', 'js/markitup/sets/markdown/style.css')
-        }
-        js = ('js/jquery.js', 'js/markitup/jquery.markitup.js', 'js/markitup/sets/markdown/set.js', 'js/markitup.js')
 
 class CommentAdmin(BatchModelAdmin):
     list_display = ('author_name', 'author_email', 'author_url', 'is_approved', 'is_spam', 'added_on', )

@@ -1,1 +1,1 @@
-$(document).ready(function() { $("textarea").markItUp(); });
+$(document).ready(function() { $("textarea").markItUp(mySettings); });
