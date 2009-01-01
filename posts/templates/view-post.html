@@ -12,6 +12,9 @@
 
 {% block main-content %}
     {% load humanize %}
+    {% if not post.is_published %}
+    <h2>This post is not published yet.</h2>
+    {% endif %}
     {% include "individual-post.html" %}
     {% if related_posts %}
     <div id="related_posts" class="post">
