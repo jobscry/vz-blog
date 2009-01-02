@@ -18,7 +18,7 @@ class LatestPosts(Feed):
         return 'http://%s/posts/feed/latest/'%current_site.domain
 
     def description(self):
-        return settings.BLOG_DESCRIPTION
+        return settings.BLOG_TAGLINE
 
     def author_name(self):
         return settings.ADMINS[0][0]
