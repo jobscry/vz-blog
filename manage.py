@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import sys
-sys.path.append('/home/joe/projects/django/src-dev')
 from django.core.management import execute_manager
 try:
     import settings # Assumed to be in the same directory.
