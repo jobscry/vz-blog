@@ -52,7 +52,7 @@ class Comment(models.Model):
             ak = _get_ak()
             if ak.verify_key():
                 data = _build_comment_data(self)
-                ak.submit_spam(smart_unicode(instance.body), data=data, build_data=True)
+                ak.submit_spam(smart_unicode(self.body), data=data, build_data=True)
 
         self.is_approved = False
         self.awaiting_moderation = False

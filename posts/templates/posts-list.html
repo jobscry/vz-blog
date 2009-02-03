@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 
-{% block main-content %}
-    {% load markup %}
-    {% with "1" as do_truncate %}
-        {% for post in post_list %}
-            {% include "individual-post.html" %}
-        {% endfor %}
-    {% endwith %}
+{% block main_content %}
+    {% set do_truncate = 1 %}
+    {% for post in post_list %}
+        {% include "individual-post.html" %}
+    {% endfor %}
     {% include "post-list-pagination.html" %}
 {% endblock %}

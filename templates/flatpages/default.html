@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
-{% block page-title %} :: {{ flatpage.title }}{% endblock %}
+{% block page_title %} :: {{ flatpage.title }}{% endblock %}
 
-{% block main-content %}
-	{% load markup post_extras %}
+{% block main_content %}
 	<div class="page">
     	<h2>{{ flatpage.title }}</h2>
-        {{ flatpage.content|markdown:"codehilite"|safe }}
+        {{ flatpage.content|markdown("codehilite")|safe }}
     </div>
 {% endblock %}

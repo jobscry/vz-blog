@@ -13,7 +13,7 @@ class Profile(models.Model):
 
 	@models.permalink
 	def get_absolute_url(self):
-		return ('posts.users.view_profile', [self.user.username])
+		return ('view_profile', [self.user.username])
 
 def auto_create_profile(sender, created, instance, **kwargs):
 	"""

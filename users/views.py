@@ -1,11 +1,11 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_list_or_404, get_object_or_404
-from django.views.generic.list_detail import object_detail
-from django.template import RequestContext
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect, HttpResponseForbidden
+from django.shortcuts import get_list_or_404, get_object_or_404
 from models import Profile
-from forms import UserForm
+from forms import UserForm, LoginForm
+from utils import render_to_response
 
 def view_profile(request, username):
 	if username is None:	
@@ -20,7 +20,7 @@ def view_profile(request, username):
 			'this_user': user,
 			'this_profile': user.get_profile(),
 		},
-		context_instance=RequestContext(request)
+		request
 	)
 
 @login_required
@@ -45,5 +45,30 @@ def edit_profile(request, username):
 			'this_user': user,
 			'this_user_form': this_user_form,
 		},
-		context_instance=RequestContext(request)
+		request
 	)
+
+def login(request):
+    from django.contrib.auth import authenticate, login
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+                else:
+                    return HttpResponseForbidden('Your account is disabled')
+            else:
+                return HttpResponseForbidden('User does not exist')
+    else:
+        form = LoginForm()
+    
+    return render_to_response(
+        'login.html',
+        { 'form': form },
+        request
+    )

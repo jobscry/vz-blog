@@ -1,25 +1,18 @@
 {% extends "base.html" %}
 
-{% block page-title %} :: Search{{ year }}{% endblock %}
+{% block page_title %} :: Search{{ year }}{% endblock %}
 
-{% block extra-javascript %}
-
-{% endblock %}
-
-{% block main-content %}
-
-{% load markup %}
+{% block main_content %}
 <h2>Search</h2>
-<form method="get" action="{% url search_posts %}">
-{{ form.as_p }}
+<form method="get" action="{{ "search_posts"|url }}">
+{{ form.as_p()|safe }}
 <p><input id="submit-button" type="submit" value="Go" /></p>
 </form>
 <div id="search-results">
 {% if search_string %}
-<p>Found {{ posts.count }} post{{ posts.count|pluralize }} with <em>{{ search_string }}</em>.</p>
-{% with posts as posts_list %}
+<p>Found {{ posts.count() }} post{{ posts.count|makeplural }} with <em>{{ search_string }}</em>.</p>
+{% set posts_list = posts %}
     {% include "ul-posts.html" %}
-{% endwith %}
 {% endif %}
 </div>
 {% endblock %}

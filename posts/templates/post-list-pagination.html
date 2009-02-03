@@ -1,24 +1,24 @@
-{% if page_obj.has_other_pages %}
+{% if page_obj.has_other_pages() %}
 <ul class="paginator">
     <li><strong>Pages:</strong></li>
-    {% ifnotequal page_obj.number "1" %}
-    <li><a href="{% url posts_list_page "1" %}" title="first page">First</a></li>
-    {% endifnotequal %}
-    {% if page_obj.has_previous %}
-    <li><a href="{% url posts_list_page page_obj.previous_page_number %}" title="previous page">&lt;</a></li>
+    {% if page_obj.number != 1 %}
+    <li><a href="{{ "posts_list_page"|url }}" title="first page">First</a></li>
     {% endif %}
-    {% for page_number in paginator.page_range %}
-        {% ifequal page_obj.number page_number %}
+    {% if page_obj.has_previous() %}
+    <li><a href="{{ "posts_list_page"|url(page_obj.previous_page_number()) }}" title="previous page">&lt;</a></li>
+    {% endif %}
+    {% for page_number in paginator.page_range() %}
+        {% if page_obj.number() == page_number %}
     <li class="current-page">{{ page_number }}</li>
         {% else %}
-    <li><a href="{% url posts_list_page page_number %}" title="page {{ page_number }}">{{ page_number }}</a></li>
-        {% endifequal %}
+    <li><a href="{{ "posts_list_page"|url(page_number) }}" title="page {{ page_number }}">{{ page_number }}</a></li>
+        {% endif %}
     {% endfor %}
-    {% if page_obj.has_next %}
-    <li><a href="{% url posts_list_page page_obj.next_page_number %}" title="next page">&gt;</a></li>
+    {% if page_obj.has_next() %}
+    <li><a href="{{ "posts_list_page"|url(page_obj.next_page_number) }}" title="next page">&gt;</a></li>
     {% endif %}
-    {% ifnotequal page_obj.number paginator.num_pages %}
-    <li><a href="{% url posts_list_page paginator.num_pages %}" title="last page">Last</a></li>
-    {% endifnotequal %}
+    {% if page_obj.number() != paginator.num_pages() %}
+    <li><a href="{{ "posts_list_page"|url(paginator.num_pages) }}" title="last page">Last</a></li>
+    {% endif %}
 </ul>
 {% endif %}

@@ -1,27 +1,18 @@
 {% extends "base.html" %}
 
-{% block page-title %} :: Posts :: {{ post.title }}{% endblock %}
+{% block page_title %} :: Posts :: {{ post.title }}{% endblock %}
 
-{% block extra-javascript %}
-
-{% endblock %}
-
-{% block user-menu %}
-
-{% endblock %}
-
-{% block main-content %}
-    {% load humanize %}
+{% block main_content %}
     {% if not post.is_published %}
     <h2>This post is not published yet.</h2>
     {% endif %}
     {% include "individual-post.html" %}
     {% if related_posts %}
     <div id="related_posts" class="post">
-        <h3>{{ related_posts|length|apnumber|title }} Related Post{{ related_posts|length|pluralize }}</h3>
+        <h3>{{ related_posts|length|apnumber|title }} Related Post{{ related_posts|length|makeplural }}</h3>
         <ul>
         {% for related_post in related_posts %}
-            <li><a href="{{ related_post.get_absolute_url }}" title="{{ related_post.title }}">{{ related_post.title }}</a> - {{ related_post.published_on|naturalday }}</li>
+            <li><a href="{{ related_post.get_absolute_url() }}" title="{{ related_post.title }}">{{ related_post.title }}</a> - {{ related_post.published_on|naturalday }}</li>
         {% endfor %}
         </ul>
     </div>
@@ -29,23 +20,19 @@
     <div id="comments" class="post">
     <h3>Comments</h3>
     {% if post.can_comment %}
-        <div id="comment-form">
-        {% include "comments/form.html" %}
-        </div>
+    <p><a href="{{ "comment"|url(post.slug)}}" title="post a comment">Post a comment.</a></p>
     {% else %}
-        <p>Comments are closed for this post.</p>
+    <p>Comments are closed for this post.</p>
     {% endif %}
     {% if perms.comment.can_change %}
-        {% if post.moderation_queue.count %}
-        <h4>{{ post.moderation_queue.count }} Comment{{ post.moderation_queue.count|pluralize }} Awaiting Moderation</h4>
-            {% with post.moderation_queue.all as comments %}
-                {% include "comments/comment.html" %}
-            {% endwith %}
+        {% if post.moderation_queue().count() %}
+        <h4>{{ post.moderation_queue().count() }} Comment{{ post.moderation_queue().count()|makeplural }} Awaiting Moderation</h4>
+            {% set comments = post.moderation_queue() %}
+            {% include "view-comments.html" %}
             <h4>Approved Comments</h4>
         {% endif %}
     {% endif %}
-    {% with post.approved_comments.all as comments %}
-        {% include "comments/comment.html" %}
-    {% endwith %}
+    {% set comments = post.approved_comments() %}
+    {% include "view-comments.html" %}
     </div>
 {% endblock %}

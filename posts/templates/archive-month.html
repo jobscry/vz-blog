@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block page-title %} :: Archive :: {{ month.year }} :: {{ month|date:"F" }}{% endblock %}
+{% block page_title %} :: Archive :: {{ month.year }} :: {{ month.strftime('%B') }}{% endblock %}
 
-{% block main-content %}
+{% block main_content %}
 
 <h2>
-	<a href="{% url archive_index %}" title="back to archive">Archive</a>
-	&gt; <a href="{% url archive_year month.year %}" title="back to archive for {{ month.year }}">{{ month.year }}</a>
-	&gt; {{ month|date:"F" }}
+	<a href="{{ "archive_index"|url }}" title="back to archive">Archive</a>
+	&gt; <a href="{{ "archive_year"|url(month.year) }}" title="back to archive for {{ month.year }}">{{ month.year }}</a>
+	&gt; {{ month.strftime('%B') }}
 </h2>
 {% include "ul-posts.html" %}
 {% endblock %}

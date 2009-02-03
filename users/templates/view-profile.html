@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block main-content %}
-	{% ifequal request.user this_user %}
+{% block main_content %}
+	{% if user == this_user %}
 <h2>My Profile</h2>
 	{% else %}
 <h2>{{ this_user }}'s Profile</h2>
-	{% endifequal %}
-	{% ifequal request.user this_user %}
-<p><a href="{% url edit_profile this_user.username %}" title="edit my profile">Edit My Profile</a></p>
+	{% endif %}
+	{% if user == this_user %}
+<p><a href="{{ "edit_profile"|url(this_user.username) }}" title="edit my profile">Edit My Profile</a></p>
 	{% else %}
 		{% if perms.users.can_change %}
-<p><a href="{% url edit_profile this_user.username %}" title="edit profile">Edit Profile</a></p>
+<p><a href="{{ "edit_profile"|url(this_user.username) }}" title="edit profile">Edit Profile</a></p>
 		{% endif %}
-	{% endifequal %}
+	{% endif %}
 <dl>
 <dt>Username</dt>
 <dd>{{ this_user.username }}</dd>

@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block page-title %} :: Archive :: {{ year }}{% endblock %}
+{% block page_title %} :: Archive :: {{ year }}{% endblock %}
 
-{% block main-content %}
+{% block main_content %}
 <h2>
-	<a href="{% url archive_index %}" title="back to archive">Archive</a>
+	<a href="{{ "archive_index"|url }}" title="back to archive">Archive</a>
 	&gt; {{ year }}
 </h2>
 <ul>
     {% for month in date_list %}
-	<li><a href="{% url archive_month month.year, month.month %}" title="archive for {{ month|date:"F" }} {{ month.year }}">{{ month|date:"F" }}</a></li>
+	<li><a href="{{ "archive_month"|url(year=month.year, month=month.month) }}" title="archive for {{ month.strftime('%B') }} {{ month.year }}">{{ month.strftime('%B') }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
