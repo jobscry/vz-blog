@@ -1,4 +1,6 @@
 #!/usr/bin/python
+#http://www.freewisdom.org/projects/python-markdown/CodeHilite
+
 import markdown
 
 # --------------- CONSTANTS YOU MIGHT WANT TO MODIFY -----------------
