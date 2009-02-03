@@ -1,10 +1,8 @@
-{% extends "base.html" %}
-
-{% block main-content %}
+{% block main_content %}
 
 <h2>Oh Snap!</h2>
 
 <p>I couldn't find <em>{{ request_path }}</em>.</p>
-<p>Try <a href="{{ "search_posts"|url }}" title="search">searching</a> for it.</p>
+<p>Try <a href="{% url search_posts %}" title="search">searching</a> for it.</p>
 
 {% endblock %}
