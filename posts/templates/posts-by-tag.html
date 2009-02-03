@@ -16,7 +16,7 @@
 </p>
 
     {% if tag %}
-<h3>{{ posts.count()|apnumber }} post{{ posts.count()|makeplural }} tagged <em>{{ tag }}</em></h3>
+<h3>{{ posts_list.count()|apnumber }} post{{ posts_list.count()|makeplural }} tagged <em>{{ tag }}</em></h3>
     {% include "ul-posts.html" %}
     {% endif %}
 {% endblock %}
