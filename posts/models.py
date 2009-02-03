@@ -137,7 +137,10 @@ def auto_pingback(sender, instance, created, **kwargs):
         
         current_site = Site.objects.get(id=settings.SITE_ID)
         html = markdown.markdown(force_unicode(instance.body))
-        pingback.autoPingback('http://%s'%current_site.domain, reST=None, HTML=html)
+        try:
+            pingback.autoPingback('http://%s'%current_site.domain, reST=None, HTML=html)
+        except Fault:
+            pass
 
 post_save.connect(auto_pingback, sender=Post)
 
