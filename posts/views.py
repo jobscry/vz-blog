@@ -40,6 +40,7 @@ def posts_by_tag(request):
         'posts-by-tag.html',
         {
             'tag': tag,
+            'post_tags': Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution='linear'),
             'posts': posts,
         },
         request

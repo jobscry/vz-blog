@@ -35,6 +35,9 @@ def get_env():
     from posts.templatetags.post_extras import markdown
     env.filters['markdown'] = markdown
     
+    from tagging.templatetags.tagging_tags import do_tags_for_model
+    env.filters['tags_for_model'] = do_tags_for_model
+    
     env.filters['url'] = url
     
     return env

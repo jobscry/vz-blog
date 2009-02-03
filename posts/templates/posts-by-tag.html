@@ -1,27 +1,22 @@
 {% extends "base.html" %}
 
-{% block page-title %}
+{% block page_title %}
  :: Tags
     {% if tag %}
  :: {{ tag }}    
     {% endif %}
 {% endblock %}
 
-{% block main-content %}
-    {% load tagging_tags %}
+{% block main_content %}
 <h2>Tags</h2>
-    {% tag_cloud_for_model posts.post as post_tags with steps=10 min_count=1 distribution=linear %}
 <p>
     {% for post_tag in post_tags %}
-<a href="{% url posts_by_tag %}?tag={{ post_tag }}" rel="tag" class="tag_{{ post_tag.font_size }}">{{ post_tag }}</a> 
+<a href="{{ "posts_by_tag"|url }}?tag={{ post_tag }}" rel="tag" class="tag_{{ post_tag.font_size }}">{{ post_tag }} ({{ post_tag.count }})</a> 
     {% endfor %}
 </p>
 
     {% if tag %}
-        {% load humanize %}
-<h3>{{ posts.count|apnumber|title }} post{{ posts.count|pluralize }} tagged <em>{{ tag }}</em></h3>
-        {% with posts as posts_list %}
-            {% include "ul-posts.html" %}
-        {% endwith %}
+<h3>{{ posts.count()|apnumber }} post{{ posts.count()|makeplural }} tagged <em>{{ tag }}</em></h3>
+    {% include "ul-posts.html" %}
     {% endif %}
 {% endblock %}
