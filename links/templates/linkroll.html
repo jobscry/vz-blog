@@ -1,6 +1,6 @@
-{% if links %}
+{% if linkroll.count() > 0 %}
 <ul class="menu">
-    {% for link in links %}
+    {% for link in linkroll %}
     <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
     {% endfor %}
 </ul>

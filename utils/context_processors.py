@@ -2,13 +2,15 @@ from django.conf import settings
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.sites.models import Site
 from blog.posts.models import Post
+from blog.links.models import Link
 
 def blog_info(request):
     return { 
         'blog_tagline': settings.BLOG_TAGLINE,
         'blog_title': settings.BLOG_TITLE,
         'blog_copyright': settings.BLOG_COPYRIGHT,
-        'preview_length': settings.POST_PREVIEW_LENGTH
+        'preview_length': settings.POST_PREVIEW_LENGTH,
+        'linkroll': Link.objects.all(),
     }
 
 def base_url(request):
