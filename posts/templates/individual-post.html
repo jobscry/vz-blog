@@ -10,7 +10,7 @@
         {% endif %}
 </div>
     {% if do_truncate %}
-        {{ post.body|markdown("codehilite")|truncatewords_html(preview_length)|safe }}
+        {{ post.body|markdown("codehilite")|truncatewords_html(blog_preview_length)|safe }}
     {% else %}
         {{ post.body|markdown("codehilite")|safe }}
     {% endif %}
