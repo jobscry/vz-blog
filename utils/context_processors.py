@@ -10,6 +10,7 @@ def blog_info(request):
         'blog_tagline': settings.BLOG_TAGLINE,
         'blog_title': settings.BLOG_TITLE,
         'blog_copyright': settings.BLOG_COPYRIGHT,
+        'blog_copyright_url': settings.BLOG_COPYRIGHT_URL,
         'blog_preview_length': settings.POST_PREVIEW_LENGTH,
         'blog_linkroll': Link.objects.all(),
         'blog_tags': Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution='logarithmic'),
