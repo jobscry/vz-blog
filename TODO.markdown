@@ -5,4 +5,4 @@
 1. __bug__ Jinja2 not used when 404/500 is rendered...grrr, temporary fix in place.  Don't like it.
 2. __bug__ Must re-add Javascript to pages, "fell off" when I added Jinja2
 3. <del>re-add linkroll</del>
-4. re-add tags list
+4. <del>re-add tags list</del>
