@@ -8,6 +8,7 @@ from django.template import RequestContext
 from django.views.generic.list_detail import object_list
 from django.views.generic.date_based import archive_index, archive_year, archive_month
 from tagging.models import Tag, TaggedItem
+from tagging.utils import LINEAR
 from utils import render_to_response
 from models import Post, Comment
 from forms import SearchForm, CommentForm
@@ -40,7 +41,7 @@ def posts_by_tag(request):
         'posts-by-tag.html',
         {
             'tag': tag,
-            'post_tags': Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution='linear'),
+            'post_tags': Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution=LINEAR),
             'posts_list': posts,
         },
         request
