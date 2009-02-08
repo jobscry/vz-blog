@@ -77,6 +77,9 @@ ROOT_URLCONF = 'blog.urls'
 
 TEMPLATE_DIRS = (
 	os.path.join(PROJECT_DIR, 'templates'),
+	os.path.join(PROJECT_DIR, 'posts', 'templates'),
+	os.path.join(PROJECT_DIR, 'users', 'templates'),
+	os.path.join(PROJECT_DIR, 'links', 'templates'),
 )
 
 INSTALLED_APPS = (

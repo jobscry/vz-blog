@@ -1,13 +1,7 @@
-{% load tagging_tags %}
-{% tags_for_model links.link as linktags %}
-{% for linktag in linktags %}
-<h3>{{ linktag|title }}</h3>
-    {% tagged_objects linktag in links.link as links %}
-    {% if links %}
+{% if links %}
 <ul class="menu">
-        {% for link in links %}
+    {% for link in links %}
     <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
-        {% endfor %}
+    {% endfor %}
 </ul>
-    {% endif %}
-{% endfor %}
+{% endif %}
