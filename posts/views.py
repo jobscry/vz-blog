@@ -177,10 +177,47 @@ def comment(request, slug):
             comment.author_user_agent = request.META.get('HTTP_USER_AGENT', '')
             comment.author_refferrer = request.META.get('HTTP_REFERER', '')
             comment.save()
+            
+            from django.core.mail import send_mail
+
+            current_site = Site.objects.get(id=settings.SITE_ID)
             post.comments.add(comment)
-            if request.user.is_authenticated():
-                comment.user = request.user
-                comment.mark_approved()
+            if settings.BLOG_NOTIFY_ON_COMMENT:
+                if request.user.is_authenticated():
+                    comment.user = request.user
+                    comment.mark_approved()
+                    send_mail(
+                        u'[%s :: registered user comment]'%settings.BLOG_TITLE,
+                        u'A comment has been made by %s <%s> on %s.\n\r  See it at http://%s%s#c%s'%(
+                            request.user.username,
+                            request.user.email,
+                            post.title,
+                            current_site.domain,
+                            post.get_absolute_url(),
+                            comment.pk
+                        ),
+                        settings.EMAIL_HOST_USER,
+                        (post.author.email, ),
+                        fail_silently=True
+                    )
+            else:
+                if settings.BLOG_NOTIFY_ON_COMMENT:
+                    send_mail(
+                        u'[%s :: comment awaiting moderation]'%settings.BLOG_TITLE,
+                        u'A comment has been made by %s <%s> from %s on %s.\n\r  Moderate it at http://%s%s#c%s'%(
+                            comment.author_name,
+                            comment.author_email,
+                            comment.author_ip,
+                            post.title,
+                            current_site.domain,
+                            post.get_absolute_url(),
+                            comment.pk
+                        ),
+                        settings.EMAIL_HOST_USER,
+                        (post.author.email, ),
+                        fail_silently=True
+                    )
+                
             return render_to_response(
                 'comment-submitted.html',
                 {
