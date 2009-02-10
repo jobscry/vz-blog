@@ -2,6 +2,11 @@
 
 {% block page_title %} :: Search{{ year }}{% endblock %}
 
+{% block javascript %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/prettydate.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/search.js"></script>
+{% endblock %}
+
 {% block main_content %}
 <h2>Search</h2>
 <form method="get" action="{{ "search_posts"|url }}">
