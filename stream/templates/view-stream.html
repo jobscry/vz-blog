@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block page_title %} :: Stream{% endblock %}
+
+{% block main_content %}
+
+<h2>Stream</h2>
+
+{% for entry in entries %}
+<h3>{{ entry.feed.title }}</h3>
+<p>{{ entry.body|safe }}</p>
+{% endfor %}
+
+{% endblock %}

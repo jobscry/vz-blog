@@ -22,4 +22,3 @@ urlpatterns += patterns('posts.views',
 	url(r'(?P<slug>[\w\-]+)/$', 'view_post', name="view_post"),
     url(r'$', 'posts_list', { 'page_num': 1, }, name="posts_list"),
 )
-
