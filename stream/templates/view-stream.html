@@ -7,8 +7,7 @@
 <h2>Stream</h2>
 
 {% for entry in entries %}
-<h3>{{ entry.feed.title }}</h3>
-<p>{{ entry.body|safe }}</p>
+<p><a href="{{ entry.link }}">{{ entry.title|safe }}</a> - {{ entry.feed.title }}</p>
 {% endfor %}
 
 {% endblock %}

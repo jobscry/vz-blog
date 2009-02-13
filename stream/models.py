@@ -1,9 +1,11 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 import datetime, time
 from utils import feedparser
 from django.utils.encoding import DjangoUnicodeDecodeError, smart_str
-      
+
+user_agent = 'vz-blog/%s +%s'%(settings.BLOG_CODE_VERSION, settings.BLOG_CODE_URL)
 
 class RssFeed(models.Model):
     title = models.CharField(max_length=255)
@@ -12,6 +14,7 @@ class RssFeed(models.Model):
     etag = models.CharField(max_length=255, default='', blank=True)
     modified = models.DateTimeField(blank=True, null=True)
     last_status = models.CharField(max_length=25, default='N/A')
+    last_debug = models.TextField(default='none')
     escape_html = models.BooleanField(default=False)
     added_on = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
@@ -23,51 +26,56 @@ class RssFeed(models.Model):
         return '%s: %s'%(self.title, self.url)
 
     def update_entries(self, stream):
-        if self.etag == '' and self.modified == None:
-            data = feedparser.parse(self.url)
-        elif self.etag != '':
-            data = feedparser.parse(self.url, etag=self.etag)
-        else:
+        if self.etag != '':
+            data = feedparser.parse(self.url, etag=self.etag, agent=user_agent)
+        elif self.modified != None:
             d = self.modified
-            t_tuple = time.mktime( (d.year, d.month, d.day, d.hour, d.minute, d.second, d.weekday(),  d.toordinal() - datetime.date(d.year, 1, 1).toordinal() + 1, 0) )
-            data = feedparser.parse(self.url, modified=t_tuple)
+            t_tuple = (d.year, d.month, d.day, d.hour, d.minute, d.second, d.weekday(),  d.toordinal() - datetime.date(d.year, 1, 1).toordinal() + 1, 0)
+            data = feedparser.parse(self.url, modified=t_tuple, agent=user_agent)
+        else:
+            data = feedparser.parse(self.url, agent=user_agent)
 
-        if 'status' not in data.keys() or data.status != 200:
-            return
+        if data.bozo == 1:
+             self.debug_message = 'bozo detected'
+             self.save()
+             return
+
+        if data.has_key('debug_message'):
+            self.last_debug = data.debug_message
+            self.save()
 
         self.last_status = data.status
         self.times_updated = self.times_updated+1
         
-        if data.etag:
-            loc = data.etag.find('-')
-            if loc > -1:
-                self.etag = data.etag[:loc]
-            else:
-                self.etag = data.etag
-        elif data.modified:
+        if data.has_key('etag') and data.etag:
+            self.etag = data.etag
+        elif data.has_key('modified') and data.modified:
             self.modified = datetime.datetime(*data.modified[0:6])
 
         self.save()
 
+        try:
+            last_entry = self.entries().all()[0]
+        except IndexError:
+            last_entry = False
         for entry in data.entries:
-            try:
-                Entry.objects.create(
-                    stream=stream,
-                    feed=self,
-                    title=smart_str(entry.title),
-                    link=smart_str(entry.link),
-                    body=smart_str(entry.summary),
-                    published_on=datetime.datetime(
-                        entry.updated_parsed[0],
-                        entry.updated_parsed[1],
-                        entry.updated_parsed[2],
-                        entry.updated_parsed[3],
-                        entry.updated_parsed[4],
-                        entry.updated_parsed[5]
+            published_on = datetime.datetime(*entry.updated_parsed[0:6])
+            if last_entry is False or published_on > last_entry.published_on:
+                try:
+                    if entry.has_key('summary'):
+                        body = smart_str(entry.summary)
+                    else:
+                        body = smart_str(entry.content)
+                    Entry.objects.create(
+                        stream=stream,
+                        feed=self,
+                        title=smart_str(entry.title),
+                        link=smart_str(entry.link),
+                        body=body,
+                        published_on=published_on
                     )
-                )
-            except DjangoUnicodeDecodeError:
-                pass
+                except DjangoUnicodeDecodeError:
+                    pass
 
 class Stream(models.Model):
     user = models.ForeignKey(User)
