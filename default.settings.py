@@ -80,6 +80,7 @@ TEMPLATE_DIRS = (
 	os.path.join(PROJECT_DIR, 'posts', 'templates'),
 	os.path.join(PROJECT_DIR, 'users', 'templates'),
 	os.path.join(PROJECT_DIR, 'links', 'templates'),
+	os.path.join(PROJECT_DIR, 'stream', 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -99,6 +100,7 @@ INSTALLED_APPS = (
     'users',
 	'posts',
 	'links',
+	'stream',
 )
 
 AUTH_PROFILE_MODULE = 'users.profile'
@@ -134,6 +136,8 @@ BLOG_TITLE = 'test blog'
 BLOG_TAGLINE = 'my thoughts and other miscellany'
 BLOG_COPYRIGHT = ''
 BLOG_COPYRIGHT_URL = ''
+BLOG_CODE_VERSION = '0.1b'
+BLOG_CODE_URL = ''
 MAX_COMMENT_DAYS = 60
 POSTS_PER_PAGE = 3
 POST_PREVIEW_LENGTH = 200
