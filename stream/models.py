@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 import datetime, time
 from utils import feedparser
 from django.utils.encoding import DjangoUnicodeDecodeError, smart_str
+import re
 
+img_re = re.compile('^[^\.\s]+\.[jpg|png|gif|bmp]{3}$', re.IGNORECASE)
 user_agent = 'vz-blog/%s +%s'%(settings.BLOG_CODE_VERSION, settings.BLOG_CODE_URL)
 
 class RssFeed(models.Model):
@@ -62,16 +64,29 @@ class RssFeed(models.Model):
             published_on = datetime.datetime(*entry.updated_parsed[0:6])
             if last_entry is False or published_on > last_entry.published_on:
                 try:
-                    if entry.has_key('summary'):
-                        body = smart_str(entry.summary)
+                    if entry.has_key('guidislink') and entry.guidislink:
+                        link = smart_str(entry.guid)
                     else:
-                        body = smart_str(entry.content)
+                        link = smart_str(entry.link)
+
+                    title = smart_str(entry.title)
+                    is_img = False
+                    if img_re.match(title):
+                        if entry.has_key('summary'):
+                            name = title.split('.')
+                            pattern = u'src="(?P<url>http://.+%s\.[jpg|png|gif|bmp]{3})"'%name[0]
+                            img_file_re = re.compile(pattern, re.IGNORECASE)
+                            s = img_file_re.search(entry.summary)
+                            if s and s.group('url'):
+                                title = '<img src="%s" alt="%s">'%(s.group('url'), title)
+                                is_img = True
+
                     Entry.objects.create(
                         stream=stream,
                         feed=self,
-                        title=smart_str(entry.title),
-                        link=smart_str(entry.link),
-                        body=body,
+                        title=title,
+                        link=link,
+                        is_img=is_img,
                         published_on=published_on
                     )
                 except DjangoUnicodeDecodeError:
@@ -96,9 +111,9 @@ class Entry(models.Model):
         ordering = ['-published_on']
     stream = models.ForeignKey(Stream)
     feed = models.ForeignKey(RssFeed)
-    link = models.URLField()
+    link = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    body = models.TextField()
+    is_img = models.BooleanField(default=False)
     published_on = models.DateTimeField(blank=True, null=True)
     added_on = models.DateTimeField(auto_now_add=True)
 

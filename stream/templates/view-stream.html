@@ -6,8 +6,19 @@
 
 <h2>Stream</h2>
 
+{% set day = None %}
 {% for entry in entries %}
-<p><a href="{{ entry.link }}">{{ entry.title|safe }}</a> - {{ entry.feed.title }}</p>
+    {% if entry.published_on.day != day.day %}
+        {% set day = entry.published_on %}
+    <h3>{{ day|naturalday }}</h3>
+    {% endif %}
+    <p>
+    {% if entry.is_img %}
+    {{ entry.title|safe }}
+    {% else %}
+    <a href="{{ entry.link }}" alt="{{ entry.title }}">{{ entry.title }}</a>
+    {% endif %}
+    <br><em>{{ entry.feed.title }}</em></p>
 {% endfor %}
 
 {% endblock %}
