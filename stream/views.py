@@ -9,3 +9,10 @@ def view_stream(request, pk):
         { 'entries': get_list_or_404(Entry, stream=stream) },
         request
     )
+
+def update_feeds(pk=1):
+    try:
+        stream = Stream.objects.get(pk=pk)
+        stream.update_feeds()
+    except Stream.DoesNotExist:
+        pass
