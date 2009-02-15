@@ -1,7 +1,11 @@
 {% if blog_linkroll.count() > 0 %}
 <ul class="menu">
     {% for link in blog_linkroll %}
+        {% if link.extra %}
     <li><a href="{{ link.url }}" title="{{ link.title }}" {{ link.extra|safe }}>{{ link.title }}</a></li>
+        {% else %}
+    <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+        {% endif %}
     {% endfor %}
 </ul>
 {% endif %}
