@@ -19,7 +19,7 @@ Learning Python and Django.  This is one of my first attempts to *Dive into Pyth
 
 ## TODO
 
-* Lifestream
+* <del>Lifestream</del>
 * Setup Trackback server (for receiving)
 * File uploading
 * More cowbell
