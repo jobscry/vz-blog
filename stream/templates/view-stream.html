@@ -16,7 +16,7 @@
     {% if entry.is_img %}
     {{ entry.title|safe }}
     {% else %}
-    <a href="{{ entry.link }}" alt="{{ entry.title }}">{{ entry.title }}</a>
+    <a href="{{ entry.link }}" title="{{ entry.title }}">{{ entry.title }}</a>
     {% endif %}
     <br><em>{{ entry.feed.title }}</em></p>
 {% endfor %}
