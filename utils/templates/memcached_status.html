@@ -3,7 +3,7 @@
 {% block main_content %}
 
 <h2>cache status as of {{ time.strftime('%d %b %y @ %H:%M:%S') }}</h2>
-
+{# http://effbot.org/zone/django-memcached-view.htm #}
 <ul>
 <li>memory usage:
     {{ stats.bytes|filesizeformat }}
