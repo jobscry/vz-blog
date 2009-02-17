@@ -1,7 +1,6 @@
 #modified from http://effbot.org/zone/django-memcached-view.htm
 from django.http import Http404
 from django.conf import settings
-import render_to_response
 
 import datetime, re
 
@@ -14,14 +13,14 @@ def view(request):
 
     if not (request.user.is_authenticated() and
             request.user.is_staff):
-        raise http.Http404
+        raise Http404
 
     # get first memcached URI
     m = re.match(
         "memcached://([.\w]+:\d+)", settings.CACHE_BACKEND
     )
     if not m:
-        raise http.Http404
+        raise Http404
 
     host = memcache._Host(m.group(1))
     host.connect()
@@ -50,7 +49,7 @@ def view(request):
 
     host.close_socket()
 
-    return render_to_response(
+    return utils.render_to_response(
         'memcached_status.html',
         {
             'stats': stats,
