@@ -141,6 +141,7 @@ def posts_list(request, page_num):
         {
             'post_list':  page.object_list,
             'page_obj': page,
+            'paginator': paginator
         },
         request
     )
