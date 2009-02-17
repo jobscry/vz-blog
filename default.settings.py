@@ -81,6 +81,7 @@ TEMPLATE_DIRS = (
 	os.path.join(PROJECT_DIR, 'users', 'templates'),
 	os.path.join(PROJECT_DIR, 'links', 'templates'),
 	os.path.join(PROJECT_DIR, 'stream', 'templates'),
+	os.path.join(PROJECT_DIR, 'utils', 'templates'),
 )
 
 INSTALLED_APPS = (
