@@ -2,7 +2,7 @@
 
 {% block main_content %}
 
-<h2>cache status</h2>
+<h2>cache status as of {{ time }}</h2>
 
 <ul>
 <li>memory usage:
@@ -17,4 +17,5 @@
     {{ stats.bytes_written|filesizeformat }} out
 <li>uptime: {{ stats.uptime }}
 </ul>
+
 {% endblock %}
