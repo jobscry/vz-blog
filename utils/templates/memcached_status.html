@@ -2,7 +2,7 @@
 
 {% block main_content %}
 
-<h2>cache status as of {{ time|naturalday }}</h2>
+<h2>cache status as of {{ time.strftime('%d %b %y @ %H:%M:%S') }}</h2>
 
 <ul>
 <li>memory usage:
