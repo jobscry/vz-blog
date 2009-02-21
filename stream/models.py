@@ -4,10 +4,11 @@ from django.contrib.auth.models import User
 import datetime, time
 from utils import feedparser
 from django.utils.encoding import DjangoUnicodeDecodeError, smart_str
-import re
+import re, os
 
 img_re = re.compile('^[^\.\s]+\.[jpg|png|gif|bmp]{3}$', re.IGNORECASE)
 user_agent = 'vz-blog/%s +%s'%(settings.BLOG_CODE_VERSION, settings.BLOG_CODE_URL)
+stream_icon_path = os.path.join(settings.MEDIA_ROOT, 'images', 'stream')
 
 class RssFeed(models.Model):
     title = models.CharField(max_length=255)

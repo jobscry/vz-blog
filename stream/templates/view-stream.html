@@ -12,7 +12,7 @@
         {% set day = entry.published_on %}
     <h3>{{ day|naturalday }}</h3>
     {% endif %}
-    <p>
+    <p class="stream_{{ entry.feed.title|lower }}">
     {% if entry.is_img %}
     {{ entry.title|safe }}
     {% else %}

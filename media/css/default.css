@@ -155,3 +155,28 @@ div.content ul.paginator li.current-page{
     list-style: none;
     text-decoration: underline;
 }
+p.stream_twitter{
+    background: url(/media/images/stream/twitter.png) no-repeat 0px;
+    padding-left: 40px;
+    min-height: 40px;
+}
+p.stream_picasa{
+    background: url(/media/images/stream/google.png) no-repeat 0px;
+    padding-left: 40px;
+    min-height: 40px;
+}
+p.stream_delicious{
+    background: url(/media/images/stream/delicious.png) no-repeat 0px;
+    padding-left: 40px;
+    min-height: 40px;
+}
+p.stream_reddit{
+    background: url(/media/images/stream/rss.png) no-repeat 0px;
+    padding-left: 40px;
+    min-height: 40px;
+}
+p.stream_google{
+    background: url(/media/images/stream/google.png) no-repeat 0px;
+    padding-left: 40px;
+    min-height: 40px;
+}
