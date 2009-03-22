@@ -1,8 +1,4 @@
 <ul class="menu">
-<li><a href="{{ "view_stream"|url }}" title="stream">Stream</a></li>
-<li><a href="{{ "posts_list"|url }}" title="blog">Blog</a></li>
-</ul>
-<ul class="menu">
 {% if user.is_authenticated() %}
 <li><a href="{{ "logout"|url }}" title="logout">Logout</a></li>
 <li><a href="{{ "my_profile"|url }}" title="my profile">My Profile</a></li>
