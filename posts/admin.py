@@ -1,5 +1,5 @@
 from django.contrib import admin
-from batchadmin.admin import BatchModelAdmin, CHECKBOX_NAME
+#from batchadmin.admin import BatchModelAdmin, CHECKBOX_NAME
 from models import Post, Comment
 from forms import PostAdminForm
 
@@ -46,12 +46,23 @@ class PostAdmin(admin.ModelAdmin):
         obj.author = request.user
         obj.save()
 
-class CommentAdmin(BatchModelAdmin):
+def mark_list_as_spam(modeladmin, request, queryset):
+    queryset.update(is_spam=True)
+    self.message_user(request, "Marked SPAM")
+mark_list_as_spam.short_description = "Mark selected as SPAM"
+
+def approve_list(modeladmin, request, queryset):
+    queryset.update(is_approved=True)
+    self.message_user(request, "Approved")
+approve_list.short_description = "Approve selected"
+
+class CommentAdmin(admin.ModelAdmin):
     list_display = ('author_name', 'author_email', 'author_url', 'is_approved', 'is_spam', 'added_on', )
     list_filter = ('awaiting_moderation', 'is_approved', 'is_spam', 'author_name')
     search_fileds = [ 'author_name', 'author_email', 'author_url', 'body' ]
     date_hierarchy = 'added_on'
     save_on_top = True
+    actions = [mark_list_as_spam, approve_list]
     
     fieldsets = (
         (None, {
@@ -66,26 +77,6 @@ class CommentAdmin(BatchModelAdmin):
             'fields': ('awaiting_moderation', 'is_spam', 'is_approved')
         }),
     )
-
-    batch_actions = ['delete_selected', 'mark_list_as_spam', 'approve_list']
-
-    def mark_list_as_spam(self, request, changelist):
-        selected = request.POST.getlist(CHECKBOX_NAME)
-        objects = changelist.get_query_set().filter(pk__in=selected)
-        for obj in objects:
-            obj.mark_spam()
-        self.message_user(request, "Marked SPAM")
-
-    mark_list_as_spam.short_description = "Mark selected as SPAM"
-
-    def approve_list(self, request, changelist):
-        selected = request.POST.getlist(CHECKBOX_NAME)
-        objects = changelist.get_query_set().filter(pk__in=selected)
-        for obj in objects:
-            obj.mark_approved()
-        self.message_user(request, "Approved")
-
-    approve_list.short_description = "Approve selected"
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
