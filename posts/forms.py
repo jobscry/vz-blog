@@ -9,7 +9,7 @@ from django.conf import settings
 from django.http import Http404
 from django.utils.encoding import force_unicode
 from django.utils.hashcompat import sha_constructor
-from blog.posts.models import Post, Comment
+from posts.models import Post, Comment
 
 COMMENT_MAX_LENGTH = getattr(settings,'COMMENT_MAX_LENGTH', 3000)
 

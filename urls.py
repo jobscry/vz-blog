@@ -16,11 +16,11 @@ urlpatterns = patterns('',
     (r'^sitemap.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     (r'^sitemap-(?P<section>.+).xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 
-    (r'^posts/', include('blog.posts.urls')),
-	(r'^users/', include('blog.users.urls')),
-	(r'^stream/', include('blog.stream.urls')),	
+    (r'^posts/', include('posts.urls')),
+	(r'^users/', include('users.urls')),
+	(r'^stream/', include('stream.urls')),
 
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),    
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/(.*)', admin.site.root),
 
     url(r'^login/$', 'users.views.login', name='login'),
