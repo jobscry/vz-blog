@@ -201,8 +201,7 @@ def comment(request, slug):
                         (post.author.email, ),
                         fail_silently=True
                     )
-            else:
-                if settings.BLOG_NOTIFY_ON_COMMENT:
+                else:
                     send_mail(
                         u'[%s :: comment awaiting moderation]'%settings.BLOG_TITLE,
                         u'A comment has been made by %s <%s> from %s on %s.\n\r  Moderate it at http://%s%s#c%s'%(
