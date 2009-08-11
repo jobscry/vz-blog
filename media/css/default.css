@@ -5,7 +5,7 @@
 @import url(pygments.css);
 
 body{
-	background: url(images/blue-header.png) repeat-x;
+	background: url(images/blue-header.png) 0px 0px repeat-x;
 }
 
 a{
@@ -20,8 +20,12 @@ a{
 
 #header{
     margin-top: 0;
+    padding: 1em 0 0 0;
 }
-#header h1, #header div.pages-list{
+#header h1 {
+    margin-top: -0.25em;
+}
+#header div.pages-list{
     margin-top: 0.25em;
 }
 #header h1 a{
