@@ -97,7 +97,6 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'tagging',
-    'timezones',
     'users',
 	'posts',
 	'links',
@@ -122,11 +121,8 @@ DEFAULT_CHARSET = 'utf-8'
 FORCE_SCRIPT_NAME = ''
 
 INSTALLED_APPS += (
-    'batchadmin',
     'django_extensions', 
-    'django_evolution',
 )
-BATCHADMIN_MEDIA_PREFIX = 'batch-admin/'
 
 CACHE_BACKEND = ''
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
@@ -151,3 +147,5 @@ EMAIL_SUBJECT_PREFIX = ''
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 SEND_BROKEN_LINK_EMAILS = True
+
+EXTRA_META = ()

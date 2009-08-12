@@ -21,5 +21,8 @@ def base_url(request):
     current_site = Site.objects.get(id=settings.SITE_ID)
     return { 'base_url': 'http://%s'%current_site.domain }
 
+def extra_meta(request):
+    return { 'extra_meta': settings.EXTRA_META }
+
 def flatpage_list(request):
     return { 'flatpages': FlatPage.objects.all().order_by('title') }
