@@ -15,6 +15,7 @@ def blog_info(request):
         'blog_preview_length': settings.POST_PREVIEW_LENGTH,
         'blog_linkroll': Link.objects.all(),
         'blog_tags': Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution=LOGARITHMIC),
+        'blog_feedburner_url': settings.FEEDBURNER_URL,
     }
 
 def base_url(request):
