@@ -13,7 +13,7 @@
 		<!--[if IE]><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.ie.css"><![endif]-->
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/production.js"></script>
-        {% if google_analytics_js %}<script type="text/javascript">{{ google_analytics_js|safe }}</script>{% endif %}
+        {% if google_analytics_js %}{{ google_analytics_js|safe }}{% endif %}
         {% block javascript %}{% endblock %}
 	</head>
 	<body class="l8 wide">
