@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.conf import settings
-from views import flatpage
+from utils.jinja_flatpage.views import flatpage
 
 class FlatpageFallbackMiddleware(object):
     def process_response(self, request, response):
