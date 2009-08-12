@@ -140,7 +140,7 @@ class MarkItUpWidget(forms.Textarea):
         )
         css = {
             'screen': (
-                'js/markitup/skins/simple/style.css',
+                'js/markitup/skins/markitup/style.css',
                 'js/markitup/sets/markdown/style.css',
             )
         }
