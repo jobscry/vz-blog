@@ -24,5 +24,8 @@ def base_url(request):
 def extra_meta(request):
     return { 'extra_meta': settings.EXTRA_META }
 
+def google_analytics_js(request):
+    return { 'google_analytics_js': settings.GOOGLE_ANALYTICS_JS }
+
 def flatpage_list(request):
     return { 'flatpages': FlatPage.objects.all().order_by('title') }

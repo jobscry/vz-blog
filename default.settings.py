@@ -111,6 +111,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'blog.utils.context_processors.base_url',
     'blog.utils.context_processors.flatpage_list',
     'blog.utils.context_processors.blog_info',
+    'blog.utils.context_processors.google_analytics_js',
 )
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/logout/'
@@ -149,3 +150,4 @@ EMAIL_PORT = 587
 SEND_BROKEN_LINK_EMAILS = True
 
 EXTRA_META = ()
+GOOGLE_ANALYTICS_JS = ''
