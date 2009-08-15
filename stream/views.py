@@ -6,10 +6,10 @@ from utils import render_to_response
 
 def view_stream(request, pk):
     stream = get_object_or_404(Stream, pk=pk)
-    entries = Entry.objects.filter(stream=stream)[:25]
     if request.is_ajax():
         import simplejson as json
         data = list()
+        entries = Entry.objects.filter(stream=stream)[:10]
         for entry in entries:
             data.append({
                 'feed': entry.feed.title,
@@ -25,7 +25,7 @@ def view_stream(request, pk):
 
     return render_to_response(
         'view-stream.html',
-        { 'entries':  entries },
+        { 'entries':  Entry.objects.filter(stream=stream)[:100] },
         request
     )
 

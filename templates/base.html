@@ -32,20 +32,25 @@
 			</div>
 			<div id="secondary" class="stream">
 			    <div class="content">
+			    <h4><a href="{{ "view_stream"|url }}" title="stream">Stream</a></h4>
 			    </div>			
 			</div>
 			<div id="tertiary" class="menus">
 				<div class="content">
 					<div id="user-menu">
+					    <h4>User</h4>
 					    {% include "user-menu.html" %}
 					</div>
 					<div id="posts-user-menu">
+					    <h4>Posts</h4>
     					{% include "posts-user-menu.html" %}
     				</div>
     				<div id="tags">
+                        <h4>Tags</h4>
     				    {% include "post-tags.html" %}
     				</div>
 					<div id="linkroll">
+					    <h4>Links</h4>
 					    {% include "linkroll.html" %}
 					</div>
 					{% block menus %}{% endblock %}
