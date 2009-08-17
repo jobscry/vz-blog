@@ -5,6 +5,18 @@ from models import Stream, Entry, RssFeed
 from utils import render_to_response
 
 def view_stream(request, pk):
+    """
+    View Stream
+    
+    Retrieves stream from pk.
+    
+    If request is made via AJAX, returns JSON serialized list of entries.
+    
+    Templates: ``stream/view-stream.html``
+    Context:
+        entries
+            queryset of stream's entries
+    """
     stream = get_object_or_404(Stream, pk=pk)
     if request.is_ajax():
         import simplejson as json
@@ -30,6 +42,12 @@ def view_stream(request, pk):
     )
 
 def update_feeds(pk=1):
+    """
+    Update Feeds
+    
+    Not meant to be called via web, meant for CRON job to update site's primary
+    feed.
+    """
     try:
         stream = Stream.objects.get(pk=pk)
         stream.update_feeds()
