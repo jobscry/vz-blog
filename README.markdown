@@ -33,7 +33,6 @@ Learning Python and Django.  This is one of my first attempts to *Dive into Pyth
 
 ### Django Plugins
 
-* [Batchadmin](http://code.google.com/p/django-batchadmin/ "Django Batchadmin")
 * [Tagging](http://code.google.com/p/django-tagging/ "Django Tagging")
 * [Command Extensions](http://code.google.com/p/django-command-extensions/ "Django Command Extensions")
 * [Evolution](http://code.google.com/p/django-evolution/ "Django Evolution")
