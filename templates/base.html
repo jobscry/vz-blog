@@ -43,15 +43,15 @@
 					</div>
 					<div id="posts-user-menu">
 					    <h4>Posts</h4>
-    					{% include "posts-user-menu.html" %}
+    					{% include "posts/posts-user-menu.html" %}
     				</div>
     				<div id="tags">
                         <h4>Tags</h4>
-    				    {% include "post-tags.html" %}
+    				    {% include "posts/post-tags.html" %}
     				</div>
 					<div id="linkroll">
 					    <h4>Links</h4>
-					    {% include "linkroll.html" %}
+					    {% include "links/linkroll.html" %}
 					</div>
 					{% block menus %}{% endblock %}
 				</div>
@@ -72,6 +72,5 @@
 				</div>
 			</div>
 		</div>
-		{{ ip_address }}
 	</body>
 </html>

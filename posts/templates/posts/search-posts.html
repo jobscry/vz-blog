@@ -16,7 +16,7 @@
 {% if search_string %}
 <p>Found {{ posts.count() }} post{{ posts.count|makeplural }} with <em>{{ search_string }}</em>.</p>
 {% set posts_list = posts %}
-    {% include "ul-posts.html" %}
+    {% include "posts/ul-posts.html" %}
 {% endif %}
 </div>
 {% endblock %}

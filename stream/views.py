@@ -24,7 +24,7 @@ def view_stream(request, pk):
         return response
 
     return render_to_response(
-        'view-stream.html',
+        'stream/view-stream.html',
         { 'entries':  Entry.objects.filter(stream=stream)[:100] },
         request
     )

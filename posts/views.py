@@ -14,6 +14,18 @@ from models import Post, Comment
 from forms import SearchForm, CommentForm
 
 def moderate_comment(request, action, comment_id):
+    """
+    Moderate Comment
+    
+    Logged in users who have permissions to ``comment.can_change``  can either 
+    mark comment as ``spam`` or ``approved``
+    
+    Redirects to comment's post.
+    
+    Templates:  none
+    Context:
+        none
+    """
     comment = get_object_or_404(Comment, pk=comment_id)
     post = get_object_or_404(Post, comments=comment)
     
@@ -31,6 +43,20 @@ def moderate_comment(request, action, comment_id):
 moderate_comment = permission_required('comment.can_change')(moderate_comment)
 
 def posts_by_tag(request):
+    """
+    Posts by Tag
+    
+    Gets all posts that are taged tag from GET request if it exists.
+    
+    Templates:  ``posts/posts-by-tag.html``
+    Context:
+        tag
+            string tag from GET request
+        post_tags
+            Tag cloud from Tag.objects.cloud_for_model
+        posts_list
+            all posts with tag
+    """
     tag = request.GET.get('tag', None)
     if tag != None:
         posts = TaggedItem.objects.get_by_model(Post, tag).filter(is_published=True)
@@ -38,7 +64,7 @@ def posts_by_tag(request):
         posts = None
 
     return render_to_response(
-        'posts-by-tag.html',
+        'posts/posts-by-tag.html',
         {
             'tag': tag,
             'post_tags': Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution=LINEAR),
@@ -48,22 +74,38 @@ def posts_by_tag(request):
     )
 
 def archive(request, year, month):
-    """Arcive View
+    """
+    Archive View
     
-    mostly a hackjob from Django's generic date_based views
+    mostly a hackjob from Django's generic date_based views, required because
+    jinja2 doesn't play nice with the generic views.
+    
+    Templates: 
+        ``posts/archive-index.html``, 
+        ``posts/archive-month.html``,
+        ``posts/archive-year.html``
+    Context:
+        date_list
+            list of dates in current archive view
+        year
+            year for archive view (if provided)
+        month
+            month for archive view (if provided)
+        post_list
+            queryset of posts from date
     """
     import datetime, time
     queryset = Post.objects.filter(is_published=True)
 
     if year is None:    
         return render_to_response(
-            'archive-index.html',
+            'posts/archive-index.html',
             { 'date_list': queryset.dates('published_on', 'year')[::-1] },
             request
         )
     if month is None:
         return render_to_response(
-            'archive-year.html',
+            'posts/archive-year.html',
             {
                 'date_list': queryset.filter(published_on__year=year).dates('published_on', 'month'),
                 'year': year,
@@ -86,7 +128,7 @@ def archive(request, year, month):
         'published_on__lt': last_day,
     }
     return render_to_response(
-        'archive-month.html',
+        'posts/archive-month.html',
         {
             'posts_list': queryset.filter(**lookup_kwargs),
             'month': date
@@ -95,6 +137,22 @@ def archive(request, year, month):
     )
 
 def search_posts(request):
+    """
+    Search Posts
+    
+    Uses django Q object to search Post objects within title and body fields.
+
+    Can also be called via AJAX.  If so, returns JSON serialized Post objects.
+    
+    Templates: ``posts/search-posts.html``
+    Context:
+        form
+            SearchForm object
+        search_string
+            string to search Post objects for, can be submitted view form or AJAX
+        posts
+            queryset of posts matching search_string
+    """
     from django.db.models import Q
     search_string = request.GET.get('search_string', None)
     if search_string != None:
@@ -122,7 +180,7 @@ def search_posts(request):
         return response
 
     return render_to_response(
-        'search-posts.html',
+        'posts/search-posts.html',
         {
             'form': form,
             'search_string': search_string,
@@ -132,12 +190,26 @@ def search_posts(request):
     )
 
 def posts_list(request, page_num):
+    """
+    Posts List
+    
+    Main index view for Post objects.  Returns paginated list of published Posts.
+    
+    Templates: ``posts/posts-list.html``
+    Context:
+        post_list
+            list of published Posts
+        page_obj
+            Paginated page object
+        paginator
+            paginator object
+    """
     paginator = Paginator(get_list_or_404(Post, is_published=True), settings.POSTS_PER_PAGE)
 
     page = paginator.page(page_num)
 
     return render_to_response(
-        'posts-list.html',
+        'posts/posts-list.html',
         {
             'post_list':  page.object_list,
             'page_obj': page,
@@ -147,13 +219,29 @@ def posts_list(request, page_num):
     )
 
 def view_post(request, slug):
+    """
+    View Post
+    
+    Views single post, by slug.
+    
+    If post is not published, only a logged in view with post.can_change permissions
+    can view the draft.
+    
+    Templates: ``posts/view-post.html``
+    Context:
+        post
+            post object
+        related_posts
+            queryset of posts with matching tags from TaggedItem.objects.
+            get_union_by_model    
+    """
     post = get_object_or_404(Post, slug=slug)
     if post.is_published == False:
         if request.user.has_perms('posts.post.can_change') == False:
             return HttpResponseNotAllowed('You cannot view this post.')
 
     return render_to_response(
-        'view-post.html',
+        'posts/view-post.html',
         {
             'post': post,
             'related_posts': TaggedItem.objects.get_union_by_model(Post, post.tags).filter(is_published=True).exclude(pk=post.pk),
@@ -162,6 +250,25 @@ def view_post(request, slug):
     )
 
 def comment(request, slug):
+    """
+    Comment
+    
+    Creates a comment to a post by slug.
+    
+    Checks to see if post has comments enabled.
+    
+    If user is logged in, popluates fields from profile.
+    
+    After comment is created, send email to posts' author notifying of new comment
+    in moderation queue.
+    
+    Templates: ``posts/comment-form.html``
+    Context:
+        post
+            post object to comment on
+        form
+            CommentForm object
+    """
     post = get_object_or_404(Post, slug=slug)
 
     if not post.can_comment:
@@ -219,7 +326,7 @@ def comment(request, slug):
                     )
                 
             return render_to_response(
-                'comment-submitted.html',
+                'posts/comment-submitted.html',
                 {
                     'post': post,
                     'comment':  comment
@@ -241,7 +348,7 @@ def comment(request, slug):
         form = CommentForm(post)
 
     return render_to_response(
-        'comment-form.html',
+        'posts/comment-form.html',
         {
             'post': post,
             'form': form

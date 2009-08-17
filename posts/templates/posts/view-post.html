@@ -6,7 +6,7 @@
     {% if not post.is_published %}
     <h2>This post is not published yet.</h2>
     {% endif %}
-    {% include "individual-post.html" %}
+    {% include "posts/individual-post.html" %}
     {% if related_posts %}
     <div id="related_posts" class="post">
         <h3>{{ related_posts|length|apnumber|title }} Related Post{{ related_posts|length|makeplural }}</h3>
@@ -28,11 +28,11 @@
         {% if post.moderation_queue().count() %}
         <h4>{{ post.moderation_queue().count() }} Comment{{ post.moderation_queue().count()|makeplural }} Awaiting Moderation</h4>
             {% set comments = post.moderation_queue() %}
-            {% include "view-comments.html" %}
+            {% include "posts/view-comments.html" %}
             <h4>Approved Comments</h4>
         {% endif %}
     {% endif %}
     {% set comments = post.approved_comments() %}
-    {% include "view-comments.html" %}
+    {% include "comments/view-comments.html" %}
     </div>
 {% endblock %}

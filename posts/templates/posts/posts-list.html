@@ -3,7 +3,7 @@
 {% block main_content %}
     {% set do_truncate = 1 %}
     {% for post in post_list %}
-        {% include "individual-post.html" %}
+        {% include "posts/individual-post.html" %}
     {% endfor %}
-    {% include "post-list-pagination.html" %}
+    {% include "posts/post-list-pagination.html" %}
 {% endblock %}
