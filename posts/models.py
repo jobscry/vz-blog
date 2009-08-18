@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.encoding import smart_unicode
-from akismet import Akismet
+from utils.akismet import Akismet
 from tagging.fields import TagField
 from datetime import datetime, timedelta
 
@@ -133,7 +133,7 @@ def auto_pingback(sender, instance, created, **kwargs):
     if instance.update_pingbacks:
         from django.utils.encoding import force_unicode
         import markdown
-        import pingback
+        import utils.pingback
         
         current_site = Site.objects.get(id=settings.SITE_ID)
         html = markdown.markdown(force_unicode(instance.body))
