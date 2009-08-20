@@ -1,7 +1,7 @@
 #http://effbot.org/zone/django-memcached-view.htm
 from django import http
 from django.conf import settings
-from utils import render_to_response
+from utils.jinja2_utils import render_to_response
 
 import datetime, re
 

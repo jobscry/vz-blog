@@ -9,7 +9,7 @@ from django.views.generic.list_detail import object_list
 from django.views.generic.date_based import archive_index, archive_year, archive_month
 from tagging.models import Tag, TaggedItem
 from tagging.utils import LINEAR
-from utils import render_to_response
+from utils.jinja2_utils import render_to_response
 from posts.models import Post
 from posts.forms import SearchForm
 

@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.utils.encoding import force_unicode
 from models import Stream, Entry, RssFeed
-from utils import render_to_response
+from utils.jinja2_utils import render_to_response
 
 def view_stream(request, pk):
     """

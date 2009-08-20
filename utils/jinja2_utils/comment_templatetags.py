@@ -5,7 +5,7 @@ from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.template import TemplateDoesNotExist
 from jinja2 import environmentfilter, Markup
-from utils import select_template, render_to_string
+from utils.jinja2_utils import select_template, render_to_string
 
 def comment_count(obj):
     return _qs(obj).count()

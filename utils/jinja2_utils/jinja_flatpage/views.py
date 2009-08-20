@@ -6,7 +6,7 @@ from django.core.xheaders import populate_xheaders
 from django.template import TemplateDoesNotExist
 from django.template.context import get_standard_processors
 
-from utils import get_template
+from utils.jinja2_utils import get_template
 
 DEFAULT_TEMPLATE = 'flatpages/default.html'
 
