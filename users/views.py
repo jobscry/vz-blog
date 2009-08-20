@@ -15,7 +15,7 @@ def view_profile(request, username):
 	user = get_object_or_404(User, username=username)
 
 	return render_to_response(
-		'view-profile.html',
+		'users/view-profile.html',
 		{
 			'this_user': user,
 			'this_profile': user.get_profile(),
@@ -40,7 +40,7 @@ def edit_profile(request, username):
 		this_user_form = UserForm(instance=user)
 
 	return render_to_response(
-		'edit-profile.html',
+		'users/edit-profile.html',
 		{
 			'this_user': user,
 			'this_user_form': this_user_form,
@@ -68,7 +68,7 @@ def login(request):
         form = LoginForm()
     
     return render_to_response(
-        'login.html',
+        'users/login.html',
         { 'form': form },
         request
     )

@@ -8,65 +8,6 @@ from utils.akismet import Akismet
 from tagging.fields import TagField
 from datetime import datetime, timedelta
 
-class Comment(models.Model):
-    author_name = models.CharField('Name', max_length="255")
-    author_email = models.EmailField('Email')
-    author_url = models.URLField('URL', verify_exists=False, null=True, blank=True)
-    author_ip = models.IPAddressField('IP Address')
-    author_user_agent = models.CharField('User Agent', max_length="255")
-    author_referrer = models.CharField('Referrer', max_length="255", null=True, blank=True)
-    user = models.ForeignKey(User, null=True, blank=True, default='')
-    body = models.TextField()
-    is_approved = models.BooleanField(default=False, help_text="Approve this comment?")
-    is_spam = models.BooleanField(default=False, help_text="Is this comment SPAM?")  
-    awaiting_moderation = models.BooleanField(default=True, help_text="Is this comment in the moderation queue?")
-    added_on = models.DateTimeField(auto_now_add=True)  
-
-    def __unicode__(self):
-        return u'%s by %s on %s'%(self.pk, self.author_name, self.added_on.strftime('%c'))
-
-    def mark_approved(self):
-        """
-        Mark Approved
-        
-        If comment was mistakenly marked as SPAM by Akismet, mark approved, then send HAM.
-        """
-        if self.is_spam:
-            ak = _get_ak()
-            if ak.verify_key():
-                data = _build_comment_data(self)
-                ak.suubmit_ham(smart_unicode(instance.body), data=data, build_data=True)
-
-        self.is_approved = True
-        self.awaiting_moderation = False
-        self.is_spam = False
-        self.save()
-    
-    def mark_spam(self):
-        """
-        Mark SPAM
-        
-        If Akismet didn't catch it, mark as SPAM and submit it to Akismet
-        """
-        if self.is_spam == False:        
-            ak = _get_ak()
-            if ak.verify_key():
-                data = _build_comment_data(self)
-                ak.submit_spam(smart_unicode(self.body), data=data, build_data=True)
-
-        self.is_approved = False
-        self.awaiting_moderation = False
-        self.is_spam = True
-        self.save()
-
-    class Meta:
-        permissions = (
-            ("can_moderate", 'Can moderate'),
-            ("can_add", 'Can add'),
-            ("can_remove", 'Can remove'),
-        )
-        ordering = ['added_on',]   
-
 class Post(models.Model):
     """
     Post
@@ -84,7 +25,6 @@ class Post(models.Model):
     is_published = models.BooleanField("Published", default=False, help_text="Publish this post?")
     published_on = models.DateTimeField("Date Published", blank=True, null=True, help_text="Manually change the date this post was published on.")
     created_on = models.DateTimeField("Date Created", auto_now_add=True)
-    comments = models.ManyToManyField(Comment, blank=True, null=True)
 
     def __unicode__(self):
         return self.slug
@@ -95,12 +35,6 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-published_on', 'title']
-
-    def approved_comments(self):
-        return self.comments.filter(is_approved=True)
-    
-    def moderation_queue(self):
-        return self.comments.filter(awaiting_moderation=True)
 
     def can_comment(self):
         if self.is_published and self.comments_enabled:
@@ -161,7 +95,7 @@ def comment_akismet_check(sender, instance, created, **kwargs):
                 instance.is_spam = True
                 instance.mark_spam()
 
-post_save.connect(comment_akismet_check, sender=Comment)
+#post_save.connect(comment_akismet_check, sender=Comment)
 
 def _get_ak():
     return Akismet(

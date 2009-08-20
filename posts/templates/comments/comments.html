@@ -1,0 +1,11 @@
+{% for comment in post|comment_list %}
+<p class="meta">
+    <a href="#comment_{{ loop.index }}" title="permalink for comment {{ loop_index}}">#{{ loop.index }}</a> {{ comment.submit_date|naturalday }}, by 
+    {% if comment.user_url %}
+    <a rel="no-follow" href="{{ comment.user_url }}">{{ comment.user_name }}</a>
+    {% else %}
+    {{ comment.user_name }}
+    {% endif %}
+</p>
+<p>{{ comment.comment }}</p>
+{% endfor %}

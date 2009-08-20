@@ -195,3 +195,7 @@ pre {
  /* width: 99%; */
  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
+
+label{
+    display:block;
+}

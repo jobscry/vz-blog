@@ -3,12 +3,10 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.core.xheaders import populate_xheaders
+from django.template import TemplateDoesNotExist
 from django.template.context import get_standard_processors
-from jinja2 import Environment, FileSystemLoader
 
-from utils import get_env
-
-env = get_env()
+from utils import get_template
 
 DEFAULT_TEMPLATE = 'flatpages/default.html'
 
@@ -22,14 +20,10 @@ def flatpage(request, url):
         from django.contrib.auth.views import redirect_to_login
         return redirect_to_login(request.path)
     if f.template_name:
-        t = env.get_template(f.template_name)
+        t = f.template_name
     else:
-        t = env.get_template(DEFAULT_TEMPLATE)
+        t = DEFAULT_TEMPLATE
 
-    context = { 'flatpage': f }
-    for processor in get_standard_processors():
-        context.update(processor(request))
-
-    response = HttpResponse(t.render(context))
+    response = render_to_response(t.name, { 'flatpage': f }, request)
     populate_xheaders(request, response, FlatPage, f.id)
     return response
