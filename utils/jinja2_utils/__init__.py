@@ -7,7 +7,6 @@ from django.template.context import get_standard_processors
 from jinja2 import PackageLoader, Environment, ChoiceLoader, FileSystemLoader, TemplateNotFound
 from jinja2.defaults import DEFAULT_NAMESPACE
 from django.conf import settings
-from utils.jinja2_utils.python_loader import PythonLoader
 
 from os import path
 

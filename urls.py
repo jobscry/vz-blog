@@ -25,6 +25,4 @@ urlpatterns = patterns('',
 
     url(r'^login/$', 'users.views.login', name='login'),
 	url(r'^logout/$', 'django.contrib.auth.views.logout_then_login', name='logout'),
-
-    (r'^status/cache/$', 'utils.memcached_status.view'),
 )
