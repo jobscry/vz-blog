@@ -1,10 +1,14 @@
-from django.contrib.sites.models import Site
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.comments.moderation import AlreadyModerated, CommentModerator, moderator
+from django.contrib.comments.signals import comment_will_be_posted
+from django.contrib.sites.models import Site
+from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.encoding import smart_unicode
 from utils.akismet import Akismet
+from utils.jinja2_utils import render_to_string
 from tagging.fields import TagField
 from datetime import datetime, timedelta
 
@@ -45,7 +49,7 @@ class Post(models.Model):
             max_date = self.published_on + delta_date
             if now < max_date:
                 return True
-        return False        
+        return False
 
 def auto_set_published_on(sender, instance, created, **kwargs):
     """
@@ -78,24 +82,67 @@ def auto_pingback(sender, instance, created, **kwargs):
 
 post_save.connect(auto_pingback, sender=Post)
 
+class PostModerator(CommentModerator):
+    auto_close_field = 'published_on'
+    close_after = settings.MAX_COMMENT_DAYS
+    email_notification = True
+    enable_field = 'comments_enabled'
+    
+    def moderate(self, comment, content_object, request):
+        return request.user.is_authenticated() == False
+
+    def allow(self, comment, content_object, request):
+        return content_object.can_comment()
+
+    def email(self, comment, content_object, request):
+        if not self.email_notification:
+            return
+        if comment.is_public:
+            status = 'Awaiting Moderation'
+        else:
+            satus = 'Approved'
+        message = render_to_string(
+            'comments/comment_notification_email.txt',
+            {
+                'comment': comment,
+                'status': status,
+                'content_object': content_object
+            },
+            request
+        )
+        subject = '[%s] New comment posted on "%s"' % (
+            Site.objects.get_current().name,
+            content_object
+        )
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL, 
+            [content_object.author.email],
+            fail_silently=True
+        )
+
+try:
+    moderator.register(Post, PostModerator)
+except AlreadyModerated:
+    pass
 
 #http://sciyoshi.com/blog/2008/aug/27/using-akismet-djangos-new-comments-framework/
 
-def comment_akismet_check(sender, instance, created, **kwargs):
+def comment_akismet_check(sender, comment, request, **kwargs):
     """
     Comment Akismet Check
     
     Check all incoming comments against Akismet
     """
-    if created:
+    if comment.is_public == False:
         ak = _get_ak()
         if ak.verify_key():
-            data = _build_comment_data(instance)
-            if ak.comment_check(smart_unicode(instance.body), data=data, build_data=True):
-                instance.is_spam = True
-                instance.mark_spam()
+            data = _build_comment_data(comment, request, ak.blog_url)
+            if ak.comment_check(smart_unicode(comment.comment), data=data, build_data=True):
+                comment.is_removed = True
 
-#post_save.connect(comment_akismet_check, sender=Comment)
+comment_will_be_posted.connect(comment_akismet_check)
 
 def _get_ak():
     return Akismet(
@@ -103,11 +150,11 @@ def _get_ak():
         blog_url='http://%s/' % Site.objects.get(pk=settings.SITE_ID).domain
     )
 
-def _build_comment_data(comment):
+def _build_comment_data(comment, request, default_referer):
     return {
-        'user_ip': smart_unicode(comment.author_ip),
-        'user_agent': smart_unicode(comment.author_user_agent),
-        'referrer': smart_unicode(comment.author_referrer),
+        'user_ip': smart_unicode(comment.ip_address),
+        'user_agent': smart_unicode(settings.BLOG_USER_AGENT),
+        'referrer': smart_unicode(request.META.get('HTTP_REFERER', default_referer)),
         'comment_type': 'comment',
-        'comment_author': smart_unicode(comment.author_name),
+        'comment_author': smart_unicode(comment.user_name),
     }
