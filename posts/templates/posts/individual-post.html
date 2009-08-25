@@ -4,7 +4,7 @@
 <div class="meta">
     <p>
     tagged: {% for tag in post.tags.split(' ') %}<a href="{{ "posts_by_tag"|url }}?tag={{ tag }}" rel="tag">{{ tag }}</a> {% endfor %},
-    {{ comment_list.count() }} <a href="#comments" title="comment{{ comment_list.count()|makeplural }}">comment{{ comment_list.count()|makeplural }}</a>
+    {{ comment_list.count() }} <a href="{{ post.get_absolute_url() }}#comments" title="comment{{ comment_list.count()|makeplural }}">comment{{ comment_list.count()|makeplural }}</a>
 </div>
     {% if do_truncate %}
         {{ post.body|markdown("codehilite")|truncatewords_html(blog_preview_length)|safe }}
