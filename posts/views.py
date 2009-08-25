@@ -9,9 +9,39 @@ from django.views.generic.list_detail import object_list
 from django.views.generic.date_based import archive_index, archive_year, archive_month
 from tagging.models import Tag, TaggedItem
 from tagging.utils import LINEAR
-from utils.jinja2_utils import render_to_response
+from utils.jinja2_utils import render_to_response, render_to_string
 from posts.models import Post
-from posts.forms import SearchForm
+from posts.forms import SearchForm, CommentForm
+
+def moderate_comment(request, action, comment_id):
+    """
+    Moderate Comment
+    
+    Logged in users who have permissions to ``comment.can_change``  can either 
+    mark comment as ``spam`` or ``approved``
+    
+    Redirects to comment's post.
+    
+    Templates:  none
+    Context:
+        none
+    """
+    comment = get_object_or_404(Comment, pk=comment_id)
+    post = get_object_or_404(Post, comments=comment)
+    
+    if post.is_published == False:
+        return HttpResponseNotAllowed('You cannot comment on this post.')
+    
+    if action == 'approved':
+        comment.mark_approved()
+    elif action == 'spam':
+        comment.mark_spam()
+    else:
+        return HttpResponseNotAllowed('Action must be either "spam" or "approved".')
+
+    return HttpResponseRedirect(post.get_absolute_url())
+
+moderate_comment = permission_required('comment.can_change')(moderate_comment)
 
 def posts_by_tag(request):
     """
@@ -216,6 +246,106 @@ def view_post(request, slug):
         {
             'post': post,
             'related_posts': TaggedItem.objects.get_union_by_model(Post, post.tags).filter(is_published=True).exclude(pk=post.pk),
+        },
+        request
+    )
+
+def comment(request, slug):
+    """
+    Comment
+    
+    Creates a comment to a post by slug.
+    
+    Checks to see if post has comments enabled.
+    
+    If user is logged in, popluates fields from profile.
+    
+    After comment is created, send email to posts' author notifying of new comment
+    in moderation queue.
+    
+    Templates: ``posts/comment-form.html``
+    Context:
+        post
+            post object to comment on
+        form
+            CommentForm object
+    """
+    post = get_object_or_404(Post, slug=slug)
+
+    if not post.can_comment:
+        return HttpResponseForbidden('This post is closed for comments.')
+
+    if request.method == 'POST':
+        form = CommentForm(post, data=request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            if settings.DEBUG:
+                comment.author_ip = '127.0.0.1'
+            else:
+                comment.author_ip = request.META.get('REMOTE_ADDR', '127.0.0.1')
+            comment.author_user_agent = request.META.get('HTTP_USER_AGENT', '')
+            comment.author_refferrer = request.META.get('HTTP_REFERER', '')
+            comment.save()
+            
+            from django.core.mail import send_mail
+
+            current_site = Site.objects.get(id=settings.SITE_ID)
+            post.comments.add(comment)
+            if settings.BLOG_NOTIFY_ON_COMMENT:
+                if request.user.is_authenticated():
+                    comment.user = request.user
+                    comment.mark_approved()
+                    status = 'approved'
+                    subject = u'[%s :: registered user comment]'%settings.BLOG_TITLE
+                else:
+                    status = 'awaiting moderation'
+                    subject = u'[%s :: comment awaiting moderation]'%settings.BLOG_TITLE
+
+                message = render_to_string(
+                    'comments/comment-notification-email.txt',
+                    {
+                        'comment': comment,
+                        'post': post,
+                        'status': status
+                    },
+                    request
+                )
+                send_mail(
+                    subject,
+                    message,
+                    settings.EMAIL_HOST_USER,
+                    post.author.email,
+                    fail_silently=True
+                )
+                
+            return render_to_response(
+                'comments/comment-submitted.html',
+                {
+                    'post': post,
+                    'comment':  comment
+                },
+                request
+            )
+
+    else:
+        if request.user.is_authenticated():
+            current_site = Site.objects.get(id=settings.SITE_ID)
+            form = CommentForm(
+                post,
+                initial = {
+                    'author_name': request.user.username,
+                    'author_email': request.user.email,
+                    'author_url': u'http://%s'%current_site.domain,
+                }
+            )
+        else:
+            form = CommentForm(post)
+
+    return render_to_response(
+        'comments/comment-form.html',
+        {
+            'post': post,
+            'form': form
         },
         request
     )

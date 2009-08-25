@@ -1,12 +1,12 @@
-{% for comment in post|comment_list %}
+{% for comment in comment_list %}
 <p class="meta">
-    <a href="#comment_{{ comment.pk }}" title="permalink for comment {{ loop_index}}">#{{ loop.index }}</a> <a name="#comment_{{ comment.pk }}">{{ comment.submit_date|naturalday }}, by 
-    {% if comment.user_url %}
-    <a rel="no-follow" href="{{ comment.user_url }}">{{ comment.user_name }}</a>
+    <a href="#comment_{{ comment.pk }}" title="permalink for comment {{ loop_index}}">#{{ loop.index }}</a> <a name="#comment_{{ comment.pk }}">{{ comment.added_on|naturalday }}, by 
+    {% if comment.author_url %}
+    <a rel="no-follow" href="{{ comment.user_url }}">{{ comment.author_name }}</a>
     {% else %}
-    {{ comment.user_name }}
+    {{ comment.author_name }}
     {% endif %}
     </a>
 </p>
-<p>{{ comment.comment }}</p>
+<p>{{ comment.body }}</p>
 {% endfor %}

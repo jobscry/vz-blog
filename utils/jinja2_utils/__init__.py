@@ -48,12 +48,6 @@ def create_env():
     from posts.templatetags.post_extras import markdown
     env.filters['markdown'] = markdown
     
-    from utils.jinja2_utils.comment_templatetags import comment_count, render_comment_form, comment_list
-    
-    env.filters['comment_count'] = comment_count
-    env.filters['render_comment_form'] = render_comment_form
-    env.filters['comment_list'] = comment_list
-    
     env.filters['url'] = url
     
     return env

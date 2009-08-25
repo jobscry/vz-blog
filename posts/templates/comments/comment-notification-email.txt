@@ -4,7 +4,7 @@ A new comment is {{ status }}.
 
 You can see it here (if you're logged in):
 
-{{ base_url }}{{ content_object.get_absolute_url() }}#comment_{{ comment.pk }}
+{{ base_url }}{{ post.get_absolute_url() }}#comment_{{ comment.pk }}
 
 Thank you.
 {{ blog_title }}

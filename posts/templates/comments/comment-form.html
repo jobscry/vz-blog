@@ -13,7 +13,7 @@
     Post A Comment
 </h2>
 <p>Add a comment to this post.</p>
-<form action="." method="POST">
+<form action="{{ "comment"|url }}" method="POST">
 {{ form.as_p()|safe }}
 <p><input type="submit" value="Submit Comment"></p>
 </form>

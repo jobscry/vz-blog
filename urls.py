@@ -11,8 +11,6 @@ sitemaps = {
 }
 
 urlpatterns = patterns('',
-    (r'^comments/', include('django.contrib.comments.urls')),
-
     (r'^sitemap.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     (r'^sitemap-(?P<section>.+).xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 

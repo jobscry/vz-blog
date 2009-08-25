@@ -3,9 +3,11 @@
 <html lang="en">
 	<head>
 	    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-        {% for meta in extra_meta %}
+        {% if extra_meta %}
+            {% for meta in extra_meta %}
         <meta name="{{ meta[0] }}" content="{{ meta[1] }}">
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
 		<title>{{ blog_title }} :: Blog{% block page_title %}{% endblock %}</title>
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ blog_feedburner_url }}">
 		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" media="screen">

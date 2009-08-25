@@ -3,6 +3,7 @@
 {% block main_content %}
     {% set do_truncate = 1 %}
     {% for post in post_list %}
+        {% set comment_list = post.approved_comments() %}
         {% include "posts/individual-post.html" %}
     {% endfor %}
     {% include "posts/post-list-pagination.html" %}
