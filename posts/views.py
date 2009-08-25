@@ -314,7 +314,7 @@ def comment(request, slug):
                     subject,
                     message,
                     settings.EMAIL_HOST_USER,
-                    post.author.email,
+                    [post.author.email],
                     fail_silently=True
                 )
                 

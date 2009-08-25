@@ -159,18 +159,18 @@ post_save.connect(auto_pingback, sender=Post)
 
 #http://sciyoshi.com/blog/2008/aug/27/using-akismet-djangos-new-comments-framework/
 
-def comment_akismet_check(sender, comment, **kwargs):
+def comment_akismet_check(sender, instance, **kwargs):
     """
     Comment Akismet Check
     
     Check all incoming comments against Akismet
     """
-    if comment.is_public == False:
+    if instance.is_spam == False:
         ak = _get_ak()
         if ak.verify_key():
-            data = _build_comment_data(comment)
-            if ak.comment_check(smart_unicode(comment.comment), data=data, build_data=True):
-                comment.is_removed = True
+            data = _build_comment_data(instance)
+            if ak.comment_check(smart_unicode(instance.body), data=data, build_data=True):
+                instance.is_spam = True
 
 post_save.connect(comment_akismet_check, sender=Comment)
 
