@@ -10,7 +10,7 @@ from django.views.generic.date_based import archive_index, archive_year, archive
 from tagging.models import Tag, TaggedItem
 from tagging.utils import LINEAR
 from utils.jinja2_utils import render_to_response, render_to_string
-from posts.models import Post
+from posts.models import Post, Comment
 from posts.forms import SearchForm, CommentForm
 
 def moderate_comment(request, action, comment_id):

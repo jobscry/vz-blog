@@ -21,6 +21,11 @@
     <div id="comments" class="post">
         <a name="comments"><h3>Comments</h3></a>
         {% include "comments/comments.html" %}
+        {% if perms.comment.can_moderate %}
+            {% set comment_list = post.moderation_queue() %}
+            <h4>{{ comment_list.count() }} in Moderation Queue</h4>
+            {% include "comments/comments.html" %}
+        {% endif %}
     {% if post.can_comment %}
         <p><a href="{{ "comment"|url(post.slug) }}" title="add a comment">Add a Comment</a></p>
     {% else %}

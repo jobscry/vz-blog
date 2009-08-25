@@ -8,5 +8,12 @@
     {% endif %}
     </a>
 </p>
+{% if comment.awaiting_moderation and perms.comment.can_moderate -%}
+<p>
+<strong>Moderate:</strong>
+<a href="{{ "moderate_comment"|url("spam",comment.pk) }}" title="spam">spam</a> | 
+<a href="{{ "moderate_comment"|url("approved",comment.pk) }}" title="approve">approve</a>
+</p>
+{%- endif %}
 <p>{{ comment.body }}</p>
 {% endfor %}
