@@ -6,7 +6,7 @@ from django.core.xheaders import populate_xheaders
 from django.template import TemplateDoesNotExist
 from django.template.context import get_standard_processors
 
-from utils.jinja2_utils import get_template
+from utils.jinja2_utils import get_template, render_to_response
 
 DEFAULT_TEMPLATE = 'flatpages/default.html'
 
@@ -15,15 +15,15 @@ def flatpage(request, url):
         return HttpResponseRedirect("%s/" % request.path)
     if not url.startswith('/'):
         url = "/" + url
-    f = get_object_or_404(FlatPage, url__exact=url, sites__id__exact=settings.SITE_ID)
-    if f.registration_required and not request.user.is_authenticated():
+    flatpage = get_object_or_404(FlatPage, url__exact=url, sites__id__exact=settings.SITE_ID)
+    if flatpage.registration_required and not request.user.is_authenticated():
         from django.contrib.auth.views import redirect_to_login
         return redirect_to_login(request.path)
-    if f.template_name:
-        t = f.template_name
+    if flatpage.template_name:
+        template = flatpage.template_name
     else:
-        t = DEFAULT_TEMPLATE
+        template = DEFAULT_TEMPLATE
 
-    response = render_to_response(t.name, { 'flatpage': f }, request)
-    populate_xheaders(request, response, FlatPage, f.id)
+    response = render_to_response(template, { 'flatpage': flatpage }, request)
+    populate_xheaders(request, response, FlatPage, flatpage.pk)
     return response
