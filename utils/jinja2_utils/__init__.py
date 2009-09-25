@@ -1,5 +1,3 @@
-#http://svn.python.org/projects/external/Jinja-1.1/docs/src/devrecipies.txt
-
 from itertools import chain
 from django.http import HttpResponse
 from django.template import TemplateDoesNotExist
