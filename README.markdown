@@ -27,9 +27,9 @@ Learning Python and Django.  This is one of my first attempts to *Dive into Pyth
 ## Third Party Libraries
 
 * [Python Pingback](http://mathieu.fenniak.net/python-pingback-library/ "Python Pingback")
-* [Tripoli CSS framework](http://devkick.com/lab/tripoli/ "Tripoli CSS framework")
 * [Pygments](http://pygments.org/ "Python Pygments")
 * [MarkItUp](http://markitup.jaysalvat.com/home/)
+* [960 Grid System](http://960.gs/ "960 Grid System")
 
 ### Django Plugins
 
