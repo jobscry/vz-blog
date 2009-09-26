@@ -30,9 +30,16 @@ a.comment{
 label{
     display: block;
 }
-.stream{
+p.stream{
     line-height: 16px;
     padding-left: 19px;
+}
+li.stream{
+    padding-left: 20px;
+}
+.stream_published_on{
+    color: #838B8B;
+    font-style: italic;
 }
 .stream_digg{
     background: url(images/stream/digg.png) left top no-repeat;

@@ -9,7 +9,7 @@ $(document).ready(function () {
         url: '/stream/ajax/',
         success: function(items){
             $.each(items, function(i, item){
-               var elem = '<li class="stream_'+item.feed.toLowerCase()+'">'+item.title+' [<a href="'+item.link+'" title="link">#</a>]<span class="stream_published_on">'+prettyDate(item.published_on)+'</span></li>';
+               var elem = '<li class="stream stream_'+item.feed.toLowerCase()+'">'+item.title+' [<a href="'+item.link+'" title="link">#</a>] <span class="stream_published_on">'+prettyDate(item.published_on)+'</span></li>';
                if ($('ul.stream').length == 0){
                    $('div.stream').append('<ul class="stream">'+elem+'</ul>');
                } else {
