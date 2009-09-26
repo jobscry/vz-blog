@@ -64,6 +64,9 @@ label{
 .stream_picasa{
     background: url(images/stream/picasa.png) left top no-repeat;
 }
+.stream_reddit{
+    background: url(images/stream/reddit.png) left top no-repeat;
+}
 .stream_technorati{
     background: url(images/stream/technorati.png) left top no-repeat;
 }
