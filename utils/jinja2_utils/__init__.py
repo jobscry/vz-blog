@@ -45,7 +45,7 @@ def create_env():
 
     from posts.templatetags.post_extras import markdown
     env.filters['markdown'] = markdown
-    
+
     env.filters['url'] = url
     
     return env

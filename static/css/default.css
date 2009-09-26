@@ -53,8 +53,8 @@ li.stream{
 .stream_rss{
     background: url(images/stream/feed.png) left top no-repeat;
 }
-.stream_flicker{
-    background: url(images/stream/flicker.png) left top no-repeat;
+.stream_flickr{
+    background: url(images/stream/flickr.png) left top no-repeat;
 }
 .stream_google{
     background: url(images/stream/google.png) left top no-repeat;

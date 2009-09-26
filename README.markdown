@@ -30,6 +30,7 @@ Learning Python and Django.  This is one of my first attempts to *Dive into Pyth
 * [Pygments](http://pygments.org/ "Python Pygments")
 * [MarkItUp](http://markitup.jaysalvat.com/home/)
 * [960 Grid System](http://960.gs/ "960 Grid System")
+* [Better Web Readability Project](http://code.google.com/p/better-web-readability-project/ "Better Web Readability Project")
 
 ### Django Plugins
 
@@ -40,5 +41,3 @@ Learning Python and Django.  This is one of my first attempts to *Dive into Pyth
 ## Credits
 
 * [Markdown Syntax Highlighting in Django](http://www.martin-geber.com/thought/2007/10/27/markdown-syntax-highlighting-django/ "Markdown Syntax Highlighting in Django")
-* [Overriding a Widget in the Django Admin Site](http://www.fictitiousnonsense.com/archives/22)
-
