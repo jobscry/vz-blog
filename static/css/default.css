@@ -1,7 +1,15 @@
+#header, .post{
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
 #pages_list{
     text-align: right;
 }
+#pages_list li{
+    display: inline;
+}
 #secondary{
     background: #EBECE4;
+    padding-top: 1em;
     width: 100%;
 }
