@@ -13,3 +13,20 @@
     padding-top: 1em;
     width: 100%;
 }
+.post h2, p.date{
+    display:inline;
+}
+.post{
+    border-bottom: solid 1px #EBECE4;
+}
+p.date{
+    color: #838B8B;
+    font-style: italic;
+}
+a.comment{
+    color: #333333;
+    text-decoration: none;
+}
+label{
+    display: block;
+}

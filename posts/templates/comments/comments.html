@@ -1,6 +1,6 @@
 {% for comment in comment_list %}
 <p class="meta">
-    <a href="{{ post.get_absolute_url() }}#comment_{{ comment.pk }}" title="permalink for comment {{ loop_index}}">#{{ loop.index }}</a> <a name="#comment_{{ comment.pk }}">{{ comment.added_on|naturalday }}, by 
+    <a href="{{ post.get_absolute_url() }}#comment_{{ comment.pk }}" title="permalink for comment {{ loop_index}}">#{{ loop.index }}</a> <a class="comment" name="#comment_{{ comment.pk }}">{{ comment.added_on|naturalday }}, by 
     {% if comment.author_url %}
     <a rel="no-follow" href="{{ comment.user_url }}">{{ comment.author_name }}</a>
     {% else %}
