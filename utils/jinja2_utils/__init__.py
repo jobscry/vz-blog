@@ -2,7 +2,7 @@ from itertools import chain
 from django.http import HttpResponse
 from django.template import TemplateDoesNotExist
 from django.template.context import get_standard_processors
-from jinja2 import PackageLoader, Environment, ChoiceLoader, FileSystemLoader, TemplateNotFound
+from jinja2 import PackageLoader, Environment, ChoiceLoader, FileSystemLoader, TemplateNotFound, MemcachedBytecodeCache
 from jinja2.defaults import DEFAULT_NAMESPACE
 from django.conf import settings
 
@@ -28,8 +28,20 @@ def create_env():
 
     for app in settings.INSTALLED_APPS:
         loader_array.append(PackageLoader(app))
+    
+    bytecode_cache=None
+    try:
+        import re, memcache
+        m = re.match(
+        "memcached://([.\w]+:\d+)", settings.CACHE_BACKEND
+        )
+        if m:
+            mc = memcache.Client([m.group(1)], debug=0)
+            bytecode_cache = MemcachedBytecodeCache(mc)
+    except ImportError:
+        pass
 
-    env = Environment(loader=ChoiceLoader(loader_array), autoescape=True)
+    env = Environment(loader=ChoiceLoader(loader_array), autoescape=True, bytecode_cache=bytecode_cache)
 
     from django.template.defaultfilters import date
     env.filters['date'] = date
