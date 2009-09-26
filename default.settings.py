@@ -68,7 +68,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.csrf.middleware.CsrfMiddleware',
 	'django.middleware.common.CommonMiddleware',
-	'utils.jinja2_utils.jinja_flatpage.middleware.FlatpageFallbackMiddleware',
+    'utils.jinja_flatpage.middleware.FlatpageFallbackMiddleware',
 	'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
@@ -97,6 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'tagging',
+    'compressor',
     'users',
 	'posts',
 	'links',

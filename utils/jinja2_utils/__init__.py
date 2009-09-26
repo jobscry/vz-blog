@@ -1,18 +1,16 @@
 from itertools import chain
+from django.conf import settings
 from django.http import HttpResponse
 from django.template import TemplateDoesNotExist
 from django.template.context import get_standard_processors
+
 from jinja2 import PackageLoader, Environment, ChoiceLoader, FileSystemLoader, TemplateNotFound, MemcachedBytecodeCache
-from jinja2.defaults import DEFAULT_NAMESPACE
-from django.conf import settings
 
 from os import path
 
-from django.core import cache
+_jinja_env = None
 
 default_mimetype = settings.DEFAULT_CONTENT_TYPE
-
-_jinja_env = None
 
 def get_env():
     """Get the Jinja2 env and initialize it if necessary."""
@@ -41,7 +39,7 @@ def create_env():
     except ImportError:
         pass
 
-    env = Environment(loader=ChoiceLoader(loader_array), autoescape=True, bytecode_cache=bytecode_cache)
+    env = Environment(loader=ChoiceLoader(loader_array), autoescape=True, bytecode_cache=bytecode_cache, extensions=[Compressor])
 
     from django.template.defaultfilters import date
     env.filters['date'] = date
@@ -81,7 +79,6 @@ def get_template(template_name, globals=None):
     except TemplateNotFound, e:
         raise TemplateDoesNotExist(str(e))
 
-
 def select_template(templates, globals=None):
     """Try to load one of the given templates."""
     env = get_env()
@@ -107,3 +104,47 @@ def render_to_response(template_name, context=None, request=None,
     """Render a template into a response object."""
     return HttpResponse(render_to_string(template_name, context, request,
                                          processors), mimetype)
+
+from jinja2 import nodes
+from jinja2.ext import Extension
+from django.core.cache import cache
+from compressor import CssCompressor, JsCompressor
+from compressor.conf import settings as c_settings
+
+class Compressor(Extension):
+    tags = set(['compress'])
+    
+    def __init__(self, environment):
+        super(Compressor, self).__init__(environment)
+
+    def parse(self, parser):
+        lineno = parser.stream.next().lineno
+        args = [parser.parse_expression()]
+        body = parser.parse_statements(['name:endcompress'], drop_needle=True)
+        return nodes.CallBlock(self.call_method('_compress', args),
+                               [], [], body).set_lineno(lineno)
+
+    def _compress(self, kind, caller):
+        content = caller()
+        if not c_settings.COMPRESS:
+            return content
+        if kind == 'css':
+            compressor = CssCompressor(content)
+        if kind == 'js':
+            compressor = JsCompressor(content)
+        in_cache = cache.get(compressor.cachekey)
+        if in_cache:
+            return in_cache
+        else:
+            output = self._get_compressor_output(compressor)
+            cache.set(compressor.cachekey, output, 86400) # rebuilds the cache once a day if nothign has changed.
+            return output
+
+    def _get_compressor_output(self, compressor):
+        if not c_settings.COMPRESS:
+            return compressor.content
+        url = "%s/%s" % (settings.MEDIA_URL.rstrip('/'), compressor.new_filepath)
+        compressor.save_file()
+        context = getattr(compressor, 'extra_context', {})
+        context['url'] = url
+        return render_to_string(compressor.template_name, context)
