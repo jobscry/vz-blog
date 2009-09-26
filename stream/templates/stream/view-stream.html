@@ -12,13 +12,13 @@
         {% set day = entry.published_on %}
     <h3>{{ day|naturalday }}</h3>
     {% endif %}
-    <p class="stream_{{ entry.feed.title|lower }}">
+    <p class="stream stream_{{ entry.feed.title|lower }}">
     {% if entry.is_img %}
     {{ entry.title|safe }}
     {% else %}
     <a href="{{ entry.link }}" title="{{ entry.title }}">{{ entry.title }}</a>
     {% endif %}
-    <br><em>{{ entry.feed.title }}</em></p>
+    - <em>{{ entry.feed.title }}</em></p>
 {% endfor %}
 
 {% endblock %}

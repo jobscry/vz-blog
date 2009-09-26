@@ -30,3 +30,52 @@ a.comment{
 label{
     display: block;
 }
+.stream{
+    line-height: 16px;
+    padding-left: 19px;
+}
+.stream_digg{
+    background: url(images/stream/digg.png) left top no-repeat;
+}
+.stream_delicious{
+    background: url(images/stream/delicious.png) left top no-repeat;
+}
+.stream_facebook{
+    background: url(images/stream/facebook.png) left top no-repeat;
+}
+.stream_rss{
+    background: url(images/stream/feed.png) left top no-repeat;
+}
+.stream_flicker{
+    background: url(images/stream/flicker.png) left top no-repeat;
+}
+.stream_google{
+    background: url(images/stream/google.png) left top no-repeat;
+}
+.stream_magnolia{
+    background: url(images/stream/magnolia.png) left top no-repeat;
+}
+.stream_netvibes{
+    background: url(images/stream/netvibes.png) left top no-repeat;
+}
+.stream_newsvine{
+    background: url(images/stream/newsvine.png) left top no-repeat;
+}
+.stream_picasa{
+    background: url(images/stream/picasa.png) left top no-repeat;
+}
+.stream_technorati{
+    background: url(images/stream/technorati.png) left top no-repeat;
+}
+.stream_twitter{
+    background: url(images/stream/twitter.png) left top no-repeat;
+}
+.stream_vimeo{
+    background: url(images/stream/vimeo.png) left top no-repeat;
+}
+.stream_yelp{
+    background: url(images/stream/yelp.png) left top no-repeat;
+}
+.stream_delicious{
+    background: url(images/stream/youtube.png) left top no-repeat;
+}
