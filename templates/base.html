@@ -22,6 +22,8 @@
 		{% compress 'js' %}
         <script type="text/javascript" src="{{ MEDIA_URL }}js/prettydate.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/stream.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/menu.js"></script>
         {% if google_analytics_js %}{{ google_analytics_js|safe }}{% endif %}
         {% block javascript %}{% endblock %}
         {% endcompress %}
@@ -36,37 +38,47 @@
         		{% include "flatpages/list.html" %}
             </div>
             <div class="clear"></div>
-		</div>	
+		</div>
+		<div id="secondary" class="container_12">
+		    <div class="grid12">
+		        <h3 id="site_menu_toggle">Menu</h3>
+		    </div>
+		    <div class="clear"></div>
+		    <div id="site_menu">
+		        <div id="left" class="stream grid_8">
+            	    <h4><a href="{{ "view_stream"|url }}" title="stream">Stream</a></h4>
+            	</div>
+            	<div id="right" class="grid_4">
+            	    <div class="grid_2 alpha">
+				        <div id="user-menu">
+				            <h4>User</h4>
+				            {% include "user-menu.html" %}
+				        </div>
+				        <div id="posts-user-menu">
+				            <h4>Posts</h4>
+					        {% include "posts/posts-user-menu.html" %}
+				        </div>
+				    </div>
+				    <div class="grid_2 omega">    
+				        <div id="tags">
+                            <h4>Tags</h4>
+				            {% include "posts/post-tags.html" %}
+				        </div>
+				        <div id="linkroll">
+				            <h4>Links</h4>
+				            {% include "links/linkroll.html" %}
+				        </div>
+				        {% block menus %}{% endblock %}
+				   </div>
+			    </div>
+			    <div id="site_menu_end" class="clear"></div>
+			</div>
+		</div>
     	<div id="primary" class="container_12">
     	    <div class="grid_12">
     			{% block main_content %}{% endblock %}
     		</div>
     		<div class="clear"></div>
-		</div>
-		<div id="secondary" class="container_12">
-		    <div id="left" class="stream grid_8">
-        	    <h4><a href="{{ "view_stream"|url }}" title="stream">Stream</a></h4>
-        	</div>
-        	<div id="right" class="grid_4">
-				<div id="user-menu">
-				    <h4>User</h4>
-				    {% include "user-menu.html" %}
-				</div>
-				<div id="posts-user-menu">
-				    <h4>Posts</h4>
-					{% include "posts/posts-user-menu.html" %}
-				</div>
-				<div id="tags">
-                    <h4>Tags</h4>
-				    {% include "posts/post-tags.html" %}
-				</div>
-				<div id="linkroll">
-				    <h4>Links</h4>
-				    {% include "links/linkroll.html" %}
-				</div>
-				{% block menus %}{% endblock %}
-			</div>
-			<div class="clear"></div>
 		</div>
 		<div id="footer">		
 			<p>

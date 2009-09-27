@@ -1,5 +1,10 @@
+#header{
+    margin-bottom: 1em;
+}
 #header, .post{
     margin-top: 1em;
+}
+.post{
     margin-bottom: 2em;
 }
 #pages_list{
@@ -12,6 +17,16 @@
     background: #EBECE4;
     padding-top: 1em;
     width: 100%;
+}
+h3#site_menu_toggle{
+    font-size: 100%;
+    margin: 0;
+    padding: 0 1em 1em 0;
+    text-align: right;
+}
+h3#site_menu_toggle.jqueryied{
+    color: #005AF2;
+    cursor: pointer;
 }
 .post h2, p.date{
     display:inline;
