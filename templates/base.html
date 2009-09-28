@@ -24,9 +24,9 @@
         <script type="text/javascript" src="{{ MEDIA_URL }}js/stream.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.scrollTo.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/menu.js"></script>
-        {% if google_analytics_js %}{{ google_analytics_js|safe }}{% endif %}
         {% block javascript %}{% endblock %}
         {% endcompress %}
+        {% if google_analytics_js %}{{ google_analytics_js|safe }}{% endif %}
 	</head>
 	<body>
 		<div id="header" class="container_12">
