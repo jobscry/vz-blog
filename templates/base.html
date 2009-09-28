@@ -8,18 +8,18 @@
         <meta name="{{ meta[0] }}" content="{{ meta[1] }}">
             {% endfor %}
         {% endif %}
-		<title>{{ blog_title }} :: Blog{% block page_title %}{% endblock %}</title>
+        <title>{{ blog_title }} :: Blog{% block page_title %}{% endblock %}</title>
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ blog_feedburner_url }}">
         {% compress 'css' %}
-		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all" charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.css" media="all" charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pygments.css" media="all" charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" media="all" charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" media="all" charset="utf-8">
-		{% endcompress %}
-		<script type="text/javascript"src="http://www.google.com/jsapi"></script>
-		<script type="text/javascript">google.load("jquery", "1.3.2");</script>
-		{% compress 'js' %}
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all" charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.css" media="all" charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pygments.css" media="all" charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" media="all" charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" media="all" charset="utf-8">
+        {% endcompress %}
+        <script type="text/javascript"src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript">google.load("jquery", "1.3.2");</script>
+        {% compress 'js' %}
         <script type="text/javascript" src="{{ MEDIA_URL }}js/prettydate.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/stream.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.scrollTo.js"></script>
