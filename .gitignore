@@ -2,5 +2,6 @@ settings.py
 manage.py
 admin-media
 mysite.fcgi
+urls.py
 *.pyc
 *.db
