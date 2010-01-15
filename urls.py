@@ -16,7 +16,6 @@ urlpatterns = patterns('',
 
     (r'^posts/', include('posts.urls')),
 	(r'^users/', include('users.urls')),
-	(r'^stream/', include('stream.urls')),
 
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/(.*)', admin.site.root),
