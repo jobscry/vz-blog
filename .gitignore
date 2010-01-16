@@ -5,3 +5,4 @@ mysite.fcgi
 urls.py
 *.pyc
 *.db
+.DS_Store
