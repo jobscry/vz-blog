@@ -1,21 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+<!DOCTYPE html>
+<html>
 	<head>
-	    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	    <meta charset="utf-8" />
         {% if extra_meta %}
             {% for meta in extra_meta %}
-        <meta name="{{ meta[0] }}" content="{{ meta[1] }}">
+        <meta name="{{ meta[0] }}" content="{{ meta[1] }}" />
             {% endfor %}
         {% endif %}
         <title>{{ blog_title }} :: Blog{% block page_title %}{% endblock %}</title>
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ blog_feedburner_url }}">
         {% compress 'css' %}
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all" charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.css" media="all" charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pygments.css" media="all" charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" media="all" charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" media="all" charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all" charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.css" media="all" charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pygments.css" media="all" charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" media="all" charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" media="all" charset="utf-8" />
         {% endcompress %}
         <script type="text/javascript"src="http://www.google.com/jsapi"></script>
         <script type="text/javascript">google.load("jquery", "1.4.0");</script>
