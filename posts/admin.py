@@ -45,14 +45,12 @@ class PostAdmin(admin.ModelAdmin):
         obj.author = request.user
         obj.save()
 
-def mark_list_as_spam(modeladmin, request, queryset):
+def mark_list_as_spam(PostAdmin, request, queryset):
     queryset.update(is_spam=True)
-    self.message_user(request, "Marked SPAM")
 mark_list_as_spam.short_description = "Mark selected as SPAM"
 
-def approve_list(modeladmin, request, queryset):
+def approve_list(PostAdmin, request, queryset):
     queryset.update(is_approved=True)
-    self.message_user(request, "Approved")
 approve_list.short_description = "Approve selected"
 
 class CommentAdmin(admin.ModelAdmin):
