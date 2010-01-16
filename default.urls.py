@@ -1,6 +1,9 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 from django.contrib.sitemaps import FlatPageSitemap
+from django.views.decorators.cache import cache_page
 from blog.posts.sitemaps import BlogSitemap
+from vz_stream.views import view_stream
 
 from django.contrib import admin
 admin.autodiscover()
@@ -16,6 +19,8 @@ urlpatterns = patterns('',
 
     (r'^posts/', include('posts.urls')),
 	(r'^users/', include('users.urls')),
+
+    (r'^stream/json/$', cache_page(view_stream, 60*15), {'mimetype': 'application/json'}),
 
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/(.*)', admin.site.root),
