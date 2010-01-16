@@ -9,16 +9,16 @@
         {% endif %}
         <title>{{ blog_title }} :: Blog{% block page_title %}{% endblock %}</title>
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ blog_feedburner_url }}">
-        {% compress 'css' %}
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all" charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.css" media="all" charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pygments.css" media="all" charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" media="all" charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" media="all" charset="utf-8" />
+        {% compress css %}
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pygments.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" media="all" />
         {% endcompress %}
-        <script type="text/javascript"src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
         <script type="text/javascript">google.load("jquery", "1.4.0");</script>
-        {% compress 'js' %}
+        {% compress js %}
         <script type="text/javascript" src="{{ MEDIA_URL }}js/prettydate.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/stream.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/menu.js"></script>
