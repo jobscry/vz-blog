@@ -1,5 +1,3 @@
-from jogging import logging
-
 from itertools import chain
 from django.conf import settings
 from django.http import HttpResponse
@@ -130,14 +128,11 @@ class Compressor(Extension):
         content = caller()
         if not c_settings.COMPRESS:
             return content
-        logging.info(kind)
         if kind == 'css':
             compressor = CssCompressor(content)
         if kind == 'js':
             compressor = JsCompressor(content)
-        logging.info(compressor)
         in_cache = cache.get(compressor.cachekey)
-        logging.info(compressor.output())
         if in_cache:
             return in_cache
         else:
@@ -157,7 +152,6 @@ class Compressor(Extension):
                     from traceback import format_exc
                     raise Exception(format_exc())
                 cache.set(in_progress_key, False, 300)
-            logging.info(output)
             return output
 
     def _get_compressor_output(self, compressor):
