@@ -1,3 +1,5 @@
+from jogging import logging
+
 from itertools import chain
 from django.conf import settings
 from django.http import HttpResponse
@@ -128,16 +130,34 @@ class Compressor(Extension):
         content = caller()
         if not c_settings.COMPRESS:
             return content
+        logging.info(kind)
         if kind == 'css':
             compressor = CssCompressor(content)
         if kind == 'js':
             compressor = JsCompressor(content)
+        logging.info(compressor)
         in_cache = cache.get(compressor.cachekey)
+        logging.info(compressor.output())
         if in_cache:
             return in_cache
         else:
-            output = self._get_compressor_output(compressor)
-            cache.set(compressor.cachekey, output, 86400) # rebuilds the cache once a day if nothign has changed.
+            # do this to prevent dog piling
+            in_progress_key = 'django_compressor.in_progress.%s' % compressor.cachekey
+            in_progress = cache.get(in_progress_key)
+            if in_progress:
+                while cache.get(in_progress_key):
+                    sleep(0.1)
+                output = cache.get(compressor.cachekey)
+            else:
+                cache.set(in_progress_key, True, 300)
+                try:
+                    output = compressor.output()
+                    cache.set(compressor.cachekey, output, 2591000) # rebuilds the cache every 30 days if nothign has changed.
+                except:
+                    from traceback import format_exc
+                    raise Exception(format_exc())
+                cache.set(in_progress_key, False, 300)
+            logging.info(output)
             return output
 
     def _get_compressor_output(self, compressor):
