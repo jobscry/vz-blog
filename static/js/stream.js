@@ -3,7 +3,6 @@ $(document).ready(function () {
         beforeSend: function(){
             $('div.stream').append('<span id="ajax-spinner-container">&nbsp;<img id="ajax-spinner" src="/media/images/ajax-spinner.gif" height="16" width="16" alt="ajax request in progress"></span>');
         },
-        cache: false,
         dataType: 'json',
         type: 'GET',
         url: '/stream/json/',
