@@ -3,6 +3,22 @@ from posts.models import Post, Comment
 from posts.forms import PostAdminForm
 
 class PostAdmin(admin.ModelAdmin):
+    class Media:
+        css = {
+            'all': (
+                "js/markitup/skins/markitup/style.css",
+                "js/markitup/sets/markdown/style.css"
+            )
+        }
+        js = (
+            "js/jquery.js",
+            "js/markitup/jquery.markitup.pack.js",
+            "js/markitup/sets/markdown/set.js"
+            "js/markitup.js"
+        )
+
+        
+
     form = PostAdminForm
     list_display = ('title', 'author', 'is_published', 'comment_status', 'num_moderation_comments', 'num_comments', 'num_spam_comments', 'published_on', 'created_on')
     prepopulated_fields = {"slug": ("title",)}
