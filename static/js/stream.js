@@ -6,10 +6,10 @@ $(document).ready(function () {
         cache: false,
         dataType: 'json',
         type: 'GET',
-        url: '/stream/ajax/',
+        url: '/stream/json/',
         success: function(items){
             $.each(items, function(i, item){
-               var elem = '<li class="stream stream_'+item.feed.toLowerCase()+'">'+item.title+' [<a href="'+item.link+'" title="link">#</a>] <span class="stream_published_on">'+prettyDate(item.published_on)+'</span></li>';
+               var elem = '<li class="stream stream_'+item.source.toLowerCase()+'">'+item.text+' <a href="'+item.url+'">#</a> - <span class="stream_published_on">'+prettyDate(item.created_on)+'</a></li>';
                if ($('ul.stream').length == 0){
                    $('div.stream').append('<ul class="stream">'+elem+'</ul>');
                } else {

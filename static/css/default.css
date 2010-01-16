@@ -12,6 +12,7 @@
 .menus{
     border-left: solid 1px #EBECE4;
     padding-left: 1em;
+    font-size: .75em;
 }
 .menus > div{
     border-bottom: solid 1px #EBECE4;
@@ -49,6 +50,7 @@ p.stream{
 }
 li.stream{
     padding-left: 20px;
+    font-size: 0.75em;
 }
 .stream_published_on{
     color: #838B8B;
