@@ -8,6 +8,8 @@ from tagging.utils import LOGARITHMIC
 from blog.posts.models import Post
 from blog.links.models import Link
 
+import blog
+
 def blog_info(request):
     linkroll = cache.get('blog_linkroll', None)
     if linkroll is None:
@@ -23,6 +25,7 @@ def blog_info(request):
         'blog_title': settings.BLOG_TITLE,
         'blog_copyright': settings.BLOG_COPYRIGHT,
         'blog_copyright_url': settings.BLOG_COPYRIGHT_URL,
+        'blog_version': blog.__version__,
         'blog_preview_length': settings.POST_PREVIEW_LENGTH,
         'blog_linkroll': linkroll,
         'blog_tags': tags,
