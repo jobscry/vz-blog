@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 from itertools import chain
 from django.conf import settings
 from django.http import HttpResponse

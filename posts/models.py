@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site

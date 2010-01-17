@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 from django.core.files import File
 from django.contrib.auth.modles import User
 from django.db import models

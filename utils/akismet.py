@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 # Version 0.2.0
 # 2009/06/18
 

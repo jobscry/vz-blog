@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 from django.contrib.flatpages.models import FlatPage
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect

@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 from django.conf import settings
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.sites.models import Site

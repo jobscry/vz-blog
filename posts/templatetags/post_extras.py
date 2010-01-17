@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 #http://www.martin-geber.com/thought/2007/10/27/markdown-syntax-highlighting-django/
 from django import template
 from django.template.defaultfilters import stringfilter

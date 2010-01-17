@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 #!/usr/bin/python
 #http://www.freewisdom.org/projects/python-markdown/CodeHilite
 #license: http://www.opensource.org/licenses/bsd-license.php

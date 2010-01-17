@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 from django.contrib import admin
 from posts.models import Post, Comment
 from posts.forms import PostAdminForm

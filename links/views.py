@@ -1,1 +1,1 @@
-# Create your views here.
+# -*- mode: python; coding: utf-8; -*-

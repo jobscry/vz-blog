@@ -1,3 +1,4 @@
+# -*- mode: python; coding: utf-8; -*-
 # Django settings for blog project.
 
 import os.path
