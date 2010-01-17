@@ -2,18 +2,12 @@
 
 {% block page_title %} :: {{ post.title }}{% endblock %}
 
-{% block javascript %}
-	{% if disqus %}
-
-	{% endif %}
-{% endblock %}
-
 {% block main_content %}
     {% if not post.is_published %}
     <h2>This post is not published yet.</h2>
     {% endif %}
 	{% if not disqus %}
-    {% set comment_list = post.approved_comments() %}
+    	{% set comment_list = post.approved_comments() %}
 	{% endif %}
     {% include "posts/individual-post.html" %}
     {% if related_posts %}
@@ -42,6 +36,7 @@
 	    {% endif %}
 	    </div>
 	{% else %}
+{{ disqus_iframe|safe }}
 {{ disqus_js|safe }}
 	{% endif %}
 {% endblock %}

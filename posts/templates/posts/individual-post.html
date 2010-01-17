@@ -15,7 +15,4 @@
     {% else %}
         {{ post.body|markdown("codehilite")|safe }}
     {% endif %}
-	{% if disqus %}
-{{ disqus_iframe|safe }}
-	{% endif %}
 </div>
