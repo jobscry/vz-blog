@@ -31,3 +31,13 @@ def google_analytics_js(request):
 
 def flatpage_list(request):
     return { 'flatpages': FlatPage.objects.all().order_by('title') }
+
+def disqus(request):
+    if settings.DISQUS:
+        return {
+            'disqus': True,
+            'disqus_iframe': settings.DISQUS_IFRAME,
+            'disqus_js': settings.DISQUS_JS
+        }
+    else:
+        return { 'disqus': False }
