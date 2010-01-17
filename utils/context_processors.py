@@ -33,7 +33,7 @@ def base_url(request):
     site = cache.get('current_site', None)
     if site is None:
         cache.set('current_site', Site.objects.get(id=settings.SITE_ID).domain, 60*15)
-        cache.get('current_site')
+        site = cache.get('current_site')
     return { 'base_url': 'http://%s'%site }
 
 def extra_meta(request):
