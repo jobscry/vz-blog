@@ -46,11 +46,7 @@ def google_analytics_js(request):
     return { 'google_analytics_js': settings.GOOGLE_ANALYTICS_JS }
 
 def flatpage_list(request):
-    fpages = cache.get('flatpages', None)
-    if fpages is None:
-        cache.set('flatpages', FlatPage.objects.all().order_by('title'), 60*15)
-        fpages = cache.get('flatpages')
-    return { 'flatpages': fpages }
+    return { 'flatpages':  FlatPage.objects.all().order_by('title') }
 
 def disqus(request):
     if settings.DISQUS:
