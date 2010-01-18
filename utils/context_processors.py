@@ -13,13 +13,13 @@ import blog
 def blog_info(request):
     linkroll = cache.get('blog_linkroll', None)
     if linkroll is None:
-        cache.set('blog_linkroll',  Link.objects.all(), 60*15)
-        linkroll = cache.get('blog_linkroll')
+        linkroll = Link.objects.all()
+        cache.set('blog_linkroll',  linkroll, 60*15)
 
     tags = cache.get('blog_tags', None)
     if tags is None:
-        cache.set('blog_tags',  Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution=LOGARITHMIC), 60*15)
-        tags = cache.get('blog_tags')
+        tags = Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution=LOGARITHMIC)
+        cache.set('blog_tags',  tags, 60*15)
     return { 
         'blog_tagline': settings.BLOG_TAGLINE,
         'blog_title': settings.BLOG_TITLE,
@@ -35,8 +35,9 @@ def blog_info(request):
 def base_url(request):
     site = cache.get('current_site', None)
     if site is None:
-        cache.set('current_site', Site.objects.get(id=settings.SITE_ID).domain, 60*15)
-        site = cache.get('current_site')
+        site = Site.objects.get(id=settings.SITE_ID).domain
+        cache.set('current_site', site, 60*15)
+
     return { 'base_url': 'http://%s'%site }
 
 def extra_meta(request):
@@ -46,7 +47,11 @@ def google_analytics_js(request):
     return { 'google_analytics_js': settings.GOOGLE_ANALYTICS_JS }
 
 def flatpage_list(request):
-    return { 'flatpages':  FlatPage.objects.all().order_by('title') }
+    flatpages = cache.get('flatpages_list', None)
+    if flatpages is None:
+        flatpages = FlatPage.objects.all().order_by('title')
+        cache.set('flatpages_list', flatpages, 60*15)
+    return { 'flatpages':  flatpages }
 
 def disqus(request):
     if settings.DISQUS:
