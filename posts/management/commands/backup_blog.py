@@ -10,12 +10,12 @@ class Command(NoArgsCommand):
     
     TODO: cleanup, add options
     """
-    help = 'Meant to be run as a Cron Job, backs up database data and local settings, emails to admins'
+    help = 'Meant to be run as a Cron Job, backs up database data, emails to admins'
 
     def handle_noargs(self, **options):
         diff = diffsettings.Command()
         dump = dumpdata.Command()
-        
+
         date = datetime.datetime.now().strftime('%b-%d-%y')
         text = 'blog backup '+date
         msg = EmailMessage(
@@ -29,12 +29,5 @@ class Command(NoArgsCommand):
                 'dump_'+date+'.json',
                 dump_data,
                 'application/json'
-            )
-        diff_data = diff.handle_noargs()
-        if diff_data:
-            msg.attach(
-                'diffsettigns_'+date+'.txt',
-                diff_data,
-                'text/plain'
             )
         msg.send()
