@@ -26,14 +26,14 @@ class Command(NoArgsCommand):
         dump_data = dump.handle()
         if dump_data:
             msg.attach(
-                'dump_'+date,
+                'dump_'+date+'.json',
                 dump_data,
                 'application/json'
             )
-        diff_data = diff.handle()
+        diff_data = diff.handle_noargs()
         if diff_data:
             msg.attach(
-                'diffsettigns_'+date,
+                'diffsettigns_'+date+'.txt',
                 diff_data,
                 'text/plain'
             )
