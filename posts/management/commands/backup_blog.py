@@ -21,7 +21,7 @@ class Command(NoArgsCommand):
         msg = EmailMessage(
             subject=text,
             body=text,
-            to=[addy[0] for addy in settings.ADMINS]
+            to=[addy[1] for addy in settings.ADMINS]
         )
         dump_data = dump.handle()
         if dump_data:
