@@ -11,8 +11,8 @@
 {% endif %}
 </div>
     {% if do_truncate %}
-        {{ post.body|markdown("codehilite")|truncatewords_html(blog_preview_length)|safe }}
+        {{ post.body|markdown("codehilite")|esv|truncatewords_html(blog_preview_length)|safe }}
     {% else %}
-        {{ post.body|markdown("codehilite")|safe }}
+        {{ post.body|markdown("codehilite")|esv|safe }}
     {% endif %}
 </div>

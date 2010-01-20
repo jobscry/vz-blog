@@ -102,3 +102,6 @@ li.stream{
 .stream_delicious{
     background: url(images/stream/youtube.png) left top no-repeat;
 }
+div.esv > h2{
+    font-size: 1.5em;
+}

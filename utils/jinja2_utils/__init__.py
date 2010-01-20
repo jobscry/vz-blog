@@ -54,8 +54,9 @@ def create_env():
     env.filters['naturalday'] = naturalday
     env.filters['apnumber'] = apnumber
 
-    from posts.templatetags.post_extras import markdown
-    env.filters['markdown'] = markdown
+    from posts.templatetags.post_extras import markdowner, esvapi
+    env.filters['markdown'] = markdowner
+    env.filters['esv'] = esvapi
 
     env.filters['url'] = url
     
