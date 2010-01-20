@@ -136,7 +136,6 @@ BLOG_TITLE = 'test blog'
 BLOG_TAGLINE = 'my thoughts and other miscellany'
 BLOG_COPYRIGHT = ''
 BLOG_COPYRIGHT_URL = ''
-BLOG_CODE_VERSION = '0.1b'
 BLOG_CODE_URL = ''
 MAX_COMMENT_DAYS = 60
 POSTS_PER_PAGE = 3
