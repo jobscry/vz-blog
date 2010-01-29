@@ -97,12 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django.contrib.sites',
-    'tagging',
-    'compressor',
-    'users',
-	'posts',
-	'links',
-	'stream',
+
 )
 
 AUTH_PROFILE_MODULE = 'users.profile'
@@ -124,20 +119,25 @@ DEFAULT_CHARSET = 'utf-8'
 FORCE_SCRIPT_NAME = ''
 
 INSTALLED_APPS += (
-    'django_extensions', 
+    'tagging',
+    'compressor',
+    'users',
+    'posts',
+    'links',
+    'stream',
+    'django_extensions',
+    'south',
 )
 
 CACHE_BACKEND = ''
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_SECONDS = 60 * 15
 
-AKISMET_API_KEY = ''
 BLOG_TITLE = 'test blog'
 BLOG_TAGLINE = 'my thoughts and other miscellany'
 BLOG_COPYRIGHT = ''
 BLOG_COPYRIGHT_URL = ''
 BLOG_CODE_URL = ''
-MAX_COMMENT_DAYS = 60
 POSTS_PER_PAGE = 3
 POST_PREVIEW_LENGTH = 200
 BLOG_NOTIFY_ON_COMMENT = True
