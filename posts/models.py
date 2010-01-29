@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models.signals import post_save
+from staticgenerator import quick_delete
 from tagging.fields import TagField
+from datetime import datetime
 
 class Post(models.Model):
     """
@@ -63,3 +65,12 @@ def auto_pingback(sender, instance, created, **kwargs):
             pass
 
 post_save.connect(auto_pingback, sender=Post)
+
+
+def static_delete(sender, instance, **kwargs):
+    quick_delete(instance, '/')
+
+post_save.connect(static_delete, sender=Post)
+
+from django.contrib.flatpages.models import FlatPage
+post_save.connect(static_delete, sender=FlatPage)
