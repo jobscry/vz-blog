@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.template import RequestContext
+from django.views.decorators.cache import cache_page
 from django.views.generic.list_detail import object_list
 from django.views.generic.date_based import archive_index, archive_year, archive_month
 from tagging.models import Tag, TaggedItem
@@ -14,7 +15,7 @@ from utils.jinja2_utils import render_to_response, render_to_string
 from posts.models import Post
 from posts.forms import SearchForm
 
-
+@cache_page(60 * 30)
 def posts_by_tag(request):
     """
     Posts by Tag
@@ -46,6 +47,7 @@ def posts_by_tag(request):
         request
     )
 
+@cache_page(60 * 30)
 def archive(request, year, month):
     """
     Archive View
@@ -109,6 +111,7 @@ def archive(request, year, month):
         request
     )
 
+@cache_page(60 * 30)
 def search_posts(request):
     """
     Search Posts
@@ -162,6 +165,7 @@ def search_posts(request):
         request
     )
 
+@cache_page(60 * 30)
 def posts_list(request, page_num):
     """
     Posts List
@@ -191,6 +195,7 @@ def posts_list(request, page_num):
         request
     )
 
+@cache_page(60 * 30)
 def view_post(request, slug):
     """
     View Post
