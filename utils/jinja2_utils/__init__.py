@@ -1,6 +1,7 @@
 # -*- mode: python; coding: utf-8; -*-
 from itertools import chain
 from django.conf import settings
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.template import TemplateDoesNotExist
 from django.template.context import get_standard_processors
@@ -30,7 +31,7 @@ def create_env():
     
     bytecode_cache=None
     try:
-        import re, memcache
+        import re, cmemcache
         m = re.match(
         "memcached://([.\w]+:\d+)", settings.CACHE_BACKEND
         )
@@ -44,7 +45,7 @@ def create_env():
 
     from django.template.defaultfilters import date
     env.filters['date'] = date
-
+    
     from django.template.defaultfilters import truncatewords_html, pluralize, removetags
     env.filters['truncatewords_html'] = truncatewords_html
     env.filters['makeplural'] = pluralize
@@ -95,10 +96,9 @@ def render_to_string(template_name, context=None, request=None,
                      processors=None):
     """Render a template into a string."""
     context = dict(context or {})
-    if request is not None:
-        context['request'] = request
-        for processor in chain(get_standard_processors(), processors or ()):
-            context.update(processor(request))
+    context['request'] = request
+    for processor in chain(get_standard_processors(), processors or ()):
+        context.update(processor(request))
     return get_template(template_name).render(context)
 
 def render_to_response(template_name, context=None, request=None,
