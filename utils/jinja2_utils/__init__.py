@@ -36,7 +36,7 @@ def create_env():
         "memcached://([.\w]+:\d+)", settings.CACHE_BACKEND
         )
         if m:
-            mc = memcache.Client([m.group(1)], debug=0)
+            mc = cmemcache.Client([m.group(1)], debug=0)
             bytecode_cache = MemcachedBytecodeCache(mc)
     except ImportError:
         pass
