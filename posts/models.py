@@ -15,12 +15,12 @@ class Post(models.Model):
     Post model for blog
     """
     author = models.ForeignKey(User)
-    title = models.CharField(max_length="255")
+    title = models.CharField(max_length="255", db_index=True)
     slug = models.SlugField(unique=True)
     tags = TagField()
     body = models.TextField()
     update_pingbacks = models.BooleanField(default=False, help_text="Automagically discover and update pingbacks?")
-    is_published = models.BooleanField("Published", default=False, help_text="Publish this post?")
+    is_published = models.BooleanField("Published", default=False, help_text="Publish this post?", db_index=True)
     published_on = models.DateTimeField("Date Published", blank=True, null=True, help_text="Manually change the date this post was published on.")
     created_on = models.DateTimeField("Date Created", auto_now_add=True)
 
