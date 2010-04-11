@@ -48,8 +48,11 @@ class LatestPosts(Feed):
         current_site = Site.objects.get(id=settings.SITE_ID)
         return 'http://%s%s'%(current_site.domain, item.get_absolute_url())
 
-    def item_author(self, item):
+    def item_author_name(self, item):
         return item.author.name
+
+    def item_author_email(self, item):
+        return item.author.email
 
     def item_pubdate(self, item):
         return item.published_on
