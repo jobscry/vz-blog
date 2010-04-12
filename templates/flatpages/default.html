@@ -2,9 +2,10 @@
 
 {% block page_title %} :: {{ flatpage.title }}{% endblock %}
 
+{% load markup %}
 {% block main_content %}
 	<div class="page">
     	<h2>{{ flatpage.title }}</h2>
-        {{ flatpage.content|markdown("codehilite")|safe }}
+        {{ flatpage.content|markdown:"codehilite"|safe }}
     </div>
 {% endblock %}
