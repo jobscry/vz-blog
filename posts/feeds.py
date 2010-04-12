@@ -49,7 +49,7 @@ class LatestPosts(Feed):
         return 'http://%s%s'%(current_site.domain, item.get_absolute_url())
 
     def item_author_name(self, item):
-        return item.author.name
+        return item.author.get_full_name()
 
     def item_author_email(self, item):
         return item.author.email
