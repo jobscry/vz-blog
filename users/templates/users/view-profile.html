@@ -7,10 +7,10 @@
 <h2>{{ this_user }}'s Profile</h2>
 	{% endif %}
 	{% if user == this_user %}
-<p><a href="{{ "edit_profile"|url(this_user.username) }}" title="edit my profile">Edit My Profile</a></p>
+<p><a href="{% url edit_profile this_user.username %}" title="edit my profile">Edit My Profile</a></p>
 	{% else %}
 		{% if perms.users.can_change %}
-<p><a href="{{ "edit_profile"|url(this_user.username) }}" title="edit profile">Edit Profile</a></p>
+<p><a href="{% url edit_profile this_user.username %}" title="edit profile">Edit Profile</a></p>
 		{% endif %}
 	{% endif %}
 <dl>

@@ -1,7 +1,8 @@
+{% load humanize %}
 <ul>
     {% for post in posts_list %}
 	<li>
-		<a href="{{ post.get_absolute_url() }}" title="{{ post.title }}">{{ post.title }}</a>, {{ post.published_on|naturalday }}
+		<a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a>, {{ post.published_on|naturalday }}
 	</li>
     {% endfor %}
 </ul>

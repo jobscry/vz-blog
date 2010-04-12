@@ -8,15 +8,18 @@
 
 {% block main_content %}
 <h2>Search</h2>
-<form method="get" action="{{ "search_posts"|url }}">
-{{ form.as_p()|safe }}
+<form method="get" action="{% url search_posts %}">
+{{ form.as_p|safe }}
 <p><input id="submit-button" type="submit" value="Go" /></p>
 </form>
 <div id="search-results">
 {% if search_string %}
-<p>Found {{ posts.count() }} post{{ posts.count|makeplural }} with <em>{{ search_string }}</em>.</p>
-{% set posts_list = posts %}
-    {% include "posts/ul-posts.html" %}
+{% with posts.count as count %}
+<p>Found {{ count }} post{{ count|pluralize }} with <em>{{ search_string }}</em>.</p>
+{% endwith %}
+	{% with posts as posts_list %}
+    	{% include "posts/ul-posts.html" %}
+	{% endwith %}
 {% endif %}
 </div>
 {% endblock %}

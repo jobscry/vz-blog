@@ -7,16 +7,19 @@
     {% endif %}
 {% endblock %}
 
+{% load humanize %}
 {% block main_content %}
 <h2>Tags</h2>
 <p>
     {% for post_tag in post_tags %}
-<a href="{{ "posts_by_tag"|url }}?tag={{ post_tag }}" rel="tag" class="tag_{{ post_tag.font_size }}">{{ post_tag }} ({{ post_tag.count }})</a> 
+<a href="{% url posts_by_tag %}?tag={{ post_tag }}" rel="tag" class="tag_{{ post_tag.font_size }}">{{ post_tag }} ({{ post_tag.count }})</a> 
     {% endfor %}
 </p>
 
     {% if tag %}
-<h3>{{ posts_list.count()|apnumber }} post{{ posts_list.count()|makeplural }} tagged <em>{{ tag }}</em></h3>
+{% with posts_list.count as count %}
+<h3>{{ count|apnumber|title }} post{{ count|pluralize }} tagged <em>{{ tag }}</em></h3>
+{% endwith %}
     {% include "posts/ul-posts.html" %}
     {% endif %}
 {% endblock %}

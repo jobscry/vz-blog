@@ -4,18 +4,15 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.sites.models import Site
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_list_or_404, get_object_or_404, render_to_response
 from django.template import RequestContext
-from django.views.decorators.cache import cache_page
 from django.views.generic.list_detail import object_list
 from django.views.generic.date_based import archive_index, archive_year, archive_month
 from tagging.models import Tag, TaggedItem
 from tagging.utils import LINEAR
-from utils.jinja2_utils import render_to_response, render_to_string
 from posts.models import Post
 from posts.forms import SearchForm
 
-@cache_page(60 * 30)
 def posts_by_tag(request):
     """
     Posts by Tag
@@ -44,10 +41,9 @@ def posts_by_tag(request):
             'post_tags': Tag.objects.cloud_for_model(Post, steps=10, min_count=1, distribution=LINEAR),
             'posts_list': posts,
         },
-        request
+        context_instance=RequestContext(request)
     )
 
-@cache_page(60 * 30)
 def archive(request, year, month):
     """
     Archive View
@@ -76,7 +72,7 @@ def archive(request, year, month):
         return render_to_response(
             'posts/archive-index.html',
             { 'date_list': queryset.dates('published_on', 'year')[::-1] },
-            request
+            context_instance=RequestContext(request)
         )
     if month is None:
         return render_to_response(
@@ -85,7 +81,7 @@ def archive(request, year, month):
                 'date_list': queryset.filter(published_on__year=year).dates('published_on', 'month'),
                 'year': year,
             },
-            request
+            context_instance=RequestContext(request)
         )
 
     try:
@@ -108,10 +104,9 @@ def archive(request, year, month):
             'posts_list': queryset.filter(**lookup_kwargs),
             'month': date
         },
-        request
+        context_instance=RequestContext(request)
     )
 
-@cache_page(60 * 30)
 def search_posts(request):
     """
     Search Posts
@@ -162,10 +157,9 @@ def search_posts(request):
             'search_string': search_string,
             'posts': posts,
         },
-        request
+        context_instance=RequestContext(request)
     )
 
-@cache_page(60 * 30)
 def posts_list(request, page_num):
     """
     Posts List
@@ -190,12 +184,12 @@ def posts_list(request, page_num):
         {
             'post_list':  page.object_list,
             'page_obj': page,
-            'paginator': paginator
+            'paginator': paginator,
+            'do_truncate': True,
         },
-        request
+        context_instance=RequestContext(request)
     )
 
-@cache_page(60 * 30)
 def view_post(request, slug):
     """
     View Post
@@ -224,5 +218,5 @@ def view_post(request, slug):
             'post': post,
             'related_posts': TaggedItem.objects.get_union_by_model(Post, post.tags).filter(is_published=True).exclude(pk=post.pk),
         },
-        request
+        context_instance=RequestContext(request)
     )

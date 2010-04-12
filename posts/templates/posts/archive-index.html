@@ -6,7 +6,7 @@
 <h2>Archive</h2>
 <ul>
     {% for year in date_list %}
-	<li><a href="{{ "archive_year"|url(year.year) }}" title="archive for {{ year.year }}">{{ year.year }}</a></li>
+	<li><a href="{% url archive_year year.year %}" title="archive for {{ year.year }}">{{ year.year }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

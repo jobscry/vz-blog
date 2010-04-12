@@ -1,7 +1,7 @@
 {% if blog_tags.count > 0 %}
 <ul class="menu">
-{% for tag in blog_tags[:10] %}
-    <li><a href="{{ "posts_by_tag"|url }}?tag={{ tag }}" rel="tag">{{ tag }}</a> ({{ tag.count }})</li>
+{% for tag in blog_tags %}
+    <li><a href="{% url posts_by_tag %}?tag={{ tag }}" rel="tag">{{ tag }}</a> ({{ tag.count }})</li>
 {% endfor %}
 </ul>
 {% endif %}

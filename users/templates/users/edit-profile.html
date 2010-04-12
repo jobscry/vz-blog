@@ -7,7 +7,7 @@
 <h2>Editing {{ this_user }}'s Profile</h2>
 	{% endif %}
 
-<form action="{{ "edit_profile"|url(this_user.username) }}" method="post">
-{{ this_user_form.as_p()|safe }}
+<form action="{% url edit_profile this_user.username %}" method="post">
+{{ this_user_form.as_p|safe }}
 <p><input type="submit" value="Save Profile" /></p>
 {% endblock %}

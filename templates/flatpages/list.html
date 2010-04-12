@@ -2,7 +2,7 @@
     <ul>
     {% for page in flatpages %}
         <li>
-            <a href="{{ page.get_absolute_url() }}" title="{{ page.title }}">{{ page.title }}</a>
+            <a href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a>
         {% if not loop.last %}
             |
         {% endif %}
