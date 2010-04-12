@@ -48,28 +48,3 @@ def edit_profile(request, username):
 		},
 		context_instance=RequestContext(request)
 	)
-
-def login(request):
-    from django.contrib.auth import authenticate, login
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect(settings.LOGIN_REDIRECT_URL)
-                else:
-                    return HttpResponseForbidden('Your account is disabled')
-            else:
-                return HttpResponseForbidden('User does not exist')
-    else:
-        form = LoginForm()
-    
-    return render_to_response(
-        'users/login.html',
-        { 'form': form },
-        context_instance=RequestContext(request)
-    )
