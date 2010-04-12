@@ -2,8 +2,8 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect, HttpResponseForbidden
-from django.shortcuts import get_list_or_404, get_object_or_404, render_to_response
+from django.http import HttpResponseNotAllowed, HttpResponseForbidden
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
 from users.models import Profile
 from users.forms import UserForm, LoginForm
@@ -36,7 +36,7 @@ def edit_profile(request, username):
 		this_user_form = UserForm(request.POST, instance=user)
 		if this_user_form.is_valid():
 			this_user_form.save()
-			return HttpResponseRedirect(profile.get_absolute_url())
+			return redirect(profile)
 	else:
 		this_user_form = UserForm(instance=user)
 
@@ -60,7 +60,7 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+                    return redirect(settings.LOGIN_REDIRECT_URL)
                 else:
                     return HttpResponseForbidden('Your account is disabled')
             else:
