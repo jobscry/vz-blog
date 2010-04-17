@@ -17,7 +17,7 @@
 </p>
 
     {% if tag %}
-{% with posts_list.count as count %}
+{% with post_list.count as count %}
 <h3>{{ count|apnumber|title }} post{{ count|pluralize }} tagged <em>{{ tag }}</em></h3>
 {% endwith %}
     {% include "posts/ul-posts.html" %}
