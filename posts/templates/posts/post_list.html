@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+	{% for post in post_list %}
+		{% include "posts/individual-post.html" %}
+	{% endfor %}
+	{% if is_paginated %}
+    	{% include "posts/post-list-pagination.html" %}
+	{% endif %}
+{% endblock %}
