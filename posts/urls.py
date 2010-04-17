@@ -25,19 +25,22 @@ feeds = {
     #'tags': PostsByTag,
 }
 
-from django.views.generic import list_detail
-
 urlpatterns += patterns('',
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
-    url(r'', list_detail.object_list, 
-        {'queryset': Post.objects.filter(is_published=True), 'paginate_by': settings.POSTS_PER_PAGE,
-        'template_object_name': 'post'},
-        name='post_list'
-    )
 )
 
 urlpatterns += patterns('posts.views',
 	url(r'search/$', 'search_posts', name="search_posts"),
 	url(r'tags/$', 'posts_by_tag', name="posts_by_tag"),
 	url(r'(?P<slug>[\w\-]+)/$', 'view_post', name="view_post"),
+)
+
+from django.views.generic import list_detail
+
+urlpatterns += patterns('',
+    url(r'', list_detail.object_list, 
+        {'queryset': Post.objects.filter(is_published=True), 'paginate_by': settings.POSTS_PER_PAGE,
+        'template_object_name': 'post'},
+        name='post_list'
+    )
 )
