@@ -1,24 +1,43 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.conf import settings
 from django.conf.urls.defaults import *
-from feeds import LatestPosts
+from posts.feeds import LatestPosts
+from posts.models import Post
+
+from django.views.generic import date_based
+
+archive = {
+    'queryset': Post.objects.filter(is_published=True),
+    'date_field': 'published_on',
+    'allow_empty': True,
+    'template_object_name': 'post'
+}
+
+urlpatterns = patterns('',
+    url(r'archive/$', date_based.archive_index, archive, name='archive_index'),
+    url(r'archive/(?P<year>\d{4})/$', date_based.archive_year, archive, name='archive_year'),
+    url(r'archive/(?P<year>\d{4})/(?P<month>\d{1,2})', date_based.archive_month,
+        dict({'month_format': '%m'}, **archive), name='archive_month')
+)
 
 feeds = {
     'latest': LatestPosts,
     #'tags': PostsByTag,
 }
 
-urlpatterns = patterns('',
+from django.views.generic import list_detail
+
+urlpatterns += patterns('',
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    url(r'', list_detail.object_list, 
+        {'queryset': Post.objects.filter(is_published=True), 'paginate_by': settings.POSTS_PER_PAGE,
+        'template_object_name': 'post'},
+        name='post_list'
+    )
 )
 
 urlpatterns += patterns('posts.views',
-	url(r'archive/$', 'archive', { 'year': None, 'month': None, }, name="archive_index"),
-	url(r'archive/(?P<year>\d{4})$', 'archive', { 'month': None, }, name="archive_year"),
-	url(r'archive/(?P<year>\d{4})/(?P<month>\d{1,2})$', 'archive', name="archive_month"),
 	url(r'search/$', 'search_posts', name="search_posts"),
 	url(r'tags/$', 'posts_by_tag', name="posts_by_tag"),
-    url(r'page(?P<page_num>[0-9]+)/$', 'posts_list', name="posts_list_page"),
 	url(r'(?P<slug>[\w\-]+)/$', 'view_post', name="view_post"),
-    url(r'$', 'posts_list', { 'page_num': 1, }, name="posts_list"),
 )
