@@ -7,7 +7,7 @@ from posts.models import Post
 from django.views.generic import date_based
 
 archive = {
-    'queryset': Post.objects.filter(is_published=True),
+    'queryset': Post.objects.filter(is_published=True).only('title', 'slug', 'published_on'),
     'date_field': 'published_on',
     'allow_empty': True,
     'template_object_name': 'post'
