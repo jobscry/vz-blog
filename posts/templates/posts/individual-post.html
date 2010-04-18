@@ -3,7 +3,7 @@
 <h2><a href="{{ base_url }}{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
 <p class="date">{{ post.published_on|naturalday }}</p>
 <div class="meta">
-    <p>
+    <p>by: <em>{{ post.author.username }}</em> | 
 {% tags_for_object post as tags %}
     tagged: {% for tag in tags %}<a href="{% url posts_by_tag %}?tag={{ tag }}" rel="tag">{{ tag }}</a> {% endfor %}| 
 {% if disqus %}

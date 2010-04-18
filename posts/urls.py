@@ -39,8 +39,10 @@ from django.views.generic import list_detail
 
 urlpatterns += patterns('',
     url(r'', list_detail.object_list, 
-        {'queryset': Post.objects.filter(is_published=True), 'paginate_by': settings.POSTS_PER_PAGE,
-        'template_object_name': 'post'},
-        name='post_list'
+        {'queryset': Post.objects.filter(is_published=True).only(
+            'title', 'slug', 'author', 'published_on', 'body', 'tags'), 
+            'paginate_by': settings.POSTS_PER_PAGE,
+            'template_object_name': 'post', 'extra_context': {'do_truncate': True}},
+            name='post_list'
     )
 )
