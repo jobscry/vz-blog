@@ -14,12 +14,8 @@
 </form>
 <div id="search-results">
 {% if search_string %}
-{% with posts.count as count %}
-<p>Found {{ count }} post{{ count|pluralize }} with <em>{{ search_string }}</em>.</p>
-{% endwith %}
-	{% with posts as posts_list %}
-    	{% include "posts/ul-posts.html" %}
-	{% endwith %}
+<p>Found {{ post_list|length }} post{{ post_list|length|pluralize }} with <em>{{ search_string }}</em>.</p>
+{% include "posts/ul-posts.html" %}
 {% endif %}
 </div>
 {% endblock %}

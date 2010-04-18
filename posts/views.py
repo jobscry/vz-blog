@@ -66,20 +66,20 @@ def search_posts(request):
     search_string = request.GET.get('search_string', None)
     if search_string != None:
         form =     SearchForm(request.GET)
-        posts = Post.objects.filter(
+        post_list = Post.objects.filter(
             Q(is_published=True),            
             Q(title__contains=search_string) | Q(body__contains=search_string)
-        )
+        ).only('title', 'slug', 'published_on')
     else:
         form =  SearchForm()
-        posts = None
+        post_list = None
 
     if request.is_ajax():
         from django.core import serializers
         if posts != None:
             data = serializers.serialize(
                 'json',
-                posts, 
+                post_list, 
                 fields=('title', 'slug', 'published_on')
         )
         else:
@@ -93,7 +93,7 @@ def search_posts(request):
         {
             'form': form,
             'search_string': search_string,
-            'post_list': posts,
+            'post_list': post_list,
         },
         context_instance=RequestContext(request)
     )
