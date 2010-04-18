@@ -1,4 +1,4 @@
-{% if blog_tags.count > 0 %}
+{% if blog_tags %}
 <ul class="menu">
 {% for tag in blog_tags %}
     <li><a href="{% url posts_by_tag %}?tag={{ tag }}" rel="tag">{{ tag }}</a> ({{ tag.count }})</li>
