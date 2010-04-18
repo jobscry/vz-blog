@@ -14,7 +14,9 @@
 </form>
 <div id="search-results">
 {% if search_string %}
-<p>Found {{ post_list|length }} post{{ post_list|length|pluralize }} with <em>{{ search_string }}</em>.</p>
+{% with post_list|length as count %}
+<p>Found {{ count }} post{{ count|pluralize }} with <em>{{ search_string }}</em>.</p>
+{% endwith %}
 {% include "posts/ul-posts.html" %}
 {% endif %}
 </div>

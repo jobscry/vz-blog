@@ -17,7 +17,9 @@
 </p>
 
     {% if tag %}
-<h3>{{ post_list|length|apnumber|title }} post{{ post_list|length|pluralize }} tagged <em>{{ tag }}</em></h3>
+{% with post_list|length as count %}
+<h3>{{ count|apnumber|title }} post{{ count|pluralize }} tagged <em>{{ tag }}</em></h3>
+{% endwith %}
     {% include "posts/ul-posts.html" %}
     {% endif %}
 {% endblock %}

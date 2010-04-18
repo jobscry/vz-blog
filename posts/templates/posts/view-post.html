@@ -9,8 +9,10 @@
     {% endif %}
     {% include "posts/individual-post.html" %}
     {% if related_posts %}
+	{% with related_posts|length as count %}
     <div id="related_posts" class="post">
-        <h3>{{ related_posts|length|apnumber|title }} Related Post{{ related_posts|length|pluralize }}</h3>
+        <h3>{{ count|apnumber|title }} Related Post{{ count|pluralize }}</h3>
+{% endwith %}
         <ul>
         {% for related_post in related_posts %}
             <li><a href="{{ related_post.get_absolute_url }}" title="{{ related_post.title }}">{{ related_post.title }}</a> - {{ related_post.published_on|naturalday }}</li>
