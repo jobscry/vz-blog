@@ -62,6 +62,8 @@ TEMPLATE_LOADERS = (
     )),
 )
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
