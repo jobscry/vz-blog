@@ -124,7 +124,7 @@ def view_post(request, slug):
         'posts/view-post.html',
         {
             'post': post,
-            'related_posts': TaggedItem.objects.get_union_by_model(Post, post.tags).filter(is_published=True).exclude(pk=post.pk),
+            'related_posts': TaggedItem.objects.get_union_by_model(Post, post.tags).filter(is_published=True).only('title', 'slug', 'published_on').exclude(pk=post.pk),
         },
         context_instance=RequestContext(request)
     )
