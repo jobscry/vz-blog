@@ -1,12 +1,7 @@
 {% extends "base.html" %}
-
 {% block page_title %}
- :: Tags
-    {% if tag %}
- :: {{ tag }}    
-    {% endif %}
+:: Tags{% if tag %} :: {{ tag }}{% endif %}
 {% endblock %}
-
 {% load humanize %}
 {% block main_content %}
 <h2>Tags</h2>
@@ -15,11 +10,10 @@
 <a href="{% url posts_by_tag %}?tag={{ post_tag }}" rel="tag" class="tag_{{ post_tag.font_size }}">{{ post_tag }} ({{ post_tag.count }})</a> 
     {% endfor %}
 </p>
-
     {% if tag %}
 {% with post_list|length as count %}
 <h3>{{ count|apnumber|title }} post{{ count|pluralize }} tagged <em>{{ tag }}</em></h3>
 {% endwith %}
-    {% include "posts/ul-posts.html" %}
+{% include "posts/ul-posts.html" %}
     {% endif %}
 {% endblock %}

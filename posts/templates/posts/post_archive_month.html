@@ -1,9 +1,6 @@
 {% extends "base.html" %}
-
 {% block page_title %} :: Archive :: {{ month.year }} :: {{ month|date:"F" }}{% endblock %}
-
 {% block main_content %}
-
 <h2>
 	<a href="{% url archive_index %}" title="back to archive">Archive</a>
 	&gt; <a href="{% url archive_year month.year %}" title="back to archive for {{ month.year }}">{{ month.year }}</a>

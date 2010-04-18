@@ -13,7 +13,7 @@ import blog
 def blog_info(request):
     linkroll = cache.get('blog_linkroll', None)
     if linkroll is None:
-        linkroll = Link.objects.all()
+        linkroll = Link.objects.all().only('title', 'url', 'extra')
         cache.set('blog_linkroll',  linkroll, 60*15)
 
     tags = cache.get('blog_tags', None)

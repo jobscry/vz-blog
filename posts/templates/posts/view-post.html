@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
 {% block page_title %} :: {{ post.title }}{% endblock %}
-
 {% load humanize %}
 {% block main_content %}
     {% if not post.is_published %}
@@ -20,8 +18,8 @@
         </ul>
     </div>
     {% endif %}
-	{% if disqus %}
+{% if disqus %}
 {{ disqus_iframe|safe }}
 {{ disqus_js|safe }}
-	{% endif %}
+{% endif %}
 {% endblock %}

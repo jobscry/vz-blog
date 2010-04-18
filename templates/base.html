@@ -1,15 +1,13 @@
-{% load compress %}
 <!DOCTYPE html>
 <html>
 	<head>
-	    <meta charset="utf-8" />
-        {% if extra_meta %}
-            {% for meta in extra_meta %}
-        <meta name="{{ meta.0 }}" content="{{ meta.1 }}" />
-            {% endfor %}
-        {% endif %}
+	    <meta charset="utf-8">
+        {% if extra_meta %}{% for meta in extra_meta %}
+        <meta name="{{ meta.0 }}" content="{{ meta.1 }}">
+        {% endfor %}{% endif %}
         <title>{{ blog_title }} :: Blog{% block page_title %}{% endblock %}</title>
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ blog_feedburner_url }}">
+{% load compress %}
         {% compress css %}
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all">
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.production.css" media="all">
@@ -25,22 +23,22 @@
         <script type="text/javascript" src="{{ MEDIA_URL }}js/menu.js"></script>
         {% block javascript %}{% endblock %}
         {% endcompress %}
-        {% if google_analytics_js %}{{ google_analytics_js|safe }}{% endif %}
+{% if google_analytics_js %}{{ google_analytics_js|safe }}{% endif %}
 	</head>
 	<body>
 		<div id="header" class="container_12">
-		    <div class="grid_4">					
+		    <div class="grid_4">
 	    		<h1><a href="/" title="{{ blog_title }}">{{ blog_title }}</a></h1>
     			<p class="tagline"><span class="dquo">&#8220;</span>{{ blog_tagline }}&#8221;</p>
 	        </div>
-	        <div id="pages_list" class="grid_8">		
+	        <div id="pages_list" class="grid_8">
         		{% include "flatpages/list.html" %}
             </div>
             <div class="clear"></div>
 		</div>
     	<div id="primary" class="container_12">
     	    <div class="grid_7">
-    			{% block main_content %}{% endblock %}
+{% block main_content %}{% endblock %}
     		</div>
 			<div class="grid_3">
 				<div class="stream"></div>
@@ -49,32 +47,30 @@
 				<div class="menus">
 			        <div id="user-menu">
 			            <h4>User</h4>
-			            {% include "user-menu.html" %}
+{% include "user-menu.html" %}
 			        </div>
 			        <div id="posts-user-menu">
 			            <h4>Posts</h4>
-				        {% include "posts/posts-user-menu.html" %}
+{% include "posts/posts-user-menu.html" %}
 			        </div>
 			        <div id="tags">
 	                    <h4>Tags</h4>
-			            {% include "posts/post-tags.html" %}
+{% include "posts/post-tags.html" %}
 			        </div>
 			        <div id="linkroll">
 			            <h4>Links</h4>
-			            {% include "links/linkroll.html" %}
+{% include "links/linkroll.html" %}
 			        </div>
-			        {% block menus %}{% endblock %}
+{% block menus %}{% endblock %}
 				</div>
 			</div>
     		<div class="clear"></div>
 		</div>
 		<div id="footer" class="container_12">
-			<div class="grid_12">		
+			<div class="grid_12">
 				<p>
 			    	<small>
-			        	<a href="{{ blog_copyright_url }}" title="{{ blog_copyright|safe }}">{{ blog_copyright|safe }}</a> | 
-			        	<a href="http://github.com/jobscry/vz-blog/tree/master" title="git repository">vz-blog</a>
-			         	<em>v{{ blog_version }}</em> | <a href="http://validator.w3.org/check?uri=referer">valid HTML</a>
+			        	<a href="{{ blog_copyright_url }}" title="{{ blog_copyright|safe }}">{{ blog_copyright|safe }}</a> | <a href="http://github.com/jobscry/vz-blog/tree/master" title="git repository">vz-blog</a> <em>v{{ blog_version }}</em> | <a href="http://validator.w3.org/check?uri=referer">valid HTML</a>
 			    	</small>
                 	<a href="http://www.djangoproject.com/">
                     	<img src="{{ MEDIA_URL }}images/djangosite80x15.png" alt="A Django site." title="A Django site.">
