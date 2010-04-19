@@ -76,7 +76,7 @@ def search_posts(request):
 
     if request.is_ajax():
         from django.core import serializers
-        if posts != None:
+        if post_list != None:
             data = serializers.serialize(
                 'json',
                 post_list, 
