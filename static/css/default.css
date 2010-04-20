@@ -54,7 +54,7 @@ li.stream{
     color: #838B8B;
     font-style: italic;
 }
-#container li {
+div.stream li {
    background: url(images/stream_sprite.png) no-repeat top left;
 }
 .stream_delicious { background-position: 0 0; width: 16px; height: 16px; } 
