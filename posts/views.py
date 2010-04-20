@@ -69,7 +69,7 @@ def search_posts(request):
         post_list = Post.objects.filter(
             Q(is_published=True),            
             Q(title__contains=search_string) | Q(body__contains=search_string)
-        )
+        ).only('title', 'slug', 'published_on')
     else:
         form =  SearchForm()
         post_list = None
