@@ -54,68 +54,26 @@ li.stream{
     color: #838B8B;
     font-style: italic;
 }
-.stream_digg{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -26px;
+#container li {
+   background: url(images/stream_sprite.png) no-repeat top left;
 }
-.stream_delicious{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px 0px
-}
-.stream_facebook{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -52px;
-}
-.stream_rss{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -78px;
-}
-.stream_flickr{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -104px;
-}
-.stream_google{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -130px;
-}
-.stream_magnolia{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -156px;
-}
-.stream_netvibes{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -182px;
-}
-.stream_newsvine{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -208px;
-}
-.stream_picasa{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -234px;
-}
-.stream_reddit{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -260px;
-}
-.stream_technorati{
-    background: url(images/stream/stream_sprite.png) left top no-repeat;
-    background-position: 0px -286px;
-}
-.stream_twitter{
-    background: url(images/stream/twitter.png) left top no-repeat;
-    background-position: 0px -312px;
-}
-.stream_vimeo{
-    background: url(images/stream/vimeo.png) left top no-repeat;
-    background-position: 0px -338px;
-}
-.stream_yelp{
-    background: url(images/stream/yelp.png) left top no-repeat;
-}
-.stream_delicious{
-    background: url(images/stream/youtube.png) left top no-repeat;
-}
+.stream_delicious { background-position: 0 0; width: 16px; height: 16px; } 
+.stream_digg { background-position: 0 -66px; width: 16px; height: 16px; } 
+.stream_facebook { background-position: 0 -132px; width: 16px; height: 16px; } 
+.stream_feed { background-position: 0 -198px; width: 16px; height: 16px; } 
+.stream_flickr { background-position: 0 -264px; width: 16px; height: 16px; } 
+.stream_google { background-position: 0 -330px; width: 16px; height: 16px; } 
+.stream_magnolia { background-position: 0 -396px; width: 16px; height: 16px; } 
+.stream_netvibes { background-position: 0 -462px; width: 16px; height: 16px; } 
+.stream_newsvine { background-position: 0 -528px; width: 16px; height: 16px; } 
+.stream_picasa { background-position: 0 -594px; width: 16px; height: 16px; } 
+.stream_reddit { background-position: 0 -660px; width: 16px; height: 16px; } 
+.stream_technorati { background-position: 0 -726px; width: 16px; height: 16px; } 
+.stream_twitter { background-position: 0 -792px; width: 16px; height: 16px; } 
+.stream_vimeo { background-position: 0 -858px; width: 16px; height: 16px; } 
+.stream_yelp { background-position: 0 -924px; width: 16px; height: 16px; } 
+.stream_youtube { background-position: 0 -990px; width: 16px; height: 16px; } 
+
 div.esv > h2{
     font-size: 1.5em;
 }
