@@ -55,46 +55,60 @@ li.stream{
     font-style: italic;
 }
 .stream_digg{
-    background: url(images/stream/digg.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -26px;
 }
 .stream_delicious{
-    background: url(images/stream/delicious.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px 0px
 }
 .stream_facebook{
-    background: url(images/stream/facebook.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -52px;
 }
 .stream_rss{
-    background: url(images/stream/feed.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -78px;
 }
 .stream_flickr{
-    background: url(images/stream/flickr.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -104px;
 }
 .stream_google{
-    background: url(images/stream/google.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -130px;
 }
 .stream_magnolia{
-    background: url(images/stream/magnolia.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -156px;
 }
 .stream_netvibes{
-    background: url(images/stream/netvibes.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -182px;
 }
 .stream_newsvine{
-    background: url(images/stream/newsvine.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -208px;
 }
 .stream_picasa{
-    background: url(images/stream/picasa.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -234px;
 }
 .stream_reddit{
-    background: url(images/stream/reddit.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -260px;
 }
 .stream_technorati{
-    background: url(images/stream/technorati.png) left top no-repeat;
+    background: url(images/stream/stream_sprite.png) left top no-repeat;
+    background-position: 0px -286px;
 }
 .stream_twitter{
     background: url(images/stream/twitter.png) left top no-repeat;
+    background-position: 0px -312px;
 }
 .stream_vimeo{
     background: url(images/stream/vimeo.png) left top no-repeat;
+    background-position: 0px -338px;
 }
 .stream_yelp{
     background: url(images/stream/yelp.png) left top no-repeat;
