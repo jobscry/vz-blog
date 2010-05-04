@@ -66,10 +66,5 @@ def auto_pingback(sender, instance, created, **kwargs):
 post_save.connect(auto_pingback, sender=Post)
 
 
-def static_delete(sender, instance, **kwargs):
-    quick_delete(instance, '/')
-
-post_save.connect(static_delete, sender=Post)
-
 from django.contrib.flatpages.models import FlatPage
 post_save.connect(static_delete, sender=FlatPage)
