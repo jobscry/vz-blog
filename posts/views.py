@@ -34,7 +34,7 @@ def posts_by_tag(request):
     tag = request.GET.get('tag', None)
     if tag != None:
         posts = TaggedItem.objects.get_by_model(Post, tag).filter(
-        `is_published=True).only('title', 'slug', 'published_on')
+        is_published=True).only('title', 'slug', 'published_on')
     else:
         posts = None
 
