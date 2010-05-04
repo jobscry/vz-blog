@@ -64,7 +64,3 @@ def auto_pingback(sender, instance, created, **kwargs):
             pass
 
 post_save.connect(auto_pingback, sender=Post)
-
-
-from django.contrib.flatpages.models import FlatPage
-post_save.connect(static_delete, sender=FlatPage)
