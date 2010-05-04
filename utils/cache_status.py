@@ -9,7 +9,7 @@ import datetime, re
 def view(request):
 
     try:
-        import cmemcache as memcache
+        import memcache
     except ImportError:
         raise http.Http404
 
