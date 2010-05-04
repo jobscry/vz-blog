@@ -29,5 +29,5 @@ urlpatterns = patterns('',
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'users/login.html' }, name='login'),
 	url(r'^logout/$', 'django.contrib.auth.views.logout_then_login', name='logout'),
 	
-	(r'^status/cache/$', 'utils.memcached_status.view'),
+	(r'^status/cache/$', 'utils.cache_satus.view'),
 )
