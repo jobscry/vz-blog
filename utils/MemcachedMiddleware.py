@@ -2,11 +2,13 @@
 # http://bretthoerner.com/blog/2008/oct/27/using-nginx-memcached-module-django/
 
 from django.conf import settings
+from django.core.cache import cache
 
 KEY = getattr(settings, 'NGINX_CACHE_PREFIX', 'NG')
 
 class NginxMemcacheMiddleWare:
     def process_response(self, request, response):
+
         path = request.get_full_path()
 
         if request.method != "GET" \
