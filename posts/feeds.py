@@ -5,6 +5,8 @@ from django.contrib.sites.models import Site
 from django.contrib.syndication.feeds import Feed
 from models import Post
 
+import markdown
+
 class LatestPosts(Feed):
     
     def title(self):
@@ -34,7 +36,7 @@ class LatestPosts(Feed):
         return Post.objects.filter(is_published=True).order_by('-published_on')[:10]
 
     def item_description(self, item):
-        return item.body
+        return markdown.markdown(item.body)
 
     def item_author_name(self, item):
         return item.author.get_full_name()
