@@ -1,4 +1,4 @@
-{% load humanize markup tagging_tags %}
+{% load humanize markup tagging_tags post_extras %}
 <div class="post">
 <h2><a href="{{ base_url }}{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
 <p class="date">{{ post.published_on|naturalday }}</p>
@@ -7,8 +7,8 @@
 {% if disqus %} | <a href="{{ base_url }}{{ post.get_absolute_url }}#disqus_thread" title="{{ post.title }} comments">comments</a>{% endif %}
 </div>
 {% if do_truncate %}
-{{ post.body|markdown:"codehilite"|truncatewords_html:blog_preview_length|safe }}
+{{ post.body|markdown:"codehilite"|esv|truncatewords_html:blog_preview_length|safe }}
 {% else %}
-{{ post.body|markdown:"codehilite"|safe }}
+{{ post.body|markdown:"codehilite"|esv|safe }}
 {% endif %}
 </div>

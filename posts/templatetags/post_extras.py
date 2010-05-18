@@ -23,7 +23,7 @@ ESV_DICT['include-first-verse-numbers'] = 0
 ESV_DICT['include-passage-horizontal-lines'] = 0
 ESV_DICT['include-heading-horizontal-lines'] = 0
 ESV_DICT['include-headings'] = 0
-ESV_DICT['key'] = 'ip'
+ESV_DICT['key'] = 'IP'
 
 BIBLE_RE = re.compile(r'\[\[bible ([^\]]+)\]\]', re.I)
 
@@ -32,7 +32,7 @@ ESV_QUERY_URL = ''
 
 @register.filter(name='esv')
 @stringfilter
-def esvapi(value, args=''):
+def esv(value, args=''):
     """
     Use ESV API to get a Bible Passage
     http://www.esvapi.org/v2/rest/passageQuery?key=IP&passage=Gen+1:5-10&output-format=plain-text
@@ -59,7 +59,7 @@ def esvapi(value, args=''):
     global ESV_QUERY_URL
     ESV_QUERY_URL = ESV_API_URL+'&'.join([k+'='+urllib.quote(str(v)) for (k,v) in esv_dict.items()])
     return BIBLE_RE.sub(_get_esv_txt, value)
-esvapi.is_safe = True
+esv.is_safe = True
 
 def _get_esv_txt(matchObj):
     passage = matchObj.group(1)
