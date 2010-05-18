@@ -10,10 +10,7 @@ import markdown
 
 register = template.Library()
 
-try:
-    ESV_API_URL = settings.ESV_API_URL
-except AttributeError:
-    ESV_API_URL = 'http://www.esvapi.org/v2/rest/passageQuery?'
+ESV_API_URL = getattr(settings, 'ESV_API_URL', 'http://www.esvapi.org/v2/rest/passageQuery?')
 
 ESV_DICT = {}
 ESV_DICT['output-format'] = 'html'
