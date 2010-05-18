@@ -10,6 +10,8 @@ from blog.links.models import Link
 
 import blog
 
+import datetime
+
 def blog_info(request):
     linkroll = cache.get('blog_linkroll', None)
     if linkroll is None:
@@ -30,6 +32,7 @@ def blog_info(request):
         'blog_linkroll': linkroll,
         'blog_tags': tags,
         'blog_feedburner_url': settings.FEEDBURNER_URL,
+        'blog_page_timestamp': datetime.datetime.strftime(datetime.datetime.now(), '%B %d, %Y %H:%M:%S%z'),
     }
 
 def base_url(request):

@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <meta charset="utf-8">
-        {% if extra_meta %}{% for meta in extra_meta %}
-        <meta name="{{ meta.0 }}" content="{{ meta.1 }}">
-        {% endfor %}{% endif %}
-        <title>{{ blog_title }} :: Blog{% block page_title %}{% endblock %}</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ blog_feedburner_url }}">
-{% load compress %}
-        {% compress css %}
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all">
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.production.css" media="all">
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pygments.production.css" media="all">
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" media="all">
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.production.css" media="all">
-        {% endcompress %}
-        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-        <script type="text/javascript">google.load("jquery", "1.4.0");</script>
-        {% compress js %}
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/prettydate.js"></script>
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/stream.js"></script>
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/menu.js"></script>
-        {% block javascript %}{% endblock %}
-        {% endcompress %}
+		<!-- generated {{ blog_page_timestamp }} -->
+		<meta charset="utf-8">
+		{% if extra_meta %}{% for meta in extra_meta %}
+		<meta name="{{ meta.0 }}" content="{{ meta.1 }}">
+		{% endfor %}{% endif %}
+		<title>{{ blog_title }} :: Blog{% block page_title %}{% endblock %}</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ blog_feedburner_url }}">
+		{% load compress %}
+		{% compress css %}
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" media="all">
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/typography.production.css" media="all">
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/pygments.production.css" media="all">
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" media="all">
+		<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.production.css" media="all">
+		{% endcompress %}
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript">google.load("jquery", "1.4.0");</script>
+		{% compress js %}
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/prettydate.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/stream.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/menu.js"></script>
+		{% block javascript %}{% endblock %}
+		{% endcompress %}
 {% if google_analytics_js %}{{ google_analytics_js|safe }}{% endif %}
 	</head>
 	<body>
